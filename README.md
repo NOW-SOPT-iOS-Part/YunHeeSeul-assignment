@@ -1,3 +1,3 @@
 # YunHeeSeul-assignment
 
-<img src = "https://github.com/NOW-SOPT-iOS-Part/YunHeeSeul-assignment/assets/105407130/bc09561a-26c9-4bca-a8ae-c4349ebe87b0" width = "400" align='center'>
+<img src = "https://github.com/NOW-SOPT-iOS-Part/YunHeeSeul-assignment/assets/105407130/405bd02e-d825-4b6f-bab6-c04e1c056a41" width = "400" align='center'>
