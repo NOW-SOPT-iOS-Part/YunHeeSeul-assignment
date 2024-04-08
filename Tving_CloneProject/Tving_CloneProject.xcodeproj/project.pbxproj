@@ -22,6 +22,8 @@
 		CA3953102BC45A7200B15E91 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA39530F2BC45A7200B15E91 /* Pretendard-Regular.otf */; };
 		CA3953122BC45A7A00B15E91 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA3953112BC45A7A00B15E91 /* Pretendard-SemiBold.otf */; };
 		CA3953152BC45CA700B15E91 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CA3953142BC45CA700B15E91 /* Then */; };
+		CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953162BC45DA300B15E91 /* UIFont+.swift */; };
+		CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953182BC47D3300B15E91 /* UILabel+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		CA39530D2BC45A5B00B15E91 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		CA39530F2BC45A7200B15E91 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		CA3953112BC45A7A00B15E91 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		CA3953162BC45DA300B15E91 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		CA3953182BC47D3300B15E91 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 			children = (
 				CA3952FF2BC44B9900B15E91 /* UIView+.swift */,
 				CA3953012BC44BCD00B15E91 /* UITextField+.swift */,
+				CA3953162BC45DA300B15E91 /* UIFont+.swift */,
+				CA3953182BC47D3300B15E91 /* UILabel+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -235,6 +241,8 @@
 				CA3953022BC44BCD00B15E91 /* UITextField+.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
+				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
+				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
 				CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
