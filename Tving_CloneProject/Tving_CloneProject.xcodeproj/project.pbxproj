@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952E52BC31F9900B15E91 /* AppDelegate.swift */; };
 		CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952E72BC31F9900B15E91 /* SceneDelegate.swift */; };
-		CA3952EA2BC31F9900B15E91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952E92BC31F9900B15E91 /* ViewController.swift */; };
+		CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952E92BC31F9900B15E91 /* LoginViewController.swift */; };
 		CA3952EF2BC31F9A00B15E91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA3952EE2BC31F9A00B15E91 /* Assets.xcassets */; };
 		CA3952F22BC31F9A00B15E91 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CA3952F12BC31F9A00B15E91 /* Base */; };
 		CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952FF2BC44B9900B15E91 /* UIView+.swift */; };
@@ -20,7 +20,7 @@
 		CA3952E22BC31F9900B15E91 /* Tving_CloneProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tving_CloneProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3952E52BC31F9900B15E91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA3952E72BC31F9900B15E91 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CA3952E92BC31F9900B15E91 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CA3952E92BC31F9900B15E91 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CA3952EE2BC31F9A00B15E91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA3952F12BC31F9A00B15E91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA3952F32BC31F9A00B15E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		CA3952FA2BC4488E00B15E91 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				CA3952E92BC31F9900B15E91 /* ViewController.swift */,
+				CA3952E92BC31F9900B15E91 /* LoginViewController.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -190,7 +190,7 @@
 			files = (
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
 				CA3953022BC44BCD00B15E91 /* UITextField+.swift in Sources */,
-				CA3952EA2BC31F9900B15E91 /* ViewController.swift in Sources */,
+				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
 				CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */,
 			);
