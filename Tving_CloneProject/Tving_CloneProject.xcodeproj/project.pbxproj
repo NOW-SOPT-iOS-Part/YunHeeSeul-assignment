@@ -21,6 +21,7 @@
 		CA39530E2BC45A5B00B15E91 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA39530D2BC45A5B00B15E91 /* Pretendard-Medium.otf */; };
 		CA3953102BC45A7200B15E91 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA39530F2BC45A7200B15E91 /* Pretendard-Regular.otf */; };
 		CA3953122BC45A7A00B15E91 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA3953112BC45A7A00B15E91 /* Pretendard-SemiBold.otf */; };
+		CA3953152BC45CA700B15E91 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CA3953142BC45CA700B15E91 /* Then */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA3953052BC4527D00B15E91 /* SnapKit in Frameworks */,
+				CA3953152BC45CA700B15E91 /* Then in Frameworks */,
 				CA3953072BC4527D00B15E91 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -164,6 +166,7 @@
 			packageProductDependencies = (
 				CA3953042BC4527D00B15E91 /* SnapKit */,
 				CA3953062BC4527D00B15E91 /* SnapKit-Dynamic */,
+				CA3953142BC45CA700B15E91 /* Then */,
 			);
 			productName = Tving_CloneProject;
 			productReference = CA3952E22BC31F9900B15E91 /* Tving_CloneProject.app */;
@@ -195,6 +198,7 @@
 			mainGroup = CA3952D92BC31F9900B15E91;
 			packageReferences = (
 				CA3953032BC4527D00B15E91 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CA3953132BC45CA700B15E91 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = CA3952E32BC31F9900B15E91 /* Products */;
 			projectDirPath = "";
@@ -454,6 +458,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		CA3953132BC45CA700B15E91 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -466,6 +478,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA3953032BC4527D00B15E91 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";
+		};
+		CA3953142BC45CA700B15E91 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA3953132BC45CA700B15E91 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
