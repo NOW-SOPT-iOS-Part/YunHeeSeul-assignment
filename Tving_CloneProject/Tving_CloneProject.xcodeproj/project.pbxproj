@@ -54,14 +54,62 @@
 		CA3952E42BC31F9900B15E91 /* Tving_CloneProject */ = {
 			isa = PBXGroup;
 			children = (
-				CA3952E52BC31F9900B15E91 /* AppDelegate.swift */,
-				CA3952E72BC31F9900B15E91 /* SceneDelegate.swift */,
-				CA3952E92BC31F9900B15E91 /* ViewController.swift */,
-				CA3952EE2BC31F9A00B15E91 /* Assets.xcassets */,
-				CA3952F02BC31F9A00B15E91 /* LaunchScreen.storyboard */,
+				CA3952FB2BC448AE00B15E91 /* Application */,
+				CA3952FA2BC4488E00B15E91 /* Scene */,
+				CA3952F92BC4488700B15E91 /* Global */,
 				CA3952F32BC31F9A00B15E91 /* Info.plist */,
 			);
 			path = Tving_CloneProject;
+			sourceTree = "<group>";
+		};
+		CA3952F92BC4488700B15E91 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				CA3952FE2BC448FA00B15E91 /* Literals */,
+				CA3952FD2BC448C100B15E91 /* Resources */,
+				CA3952FC2BC448BC00B15E91 /* Extensions */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		CA3952FA2BC4488E00B15E91 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CA3952E92BC31F9900B15E91 /* ViewController.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		CA3952FB2BC448AE00B15E91 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				CA3952F02BC31F9A00B15E91 /* LaunchScreen.storyboard */,
+				CA3952E52BC31F9900B15E91 /* AppDelegate.swift */,
+				CA3952E72BC31F9900B15E91 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		CA3952FC2BC448BC00B15E91 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CA3952FD2BC448C100B15E91 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CA3952EE2BC31F9A00B15E91 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		CA3952FE2BC448FA00B15E91 /* Literals */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Literals;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
