@@ -32,6 +32,16 @@ class LoginViewController: UIViewController {
     
     private let createNicknameLabel = UILabel()
     
+    private let idButtonBox = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
+    
+    private let pwButtonBox = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 20))
+    
+    private let idClearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    
+    private let pwClearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    
+    private let maskButton =  UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    
     
     // MARK: - Properties
     
@@ -56,7 +66,15 @@ class LoginViewController: UIViewController {
 private extension LoginViewController {
     
     func setHierarchy() {
-        self.view.addSubviews(loginLabel, idTextField, pwTextField, loginButton, findIdLabel, findPwLabel, divider, messageLabel, createNicknameLabel)
+        self.view.addSubviews(loginLabel, 
+                              idTextField, 
+                              pwTextField,
+                              loginButton,
+                              findIdLabel,
+                              findPwLabel,
+                              divider,
+                              messageLabel,
+                              createNicknameLabel)
     }
     
     func setLayout() {
@@ -116,7 +134,7 @@ private extension LoginViewController {
             $0.leading.equalTo(findPwLabel)
             $0.width.equalTo(130)
         }
-        
+
     }
     
     func setStyle() {
@@ -137,6 +155,14 @@ private extension LoginViewController {
                               fontColor: UIColor(resource: .grey2),
                               font: UIFont.pretendard(.subhead3))
             $0.setLeftPadding(amount: 22)
+            
+            idButtonBox.addSubview(idClearButton)
+            idClearButton.snp.makeConstraints {
+                $0.top.leading.height.equalToSuperview()
+                $0.trailing.equalToSuperview().inset(20)
+            }
+            $0.rightView = idButtonBox
+            $0.rightViewMode = .whileEditing
         }
         
         pwTextField.do {
@@ -148,6 +174,21 @@ private extension LoginViewController {
                               fontColor: UIColor(resource: .grey2),
                               font: UIFont.pretendard(.subhead3))
             $0.setLeftPadding(amount: 22)
+            
+            pwButtonBox.addSubviews(pwClearButton, maskButton)
+            
+            maskButton.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.trailing.equalToSuperview().inset(20)
+            }
+            
+            pwClearButton.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.trailing.equalToSuperview().inset(56)
+            }
+            
+            $0.rightView = pwButtonBox
+            $0.rightViewMode = .whileEditing
         }
         
         loginButton.do {
@@ -185,6 +226,27 @@ private extension LoginViewController {
             $0.font = UIFont.pretendard(.subhead4)
             $0.textColor = UIColor(resource: .grey2)
             $0.addUnderline()
+        }
+        
+        idButtonBox.do {
+            $0.backgroundColor = UIColor(resource: .grey4)
+        }
+        
+        idClearButton.do {
+            $0.setImage(UIImage(resource: .clear), for: .normal)
+        }
+        
+        pwButtonBox.do {
+            $0.backgroundColor = UIColor(resource: .grey4)
+        }
+        
+        pwClearButton.do {
+            $0.setImage(UIImage(resource: .clear), for: .normal)
+        }
+        
+        maskButton.do {
+            $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            $0.tintColor = UIColor(resource: .grey3)
         }
         
     }
