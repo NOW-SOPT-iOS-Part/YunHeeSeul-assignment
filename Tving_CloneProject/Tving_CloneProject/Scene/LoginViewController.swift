@@ -213,6 +213,7 @@ private extension LoginViewController {
             $0.layer.cornerRadius = 3
             $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor(resource: .grey4).cgColor
+            $0.addTarget(self, action: #selector(pushToWelcomeVC), for: .touchUpInside)
         }
         
         findIdLabel.do {
@@ -320,11 +321,19 @@ private extension LoginViewController {
         isActivate = false
     }
     
+    @objc
+    func pushToWelcomeVC() {
+        let welcomeVC = WelcomeViewController()
+        welcomeVC.userInfo = self.idTextField.text
+        self.navigationController?.pushViewController(welcomeVC, animated: true)
+    }
+    
 }
 
 // MARK: - Delegates
 
 extension LoginViewController: UITextFieldDelegate {
+    
     func textFieldDidBeginEditing (_ textField: UITextField) {
         
         if textField.placeholder == "아이디" {

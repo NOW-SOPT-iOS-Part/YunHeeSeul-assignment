@@ -26,6 +26,8 @@ class WelcomeViewController: UIViewController {
     let width = UIScreen.main.bounds.size.width / 375
     
     let height = UIScreen.main.bounds.size.height / 812
+        
+    var userInfo: String? = ""
     
     // MARK: - Life Cycles
     
@@ -35,6 +37,7 @@ class WelcomeViewController: UIViewController {
         setHierarchy()
         setLayout()
         setStyle()
+        bindUserInfo()
     }
     
 }
@@ -72,6 +75,7 @@ private extension WelcomeViewController {
     
     func setStyle() {
         self.view.backgroundColor = UIColor(resource: .black)
+        self.navigationController?.navigationBar.isHidden = true
         
         logoImageView.do {
             $0.image = UIImage(resource: .tvingLogo)
@@ -80,6 +84,7 @@ private extension WelcomeViewController {
         welcomeLabel.do {
             $0.font = UIFont.pretendard(.subhead1)
             $0.textColor = UIColor(resource: .grey1)
+            $0.textAlignment = .center
             $0.numberOfLines = 0
         }
         
@@ -88,9 +93,21 @@ private extension WelcomeViewController {
             $0.setTitleColor(UIColor(resource: .white), for: .normal)
             $0.layer.cornerRadius = 3
             $0.backgroundColor = UIColor(resource: .red)
+            $0.addTarget(self, action: #selector(popToLoginVC), for: .touchUpInside)
         }
         
     }
+    
+    func bindUserInfo() {
+        let name = userInfo ?? ""
+        self.welcomeLabel.text = "\(name)님\n반가워요!"
+    }
+    
+    @objc
+    func popToLoginVC() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 // MARK: - Delegates
