@@ -24,6 +24,7 @@
 		CA3953152BC45CA700B15E91 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CA3953142BC45CA700B15E91 /* Then */; };
 		CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953162BC45DA300B15E91 /* UIFont+.swift */; };
 		CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953182BC47D3300B15E91 /* UILabel+.swift */; };
+		CA39531C2BC5A75C00B15E91 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		CA3953112BC45A7A00B15E91 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		CA3953162BC45DA300B15E91 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		CA3953182BC47D3300B15E91 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				CA3952E92BC31F9900B15E91 /* LoginViewController.swift */,
+				CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
+				CA39531C2BC5A75C00B15E91 /* WelcomeViewController.swift in Sources */,
 				CA3953022BC44BCD00B15E91 /* UITextField+.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
