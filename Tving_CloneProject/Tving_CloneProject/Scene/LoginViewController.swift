@@ -16,9 +16,9 @@ class LoginViewController: UIViewController {
     
     private let loginLabel = UILabel()
     
-    private let idTextField = UITextField()
+    private lazy var idTextField = UITextField()
     
-    private let pwTextField = UITextField()
+    private lazy var pwTextField = UITextField()
     
     private let loginButton = UIButton()
     
@@ -169,6 +169,7 @@ private extension LoginViewController {
             $0.rightViewMode = .whileEditing
             
             $0.delegate = self
+            $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
         pwTextField.do {
@@ -203,6 +204,7 @@ private extension LoginViewController {
             $0.rightViewMode = .whileEditing
             
             $0.delegate = self
+            $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
         loginButton.do {
@@ -271,6 +273,35 @@ private extension LoginViewController {
     }
     
     @objc
+    func textFieldChange() {
+        let id = self.idTextField.text ?? ""
+        let pw = self.pwTextField.text ?? ""
+        
+        if !id.isEmpty {
+            idClearButton.isHidden = false
+        } else {
+            pwClearButton.isHidden = false
+            maskButton.isHidden = false
+        }
+        
+        if !id.isEmpty && !pw.isEmpty {
+            loginButton.backgroundColor = UIColor(resource: .red)
+            loginButton.setTitleColor(UIColor(resource: .white), for: .normal)
+            loginButton.layer.borderWidth = 0
+            loginButton.isEnabled = true
+            isActivate = true
+        } else {
+            loginButton.backgroundColor = UIColor(resource: .black)
+            loginButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
+            loginButton.layer.borderWidth = 1
+            loginButton.isEnabled = false
+            isActivate = false
+        }
+        
+        print("\(id),  \(pw)")
+    }
+    
+    @objc
     func maskButtonTapped() {
         self.pwTextField.isSecureTextEntry = !self.pwTextField.isSecureTextEntry
     }
@@ -283,6 +314,8 @@ private extension LoginViewController {
             self.pwTextField.text = ""
         }
         loginButton.backgroundColor = UIColor(resource: .black)
+        loginButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
+        loginButton.layer.borderWidth = 1
         loginButton.isEnabled = false
         isActivate = false
     }
