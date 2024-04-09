@@ -36,17 +36,20 @@ class LoginViewController: UIViewController {
     
     private let pwButtonBox = UIView()
     
-    private let idClearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    private lazy var idClearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
-    private let pwClearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    private lazy var pwClearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
-    private let maskButton =  UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    private lazy var maskButton =  UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
     
     // MARK: - Properties
     
     let width = UIScreen.main.bounds.size.width / 375
+    
     let height = UIScreen.main.bounds.size.height / 812
+    
+    var isActivate: Bool = false
 
     // MARK: - Life Cycles
     
@@ -245,6 +248,8 @@ private extension LoginViewController {
         
         idClearButton.do {
             $0.setImage(UIImage(resource: .clear), for: .normal)
+            $0.tag = 0
+            $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
         
         pwButtonBox.do {
@@ -253,13 +258,33 @@ private extension LoginViewController {
         
         pwClearButton.do {
             $0.setImage(UIImage(resource: .clear), for: .normal)
+            $0.tag = 1
+            $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
         
         maskButton.do {
             $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
             $0.tintColor = UIColor(resource: .grey3)
+            $0.addTarget(self, action: #selector(maskButtonTapped), for: .touchUpInside)
         }
         
+    }
+    
+    @objc
+    func maskButtonTapped() {
+        self.pwTextField.isSecureTextEntry = !self.pwTextField.isSecureTextEntry
+    }
+    
+    @objc
+    func clearButtonTapped(_ sender: UIButton) {
+        if sender.tag == 0 {
+            self.idTextField.text = ""
+        } else {
+            self.pwTextField.text = ""
+        }
+        loginButton.backgroundColor = UIColor(resource: .black)
+        loginButton.isEnabled = false
+        isActivate = false
     }
     
 }
