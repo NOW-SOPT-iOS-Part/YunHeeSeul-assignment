@@ -25,6 +25,7 @@
 		CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953162BC45DA300B15E91 /* UIFont+.swift */; };
 		CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953182BC47D3300B15E91 /* UILabel+.swift */; };
 		CA39531C2BC5A75C00B15E91 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */; };
+		CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		CA3953162BC45DA300B15E91 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		CA3953182BC47D3300B15E91 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				CA3952E92BC31F9900B15E91 /* LoginViewController.swift */,
 				CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */,
+				CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
 				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
 				CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */,
+				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

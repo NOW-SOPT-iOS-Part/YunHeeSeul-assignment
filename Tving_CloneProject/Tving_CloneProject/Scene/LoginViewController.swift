@@ -50,6 +50,8 @@ class LoginViewController: UIViewController {
     let height = UIScreen.main.bounds.size.height / 812
     
     var isActivate: Bool = false
+    
+    var nickname: String = ""
 
     // MARK: - Life Cycles
     
@@ -146,7 +148,7 @@ private extension LoginViewController {
         loginLabel.do {
             $0.text = "TVING ID 로그인"
             $0.font = UIFont.pretendard(.body1)
-            $0.textColor = UIColor(resource: .white)
+            $0.textColor = UIColor(resource: .grey1)
         }
         
         idTextField.do {
@@ -243,6 +245,10 @@ private extension LoginViewController {
             $0.font = UIFont.pretendard(.subhead4)
             $0.textColor = UIColor(resource: .grey2)
             $0.addUnderline()
+            
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(presentCreateNicknameVC))
+            $0.isUserInteractionEnabled = true
+            $0.addGestureRecognizer(gesture)
         }
         
         idButtonBox.do {
@@ -298,8 +304,6 @@ private extension LoginViewController {
             loginButton.isEnabled = false
             isActivate = false
         }
-        
-        print("\(id),  \(pw)")
     }
     
     @objc
@@ -326,6 +330,14 @@ private extension LoginViewController {
         let welcomeVC = WelcomeViewController()
         welcomeVC.userInfo = self.idTextField.text
         self.navigationController?.pushViewController(welcomeVC, animated: true)
+    }
+    
+    @objc
+    func presentCreateNicknameVC(sender: UITapGestureRecognizer) {
+        let createNicknameVC = CreateNicknameViewController()
+        createNicknameVC.delegate = self
+        createNicknameVC.modalPresentationStyle = .overFullScreen
+        self.present(createNicknameVC, animated: true)
     }
     
 }
@@ -355,5 +367,13 @@ extension LoginViewController: UITextFieldDelegate {
             self.pwTextField.layer.borderWidth = 0
             self.pwTextField.layer.borderColor = UIColor(resource: .grey4).cgColor
         }
+    }
+}
+
+extension LoginViewController: CreateNicknameVCDelegate {
+    
+    func saveUserNickname(nickname: String) {
+        self.nickname = nickname
+        print(self.nickname)
     }
 }
