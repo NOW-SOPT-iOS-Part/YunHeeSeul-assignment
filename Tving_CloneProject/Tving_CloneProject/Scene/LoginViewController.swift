@@ -34,7 +34,7 @@ class LoginViewController: UIViewController {
     
     private let idButtonBox = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
     
-    private let pwButtonBox = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 20))
+    private let pwButtonBox = UIView()
     
     private let idClearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
@@ -155,6 +155,7 @@ private extension LoginViewController {
                               fontColor: UIColor(resource: .grey2),
                               font: UIFont.pretendard(.subhead3))
             $0.setLeftPadding(amount: 22)
+            $0.textColor = UIColor(resource: .grey2)
             
             idButtonBox.addSubview(idClearButton)
             idClearButton.snp.makeConstraints {
@@ -163,6 +164,8 @@ private extension LoginViewController {
             }
             $0.rightView = idButtonBox
             $0.rightViewMode = .whileEditing
+            
+            $0.delegate = self
         }
         
         pwTextField.do {
@@ -174,21 +177,29 @@ private extension LoginViewController {
                               fontColor: UIColor(resource: .grey2),
                               font: UIFont.pretendard(.subhead3))
             $0.setLeftPadding(amount: 22)
+            $0.textColor = UIColor(resource: .grey2)
+            $0.isSecureTextEntry = true
             
             pwButtonBox.addSubviews(pwClearButton, maskButton)
             
+            pwButtonBox.snp.makeConstraints {
+                $0.width.equalTo(80)
+                $0.height.equalTo(20)
+            }
             maskButton.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
+                $0.top.height.equalToSuperview()
                 $0.trailing.equalToSuperview().inset(20)
             }
             
             pwClearButton.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
+                $0.top.height.equalToSuperview()
                 $0.trailing.equalToSuperview().inset(56)
             }
             
             $0.rightView = pwButtonBox
             $0.rightViewMode = .whileEditing
+            
+            $0.delegate = self
         }
         
         loginButton.do {
@@ -229,7 +240,7 @@ private extension LoginViewController {
         }
         
         idButtonBox.do {
-            $0.backgroundColor = UIColor(resource: .grey4)
+            $0.backgroundColor = UIColor.clear
         }
         
         idClearButton.do {
@@ -237,7 +248,7 @@ private extension LoginViewController {
         }
         
         pwButtonBox.do {
-            $0.backgroundColor = UIColor(resource: .grey4)
+            $0.backgroundColor = UIColor.clear
         }
         
         pwClearButton.do {
@@ -253,3 +264,29 @@ private extension LoginViewController {
     
 }
 
+// MARK: - Delegates
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing (_ textField: UITextField) {
+        
+        if textField.placeholder == "아이디" {
+            self.idTextField.layer.borderWidth = 1
+            self.idTextField.layer.borderColor = UIColor(resource: .grey2).cgColor
+        } else {
+            self.pwTextField.layer.borderWidth = 1
+            self.pwTextField.layer.borderColor = UIColor(resource: .grey2).cgColor
+        }
+        
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if textField.placeholder == "아이디" {
+            self.idTextField.layer.borderWidth = 0
+            self.idTextField.layer.borderColor = UIColor(resource: .grey4).cgColor
+        } else {
+            self.pwTextField.layer.borderWidth = 0
+            self.pwTextField.layer.borderColor = UIColor(resource: .grey4).cgColor
+        }
+    }
+}
