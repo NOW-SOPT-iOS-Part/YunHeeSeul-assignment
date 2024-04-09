@@ -327,9 +327,11 @@ private extension LoginViewController {
     
     @objc
     func pushToWelcomeVC() {
-        let welcomeVC = WelcomeViewController()
-        welcomeVC.userInfo = self.idTextField.text
-        self.navigationController?.pushViewController(welcomeVC, animated: true)
+        if isActivate {
+            let welcomeVC = WelcomeViewController()
+            welcomeVC.userInfo = nickname.isEmpty ? self.idTextField.text : nickname
+            self.navigationController?.pushViewController(welcomeVC, animated: true)
+        }
     }
     
     @objc
@@ -374,6 +376,5 @@ extension LoginViewController: CreateNicknameVCDelegate {
     
     func saveUserNickname(nickname: String) {
         self.nickname = nickname
-        print(self.nickname)
     }
 }
