@@ -110,10 +110,8 @@
 		CA3952FA2BC4488E00B15E91 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				CA3952E92BC31F9900B15E91 /* LoginViewController.swift */,
-				CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */,
-				CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */,
-				CA39531F2BC6F6BE00B15E91 /* LoginView.swift */,
+				CA3953272BC6FC1F00B15E91 /* Welcome */,
+				CA3953262BC6FC0E00B15E91 /* Login */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -174,6 +172,48 @@
 				CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		CA3953262BC6FC0E00B15E91 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				CA3953292BC6FC3D00B15E91 /* Views */,
+				CA3953282BC6FC2C00B15E91 /* ViewControllers */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		CA3953272BC6FC1F00B15E91 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				CA39532A2BC6FC6A00B15E91 /* ViewControllers */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		CA3953282BC6FC2C00B15E91 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */,
+				CA3952E92BC31F9900B15E91 /* LoginViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CA3953292BC6FC3D00B15E91 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CA39531F2BC6F6BE00B15E91 /* LoginView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CA39532A2BC6FC6A00B15E91 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
