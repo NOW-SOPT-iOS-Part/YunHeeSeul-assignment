@@ -27,6 +27,8 @@
 		CA39531C2BC5A75C00B15E91 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */; };
 		CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */; };
 		CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531F2BC6F6BE00B15E91 /* LoginView.swift */; };
+		CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953212BC6FA9F00B15E91 /* Constant.swift */; };
+		CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameViewController.swift; sourceTree = "<group>"; };
 		CA39531F2BC6F6BE00B15E91 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		CA3953212BC6FA9F00B15E91 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,7 @@
 		CA3952F92BC4488700B15E91 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				CA3953232BC6FB0500B15E91 /* Utils */,
 				CA3952FE2BC448FA00B15E91 /* Literals */,
 				CA3952FD2BC448C100B15E91 /* Resources */,
 				CA3952FC2BC448BC00B15E91 /* Extensions */,
@@ -146,6 +151,7 @@
 		CA3952FE2BC448FA00B15E91 /* Literals */ = {
 			isa = PBXGroup;
 			children = (
+				CA3953212BC6FA9F00B15E91 /* Constant.swift */,
 			);
 			path = Literals;
 			sourceTree = "<group>";
@@ -160,6 +166,14 @@
 				CA3953092BC459E500B15E91 /* Pretendard-Bold.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		CA3953232BC6FB0500B15E91 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
+				CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */,
 				CA39531C2BC5A75C00B15E91 /* WelcomeViewController.swift in Sources */,
 				CA3953022BC44BCD00B15E91 /* UITextField+.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
@@ -254,6 +269,7 @@
 				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
 				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
 				CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */,
+				CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */,
 				CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */,
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
 			);
