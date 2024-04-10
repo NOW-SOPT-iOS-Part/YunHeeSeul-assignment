@@ -31,10 +31,6 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    let width = UIScreen.main.bounds.size.width / 375
-    
-    let height = UIScreen.main.bounds.size.height / 812
-    
     var isActivate: Bool = false
     
     var nickname: String = ""
@@ -77,14 +73,14 @@ private extension LoginViewController {
         loginView.snp.makeConstraints {
             $0.top.equalTo(loginLabel.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(width * 335)
-            $0.height.equalTo(height * 186)
+            $0.width.equalTo(ScreenUtils.getWidth(335))
+            $0.height.equalTo(ScreenUtils.getHeight(186))
         }
         
         findIdLabel.snp.makeConstraints {
             $0.top.equalTo(loginView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(85)
-            $0.width.equalTo(width * 65)
+            $0.width.equalTo(ScreenUtils.getWidth(65))
         }
         
         divider.snp.makeConstraints {
@@ -97,7 +93,7 @@ private extension LoginViewController {
         findPwLabel.snp.makeConstraints {
             $0.top.equalTo(loginView.snp.bottom).offset(30)
             $0.leading.equalTo(divider.snp.trailing).offset(35)
-            $0.width.equalTo(width * 75)
+            $0.width.equalTo(ScreenUtils.getWidth(75))
         }
         
         messageLabel.snp.makeConstraints {

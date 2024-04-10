@@ -22,10 +22,6 @@ class WelcomeViewController: UIViewController {
     
     
     // MARK: - Properties
-    
-    let width = UIScreen.main.bounds.size.width / 375
-    
-    let height = UIScreen.main.bounds.size.height / 812
         
     var userInfo: String? = ""
     
@@ -57,20 +53,20 @@ private extension WelcomeViewController {
         logoImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(60)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(height * 211)
+            $0.height.equalTo(ScreenUtils.getHeight(211))
         }
         
         welcomeLabel.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(67)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(width * 245)
+            $0.width.equalTo(ScreenUtils.getWidth(245))
         }
         
         goToMainButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(66)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(width * 335)
-            $0.height.equalTo(height * 52)
+            $0.width.equalTo(ScreenUtils.getWidth(335))
+            $0.height.equalTo(ScreenUtils.getHeight(52))
         }
 
     }

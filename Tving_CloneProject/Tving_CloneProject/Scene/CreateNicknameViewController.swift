@@ -30,10 +30,6 @@ class CreateNicknameViewController: UIViewController {
     
     // MARK: - Properties
     
-    let width = UIScreen.main.bounds.size.width / 375
-    
-    let height = UIScreen.main.bounds.size.height / 812
-    
     var isActivate: Bool = false
     
     weak var delegate: CreateNicknameVCDelegate?
@@ -48,7 +44,6 @@ class CreateNicknameViewController: UIViewController {
         setLayout()
         setStyle()
     }
-    
 
 }
 
@@ -70,7 +65,7 @@ private extension CreateNicknameViewController {
         }
         
         bottomSheetView.snp.makeConstraints {
-            $0.height.equalTo(height * 812 / 2)
+            $0.height.equalTo(ScreenUtils.getHeight(406))
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
@@ -82,7 +77,7 @@ private extension CreateNicknameViewController {
         nicknameTextField.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(height * 52)
+            $0.height.equalTo(ScreenUtils.getHeight(52))
         }
         
         warningLabel.snp.makeConstraints {
@@ -93,7 +88,7 @@ private extension CreateNicknameViewController {
         saveButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(height * 52)
+            $0.height.equalTo(ScreenUtils.getHeight(52))
         }
 
     }
