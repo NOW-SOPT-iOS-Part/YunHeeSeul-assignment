@@ -29,6 +29,7 @@ class WelcomeViewController: UIViewController {
         
     var userInfo: String? = ""
     
+    
     // MARK: - Life Cycles
     
     override func viewDidLoad() {
@@ -41,6 +42,7 @@ class WelcomeViewController: UIViewController {
     }
     
 }
+
 
 // MARK: - Private Methods
 
@@ -74,6 +76,7 @@ private extension WelcomeViewController {
     }
     
     func setStyle() {
+        
         self.view.backgroundColor = UIColor(resource: .black)
         self.navigationController?.navigationBar.isHidden = true
         

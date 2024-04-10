@@ -38,6 +38,7 @@ class CreateNicknameViewController: UIViewController {
     
     weak var delegate: CreateNicknameVCDelegate?
     
+    
     // MARK: - Life Cycles
     
     override func viewDidLoad() {
@@ -50,6 +51,7 @@ class CreateNicknameViewController: UIViewController {
     
 
 }
+
 
 // MARK: - Private Methods
 
@@ -199,7 +201,7 @@ extension CreateNicknameViewController: UITextFieldDelegate {
         let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣]*$"
         
         // 입력된 문자열이 패턴과 일치하는지 확인
-        if let text = string.range(of: pattern, options: .regularExpression) {
+        if let _ = string.range(of: pattern, options: .regularExpression) {
             self.warningLabel.isHidden = true
             return true
         } else {
