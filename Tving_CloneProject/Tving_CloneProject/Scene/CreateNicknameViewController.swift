@@ -25,6 +25,8 @@ class CreateNicknameViewController: UIViewController {
     
     private let saveButton = UIButton()
     
+    private let warningLabel = UILabel()
+    
     
     // MARK: - Properties
     
@@ -55,7 +57,7 @@ private extension CreateNicknameViewController {
     
     func setHierarchy() {
         self.view.addSubviews(dimmedView, bottomSheetView)
-        bottomSheetView.addSubviews(nicknameLabel, nicknameTextField, saveButton)
+        bottomSheetView.addSubviews(nicknameLabel, nicknameTextField, warningLabel, saveButton)
     }
     
     func setLayout() {
@@ -79,6 +81,11 @@ private extension CreateNicknameViewController {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(height * 52)
+        }
+        
+        warningLabel.snp.makeConstraints {
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().inset(20)
         }
         
         saveButton.snp.makeConstraints {
@@ -126,6 +133,13 @@ private extension CreateNicknameViewController {
             $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
+        warningLabel.do {
+            $0.text = "닉네임은 \"한글\"만 사용 가능해요!"
+            $0.font = UIFont.pretendard(.subhead5)
+            $0.textColor = UIColor(resource: .red)
+            $0.isHidden = true
+        }
+        
         saveButton.do {
             $0.setTitle("저장하기", for: .normal)
             $0.layer.cornerRadius = 12
@@ -138,11 +152,8 @@ private extension CreateNicknameViewController {
         
     }
     
-    @objc
-    func textFieldChange() {
-        let nickname = self.nicknameTextField.text ?? ""
-        
-        if !nickname.isEmpty {
+    func setSaveButton(isEnabled: Bool) {
+        if isEnabled {
             saveButton.backgroundColor = UIColor(resource: .red)
             saveButton.setTitleColor(UIColor(resource: .white), for: .normal)
             saveButton.layer.borderWidth = 0
@@ -155,6 +166,12 @@ private extension CreateNicknameViewController {
             saveButton.isEnabled = false
             isActivate = false
         }
+    }
+    
+    @objc
+    func textFieldChange() {
+        let nickname = self.nicknameTextField.text ?? ""
+        setSaveButton(isEnabled: !nickname.isEmpty)
     }
     
     @objc
@@ -183,8 +200,11 @@ extension CreateNicknameViewController: UITextFieldDelegate {
         
         // 입력된 문자열이 패턴과 일치하는지 확인
         if let text = string.range(of: pattern, options: .regularExpression) {
+            self.warningLabel.isHidden = true
             return true
         } else {
+            self.warningLabel.isHidden = false
+            setSaveButton(isEnabled: false)
             return false
         }
     }
