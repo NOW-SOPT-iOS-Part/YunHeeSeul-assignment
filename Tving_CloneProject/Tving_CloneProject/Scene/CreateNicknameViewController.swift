@@ -121,6 +121,7 @@ private extension CreateNicknameViewController {
                             forBorderWidth: 0,
                             forCornerRadius: 3)
             $0.textColor = UIColor(resource: .grey4)
+            $0.delegate = self
             $0.setLeftPadding(amount: 23)
             $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
@@ -170,4 +171,21 @@ private extension CreateNicknameViewController {
         self.dismiss(animated: true)
     }
     
+}
+
+// MARK: - Delegates
+
+extension CreateNicknameViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // 정규식 패턴
+        let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣]*$"
+        
+        // 입력된 문자열이 패턴과 일치하는지 확인
+        if let text = string.range(of: pattern, options: .regularExpression) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
