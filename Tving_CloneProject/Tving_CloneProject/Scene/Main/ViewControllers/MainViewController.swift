@@ -13,7 +13,7 @@ import Then
 
 enum MainSection {
     case mainPoster([Contents])
-//    case recommendedContents([Contents])
+    case recommendedContents([Contents])
 //    case paramounts([Contents])
 //    case romance([Contents])
 //    case comedy([Contents])
@@ -25,12 +25,14 @@ class MainViewController: UIViewController {
         
     private lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.makeFlowLayout())
     
+    private let navigationBarView = NavigationBarView()
+    
     
     // MARK: - Properties
     
     private let dataSource: [MainSection] = [
         MainSection.mainPoster(Contents.mainPoster()),
-//        MainSection.recommendedContents(Contents.recommended()),
+        MainSection.recommendedContents(Contents.recommended()),
 //        MainSection.paramounts(Contents.paramounts()),
 //        MainSection.romance(Contents.romance()),
 //        MainSection.comedy(Contents.comedy())
@@ -58,12 +60,20 @@ private extension MainViewController {
     func setHierarchy() {
         
         self.view.addSubviews(mainCollectionView)
+        mainCollectionView.addSubviews(navigationBarView)
+        
     }
     
     func setLayout() {
         
         mainCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        navigationBarView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(55)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(ScreenUtils.getHeight(30))
         }
 
     }
@@ -73,11 +83,16 @@ private extension MainViewController {
         self.navigationController?.navigationBar.isHidden = true
         
         mainCollectionView.do {
-            $0.dataSource = self
             $0.delegate = self
-            $0.register(MainPosterCell.self, forCellWithReuseIdentifier: MainPosterCell.identifier)
-            $0.contentInsetAdjustmentBehavior = .never
+            $0.dataSource = self
             $0.backgroundColor = .black
+            $0.contentInsetAdjustmentBehavior = .never
+            $0.register(BasicCell.self, forCellWithReuseIdentifier: BasicCell.identifier)
+            $0.register(MainPosterCell.self, forCellWithReuseIdentifier:MainPosterCell.identifier)
+            $0.register(BasicHeaderView.self,
+                        forSupplementaryViewOfKind: BasicHeaderView.elementKinds,
+                        withReuseIdentifier: BasicHeaderView.identifier)
+
         }
     }
     
@@ -87,8 +102,8 @@ private extension MainViewController {
             switch self.dataSource[section] {
             case .mainPoster:
                 return self.makeMainPosterLayout()
-//            case .recommendedContents:
-//                return self.makeRecommendationLayout()
+            case .recommendedContents:
+                return self.makeRecommendationLayout()
 //            case .paramounts:
 //                return self.makeParamountsLayout()
 //            case .romance:
@@ -104,31 +119,58 @@ private extension MainViewController {
         // item
        let itemSize = NSCollectionLayoutSize(
            widthDimension: .fractionalWidth(1),
-           heightDimension: .absolute(550))
+           heightDimension: .fractionalHeight(1))
        let item = NSCollectionLayoutItem(layoutSize: itemSize)
        
        // group
        let groupSize = NSCollectionLayoutSize(
            widthDimension: .fractionalWidth(1),
-           heightDimension: .fractionalHeight(1))
+           heightDimension: .fractionalHeight(550 / 812))
        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
        
        // section
        let section = NSCollectionLayoutSection(group: group)
-       section.orthogonalScrollingBehavior = .continuous // 수평 스크롤
-       section.contentInsets = NSDirectionalEdgeInsets(
-           top: 0,
-           leading: 0,
-           bottom: 0,
-           trailing: 0)
-       
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, 
+                                                        leading: 0,
+                                                        bottom: 23,
+                                                        trailing: 0)
        
        return section
     }
     
-//    func makeRecommendationLayout() -> NSCollectionLayoutSection {
-//        
-//    }
+    func makeRecommendationLayout() -> NSCollectionLayoutSection {
+        
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, 
+                                                     leading: 0,
+                                                     bottom: 0,
+                                                     trailing: 8)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(98 / 375),
+            heightDimension: .absolute(168))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 14, 
+                                                      leading: 0,
+                                                      bottom: 0, 
+                                                      trailing: 0)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, 
+                                                        leading: 15,
+                                                        bottom: 0,
+                                                        trailing: 0)
+        
+        let header = makeHeaderView()
+        section.boundarySupplementaryItems = [header]
+       
+        return section
+    }
 //    
 //    func makeParamountsLayout() -> NSCollectionLayoutSection {
 //        
@@ -141,6 +183,20 @@ private extension MainViewController {
 //    func makeComedyLayout() -> NSCollectionLayoutSection {
 //        
 //    }
+    
+    func makeHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
+        
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(25))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: BasicHeaderView.identifier,
+            alignment: .top)
+        
+        return header
+        
+    }
     
 }
 
@@ -156,17 +212,45 @@ extension MainViewController: UICollectionViewDataSource {
         switch dataSource[section] {
         case .mainPoster(let data):
             return data.count
+        case .recommendedContents(let data):
+            return data.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch dataSource[indexPath.section] {
         case .mainPoster(let data):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath) as? MainPosterCell
-            else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
+                    as? MainPosterCell else { return UICollectionViewCell() }
             cell.setPageVC(contents: data[indexPath.row])
             return cell
+        case .recommendedContents(let data):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BasicCell.identifier, for: indexPath)
+                    as? BasicCell else { return UICollectionViewCell() }
+            cell.setData(data: data[indexPath.row])
+            return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == BasicHeaderView.elementKinds {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, 
+                                                                               withReuseIdentifier: BasicHeaderView.identifier,
+                                                                               for: indexPath)
+                    as? BasicHeaderView else { return UICollectionReusableView()}
+            
+            switch dataSource[indexPath.section] {
+            case .mainPoster:
+                return header
+            case .recommendedContents:
+                header.bindTitle(headerTitle: "티빙에서 꼭 봐야하는 콘텐츠")
+                return header
+            }
+        } else {
+            return UICollectionReusableView()
+        }
+        
     }
     
     
