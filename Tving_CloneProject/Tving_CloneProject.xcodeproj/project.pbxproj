@@ -35,6 +35,8 @@
 		CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531F2BC6F6BE00B15E91 /* LoginView.swift */; };
 		CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953212BC6FA9F00B15E91 /* Constant.swift */; };
 		CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */; };
+		CA902EBC2BD6F9F900560D26 /* BasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBB2BD6F9F900560D26 /* BasicCell.swift */; };
+		CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +67,8 @@
 		CA39531F2BC6F6BE00B15E91 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CA3953212BC6FA9F00B15E91 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtils.swift; sourceTree = "<group>"; };
+		CA902EBB2BD6F9F900560D26 /* BasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCell.swift; sourceTree = "<group>"; };
+		CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,7 @@
 			children = (
 				CA1F68F22BD5698C00439E33 /* MainPosterView.swift */,
 				CA1F68F42BD578B500439E33 /* NavigationBarView.swift */,
+				CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -122,6 +127,7 @@
 			children = (
 				CA1F68FA2BD5886600439E33 /* MainPosterCell.swift */,
 				CA1F68FC2BD58ED700439E33 /* PagerButtonCell.swift */,
+				CA902EBB2BD6F9F900560D26 /* BasicCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -360,9 +366,11 @@
 			files = (
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
 				CA1F68F02BD5691D00439E33 /* MainViewController.swift in Sources */,
+				CA902EBC2BD6F9F900560D26 /* BasicCell.swift in Sources */,
 				CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */,
 				CA39531C2BC5A75C00B15E91 /* WelcomeViewController.swift in Sources */,
 				CA3953022BC44BCD00B15E91 /* UITextField+.swift in Sources */,
+				CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
 				CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */,
