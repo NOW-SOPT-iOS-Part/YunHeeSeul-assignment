@@ -64,4 +64,12 @@ extension Contents {
                 Contents(image: .poster4, title: "너의 이름은", ranking: 4, channelName: "OCN", rating: 24.2),
                 Contents(image: .poster5, title: "해리포터와 마법사의 돌", ranking: 5, channelName: "OCN Movies", rating: 24.2)]
     }
+    
+    static func category() -> [Contents] {
+        return [Contents(image: .category1),
+               Contents(image: .category2),
+               Contents(image: .category3),
+               Contents(image: .category4),
+               Contents(image: .category5)]
+    }
 }

@@ -16,6 +16,7 @@ enum MainSection {
     case recommendedContents([Contents])
     case popularLiveChannel([Contents])
     case paramounts([Contents])
+    case categories([Contents])
 //    case romance([Contents])
 //    case comedy([Contents])
 }
@@ -36,6 +37,7 @@ class MainViewController: UIViewController {
         MainSection.recommendedContents(Contents.recommended()),
         MainSection.popularLiveChannel(Contents.popularChannel()),
         MainSection.paramounts(Contents.paramounts()),
+        MainSection.categories(Contents.category())
 //        MainSection.romance(Contents.romance()),
 //        MainSection.comedy(Contents.comedy())
     ]
@@ -108,6 +110,8 @@ private extension MainViewController {
                 return self.makeImageNTitleLayout()
             case .popularLiveChannel:
                 return self.makePopularLiveChannelLayout()
+            case .categories:
+                return self.makeImageOnlyLayout()
 //            case .romance:
 //                return self.makeRomanceLayout()
 //            case .comedy:
@@ -206,10 +210,32 @@ private extension MainViewController {
        
         return section
     }
-//
-//    func makeRomanceLayout() -> NSCollectionLayoutSection {
-//        
-//    }
+
+    func makeImageOnlyLayout() -> NSCollectionLayoutSection {
+        // item
+       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                             heightDimension: .fractionalHeight(1))
+       let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                     leading: 0,
+                                                     bottom: 0,
+                                                     trailing: 8)
+       
+       // group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
+                                              heightDimension: .fractionalHeight(58 / 812))
+       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+       
+       // section
+       let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                        leading: 15,
+                                                        bottom: 40,
+                                                        trailing: 0)
+       
+       return section
+    }
 //    
 //    func makeComedyLayout() -> NSCollectionLayoutSection {
 //        
@@ -244,7 +270,8 @@ extension MainViewController: UICollectionViewDataSource {
         case .mainPoster(let data),
                 .recommendedContents(let data),
                 .popularLiveChannel(let data),
-                .paramounts(let data):
+                .paramounts(let data),
+                .categories(let data):
             return data.count
         }
     }
@@ -270,6 +297,8 @@ extension MainViewController: UICollectionViewDataSource {
                 cell.setCellByType(types: .popularLiveChannel(data[indexPath.row]))
             case .paramounts(let data):
                 cell.setCellByType(types: .imageNTitle(data[indexPath.row]))
+            case .categories(let data):
+                cell.setCellByType(types: .imageOnly(data[indexPath.row]))
             }
             return cell
         }
@@ -284,7 +313,7 @@ extension MainViewController: UICollectionViewDataSource {
                     as? BasicHeaderView else { return UICollectionReusableView()}
             
             switch dataSource[indexPath.section] {
-            case .mainPoster:
+            case .mainPoster, .categories:
                 return header
             case .recommendedContents:
                 header.bindTitle(headerTitle: "티빙에서 꼭 봐야하는 콘텐츠")

@@ -121,6 +121,7 @@ private extension BasicCell {
         posterImageView.do {
             $0.clipsToBounds = true
             $0.layer.cornerRadius = 3
+            $0.backgroundColor = UIColor(resource: .grey4)
         }
         
         titleLabel.do {
