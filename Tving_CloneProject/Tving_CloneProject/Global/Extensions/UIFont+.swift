@@ -9,7 +9,7 @@ import UIKit
 
 enum FontName {
     case head1
-    case subhead1, subhead2, subhead3, subhead4, subhead5
+    case subhead1, subhead2, subhead3, subhead4, subhead5, subhead6
     case info12
     case body1, body2, body3
     
@@ -18,7 +18,7 @@ enum FontName {
         switch self {
         case .head1:
             return "Pretendard-ExtraBold"
-        case .subhead1:
+        case .subhead1, .subhead6:
             return "Pretendard-Bold"
         case .subhead3, .subhead4:
             return "Pretendard-SemiBold"
@@ -35,6 +35,8 @@ enum FontName {
             return 25
         case .body1, .subhead1:
             return 23
+        case .subhead6:
+            return 19
         case .body2:
             return 17
         case .subhead2:

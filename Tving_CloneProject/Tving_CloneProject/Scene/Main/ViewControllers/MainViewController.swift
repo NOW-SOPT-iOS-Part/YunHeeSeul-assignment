@@ -14,6 +14,7 @@ import Then
 enum MainSection {
     case mainPoster([Contents])
     case recommendedContents([Contents])
+    case popularLiveChannel([Contents])
 //    case paramounts([Contents])
 //    case romance([Contents])
 //    case comedy([Contents])
@@ -33,6 +34,7 @@ class MainViewController: UIViewController {
     private let dataSource: [MainSection] = [
         MainSection.mainPoster(Contents.mainPoster()),
         MainSection.recommendedContents(Contents.recommended()),
+        MainSection.popularLiveChannel(Contents.popularChannel()),
 //        MainSection.paramounts(Contents.paramounts()),
 //        MainSection.romance(Contents.romance()),
 //        MainSection.comedy(Contents.comedy())
@@ -104,6 +106,8 @@ private extension MainViewController {
                 return self.makeMainPosterLayout()
             case .recommendedContents:
                 return self.makeRecommendationLayout()
+            case .popularLiveChannel:
+                return self.makePopularLiveChannelLayout()
 //            case .paramounts:
 //                return self.makeParamountsLayout()
 //            case .romance:
@@ -163,7 +167,7 @@ private extension MainViewController {
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, 
                                                         leading: 15,
-                                                        bottom: 0,
+                                                        bottom: 40,
                                                         trailing: 0)
         
         let header = makeHeaderView()
@@ -171,7 +175,40 @@ private extension MainViewController {
        
         return section
     }
-//    
+    
+    func makePopularLiveChannelLayout() -> NSCollectionLayoutSection {
+        
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                     leading: 0,
+                                                     bottom: 0,
+                                                     trailing: 8)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(160 / 375),
+            heightDimension: .absolute(80))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8,
+                                                      leading: 0,
+                                                      bottom: 0,
+                                                      trailing: 0)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                        leading: 15,
+                                                        bottom: 40,
+                                                        trailing: 0)
+        
+        let header = makeHeaderView()
+        section.boundarySupplementaryItems = [header]
+       
+        return section
+    }
+//
 //    func makeParamountsLayout() -> NSCollectionLayoutSection {
 //        
 //    }
@@ -214,21 +251,33 @@ extension MainViewController: UICollectionViewDataSource {
             return data.count
         case .recommendedContents(let data):
             return data.count
+        case .popularLiveChannel(let data):
+            return data.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch dataSource[indexPath.section] {
-        case .mainPoster(let data):
+        
+        if indexPath.section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
                     as? MainPosterCell else { return UICollectionViewCell() }
-            cell.setPageVC(contents: data[indexPath.row])
-            return cell
-        case .recommendedContents(let data):
+            
+            cell.setPageVC(contents: Contents.mainPoster()[indexPath.row])
+             return cell
+        } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BasicCell.identifier, for: indexPath)
                     as? BasicCell else { return UICollectionViewCell() }
-            cell.setData(data: data[indexPath.row])
-            return cell
+            
+            switch dataSource[indexPath.section] {
+            case .mainPoster(_):
+                return cell
+            case .recommendedContents(let data):
+                cell.setCellByType(types: .imageNTitle(data[indexPath.row]))
+                return cell
+            case .popularLiveChannel(let data):
+                cell.setCellByType(types: .popularLiveChannel(data[indexPath.row]))
+                return cell
+            }
         }
     }
     
@@ -245,6 +294,9 @@ extension MainViewController: UICollectionViewDataSource {
                 return header
             case .recommendedContents:
                 header.bindTitle(headerTitle: "티빙에서 꼭 봐야하는 콘텐츠")
+                return header
+            case .popularLiveChannel:
+                header.bindTitle(headerTitle: "인기 LIVE 채널")
                 return header
             }
         } else {
