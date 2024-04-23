@@ -15,7 +15,7 @@ enum MainSection {
     case mainPoster([Contents])
     case recommendedContents([Contents])
     case popularLiveChannel([Contents])
-//    case paramounts([Contents])
+    case paramounts([Contents])
 //    case romance([Contents])
 //    case comedy([Contents])
 }
@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
         MainSection.mainPoster(Contents.mainPoster()),
         MainSection.recommendedContents(Contents.recommended()),
         MainSection.popularLiveChannel(Contents.popularChannel()),
-//        MainSection.paramounts(Contents.paramounts()),
+        MainSection.paramounts(Contents.paramounts()),
 //        MainSection.romance(Contents.romance()),
 //        MainSection.comedy(Contents.comedy())
     ]
@@ -104,12 +104,10 @@ private extension MainViewController {
             switch self.dataSource[section] {
             case .mainPoster:
                 return self.makeMainPosterLayout()
-            case .recommendedContents:
-                return self.makeRecommendationLayout()
+            case .recommendedContents, .paramounts:
+                return self.makeImageNTitleLayout()
             case .popularLiveChannel:
                 return self.makePopularLiveChannelLayout()
-//            case .paramounts:
-//                return self.makeParamountsLayout()
 //            case .romance:
 //                return self.makeRomanceLayout()
 //            case .comedy:
@@ -143,7 +141,7 @@ private extension MainViewController {
        return section
     }
     
-    func makeRecommendationLayout() -> NSCollectionLayoutSection {
+    func makeImageNTitleLayout() -> NSCollectionLayoutSection {
         
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -189,7 +187,7 @@ private extension MainViewController {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(160 / 375),
-            heightDimension: .absolute(80))
+            heightDimension: .absolute(140))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 8,
                                                       leading: 0,
@@ -209,10 +207,6 @@ private extension MainViewController {
         return section
     }
 //
-//    func makeParamountsLayout() -> NSCollectionLayoutSection {
-//        
-//    }
-//    
 //    func makeRomanceLayout() -> NSCollectionLayoutSection {
 //        
 //    }
@@ -247,11 +241,10 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch dataSource[section] {
-        case .mainPoster(let data):
-            return data.count
-        case .recommendedContents(let data):
-            return data.count
-        case .popularLiveChannel(let data):
+        case .mainPoster(let data),
+                .recommendedContents(let data),
+                .popularLiveChannel(let data),
+                .paramounts(let data):
             return data.count
         }
     }
@@ -273,11 +266,12 @@ extension MainViewController: UICollectionViewDataSource {
                 return cell
             case .recommendedContents(let data):
                 cell.setCellByType(types: .imageNTitle(data[indexPath.row]))
-                return cell
             case .popularLiveChannel(let data):
                 cell.setCellByType(types: .popularLiveChannel(data[indexPath.row]))
-                return cell
+            case .paramounts(let data):
+                cell.setCellByType(types: .imageNTitle(data[indexPath.row]))
             }
+            return cell
         }
     }
     
@@ -294,11 +288,12 @@ extension MainViewController: UICollectionViewDataSource {
                 return header
             case .recommendedContents:
                 header.bindTitle(headerTitle: "티빙에서 꼭 봐야하는 콘텐츠")
-                return header
             case .popularLiveChannel:
                 header.bindTitle(headerTitle: "인기 LIVE 채널")
-                return header
+            case .paramounts:
+                header.bindTitle(headerTitle: "1화 무료! 파라마운트+ 인기 시리즈")
             }
+            return header
         } else {
             return UICollectionReusableView()
         }
