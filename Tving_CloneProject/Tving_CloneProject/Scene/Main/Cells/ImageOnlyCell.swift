@@ -40,26 +40,33 @@ class ImageOnlyCell: UICollectionViewCell {
     
 }
 
+
 // MARK: - Private Methods
 
 private extension ImageOnlyCell {
     
     func setHierarchy() {
+        
         self.addSubview(posterImageView)
+        
     }
     
     func setLayout() {
+        
         posterImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
     }
 
     func setStyle() {
+        
         posterImageView.do {
             $0.backgroundColor = UIColor(resource: .grey4)
             $0.clipsToBounds = true
             $0.layer.cornerRadius = 3
         }
+        
     }
     
 }

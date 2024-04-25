@@ -11,12 +11,6 @@ import SnapKit
 import Then
 
 final class ImageWithTitleCell: UICollectionViewCell {
-    
-    enum CellTypes {
-        case imageOnly(Contents)
-        case imageNTitle(Contents)
-        case popularLiveChannel(Contents)
-    }
  
     // MARK: - UI Properties
     
@@ -24,20 +18,10 @@ final class ImageWithTitleCell: UICollectionViewCell {
     
     let titleLabel: UILabel = UILabel()
     
-    let rankingLabel: UILabel = UILabel()
-    
-    let channelInfoStackView: UIStackView = UIStackView()
-    
-    let channelLabel: UILabel = UILabel()
-    
-    let programTitleLabel: UILabel = UILabel()
-    
-    let ratingLabel: UILabel = UILabel()
-    
     
     // MARK: - Properties
     
-    static let identifier: String = "BasicCell"
+    static let identifier: String = "ImageWithTitleCell"
         
     
     // MARK: - Life Cycles
@@ -62,22 +46,26 @@ final class ImageWithTitleCell: UICollectionViewCell {
 
 }
 
+
 // MARK: - Private Methods
 
 private extension ImageWithTitleCell {
     
     func setHierarchy() {
+        
         self.addSubviews(posterImageView, titleLabel)
+        
     }
     
     func setLayout() {
+        
         posterImageView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(146))
+            $0.bottom.equalToSuperview().inset(20)
         }
+        
         titleLabel.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-//                $0.top.equalTo(posterImageView.snp.bottom).offset(3)
         }
     }
     

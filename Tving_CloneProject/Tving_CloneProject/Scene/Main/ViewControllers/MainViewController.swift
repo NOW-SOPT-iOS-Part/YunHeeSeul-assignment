@@ -91,8 +91,10 @@ private extension MainViewController {
             $0.dataSource = self
             $0.backgroundColor = .black
             $0.contentInsetAdjustmentBehavior = .never
-            $0.register(BasicCell.self, forCellWithReuseIdentifier: BasicCell.identifier)
+            $0.register(ImageOnlyCell.self, forCellWithReuseIdentifier: ImageOnlyCell.identifier)
             $0.register(MainPosterCell.self, forCellWithReuseIdentifier:MainPosterCell.identifier)
+            $0.register(PopularLiveCell.self, forCellWithReuseIdentifier: PopularLiveCell.identifier)
+            $0.register(ImageWithTitleCell.self, forCellWithReuseIdentifier: ImageWithTitleCell.identifier)
             $0.register(BasicHeaderView.self,
                         forSupplementaryViewOfKind: BasicHeaderView.elementKinds,
                         withReuseIdentifier: BasicHeaderView.identifier)
@@ -158,7 +160,7 @@ private extension MainViewController {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(98 / 375),
-            heightDimension: .absolute(168))
+            heightDimension: .fractionalHeight(170 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 14, 
                                                       leading: 0,
@@ -191,7 +193,7 @@ private extension MainViewController {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(160 / 375),
-            heightDimension: .absolute(140))
+            heightDimension: .fractionalHeight(140 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 8,
                                                       leading: 0,
@@ -278,28 +280,36 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.section == 0 {
+        switch dataSource[indexPath.section] {
+        case .mainPoster(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
                     as? MainPosterCell else { return UICollectionViewCell() }
             
             cell.setPageVC(contents: Contents.mainPoster()[indexPath.row])
-             return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BasicCell.identifier, for: indexPath)
-                    as? BasicCell else { return UICollectionViewCell() }
+            return cell
             
-            switch dataSource[indexPath.section] {
-            case .mainPoster(_):
-                return cell
-            case .recommendedContents(let data):
-                cell.setCellByType(types: .imageNTitle(data[indexPath.row]))
-            case .popularLiveChannel(let data):
-                cell.setCellByType(types: .popularLiveChannel(data[indexPath.row]))
-            case .paramounts(let data):
-                cell.setCellByType(types: .imageNTitle(data[indexPath.row]))
-            case .categories(let data):
-                cell.setCellByType(types: .imageOnly(data[indexPath.row]))
-            }
+        case .recommendedContents(let data):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
+                    as? ImageWithTitleCell else { return UICollectionViewCell() }
+            cell.setCell(contents: data[indexPath.row])
+            return cell
+            
+        case .popularLiveChannel(let data):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularLiveCell.identifier, for: indexPath)
+                    as? PopularLiveCell else { return UICollectionViewCell() }
+            cell.setCell(contents: data[indexPath.row])
+            return cell
+            
+        case .paramounts(let data):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
+                    as? ImageWithTitleCell else { return UICollectionViewCell() }
+            cell.setCell(contents: data[indexPath.row])
+            return cell
+            
+        case .categories(let data):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOnlyCell.identifier, for: indexPath)
+                    as? ImageOnlyCell else { return UICollectionViewCell() }
+            cell.setCell(contents: data[indexPath.row])
             return cell
         }
     }

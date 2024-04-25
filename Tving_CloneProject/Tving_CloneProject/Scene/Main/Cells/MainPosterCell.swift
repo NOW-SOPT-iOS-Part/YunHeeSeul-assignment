@@ -63,6 +63,9 @@ final class MainPosterCell: UICollectionViewCell {
     
 }
 
+
+// MARK: - Private Methods
+
 private extension MainPosterCell {
     
     func setHierarchy() {
@@ -102,6 +105,9 @@ private extension MainPosterCell {
     }
     
 }
+
+
+// MARK: - Delegates
 
 extension MainPosterCell: UICollectionViewDelegateFlowLayout {
     

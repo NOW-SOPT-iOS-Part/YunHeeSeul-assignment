@@ -38,10 +38,15 @@ class PagerButtonCell: UICollectionViewCell {
     
 }
 
+
+// MARK: - Private Methods
+
 private extension PagerButtonCell {
     
     func setHierarchy() {
+        
         self.addSubview(pagerButton)
+        
     }
     
     func setLayout() {
@@ -49,6 +54,7 @@ private extension PagerButtonCell {
         pagerButton.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
     }
     
     func setStyle() {
@@ -57,6 +63,7 @@ private extension PagerButtonCell {
             $0.layer.cornerRadius = 2
             $0.backgroundColor = .grey3
         }
+        
     }
     
 }
