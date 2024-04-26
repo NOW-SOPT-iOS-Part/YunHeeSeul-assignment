@@ -17,8 +17,6 @@ enum MainSection {
     case popularLiveChannel([Contents])
     case paramounts([Contents])
     case categories([Contents])
-//    case romance([Contents])
-//    case comedy([Contents])
 }
 
 class MainViewController: UIViewController {
@@ -29,6 +27,8 @@ class MainViewController: UIViewController {
     
     private let navigationBarView = NavigationBarView()
     
+    private let headerCategoryView = HeaderCategoryView()
+    
     
     // MARK: - Properties
     
@@ -38,9 +38,9 @@ class MainViewController: UIViewController {
         MainSection.popularLiveChannel(Contents.popularChannel()),
         MainSection.paramounts(Contents.paramounts()),
         MainSection.categories(Contents.category())
-//        MainSection.romance(Contents.romance()),
-//        MainSection.comedy(Contents.comedy())
     ]
+    
+    private var initializeCode: Bool = true
     
     
     // MARK: - Life Cycles
@@ -51,6 +51,7 @@ class MainViewController: UIViewController {
         setHierarchy()
         setLayout()
         setStyle()
+        setSegmentDidChange()
     }
 
 
@@ -64,7 +65,7 @@ private extension MainViewController {
     func setHierarchy() {
         
         self.view.addSubviews(mainCollectionView)
-        mainCollectionView.addSubviews(navigationBarView)
+        mainCollectionView.addSubviews(navigationBarView, headerCategoryView)
         
     }
     
@@ -78,6 +79,12 @@ private extension MainViewController {
             $0.top.equalToSuperview().inset(55)
             $0.width.equalToSuperview()
             $0.height.equalTo(ScreenUtils.getHeight(30))
+        }
+        
+        headerCategoryView.snp.makeConstraints {
+            $0.top.equalTo(navigationBarView.snp.bottom)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(40)
         }
 
     }
@@ -100,6 +107,17 @@ private extension MainViewController {
                         withReuseIdentifier: BasicHeaderView.identifier)
 
         }
+        
+        headerCategoryView.do {
+            $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
+        }
+        
+    }
+    
+    
+    func setSegmentDidChange() {
+        self.didChangeValue(sender: self.headerCategoryView.segmentedControlView)
+        self.initializeCode = false
     }
     
     func makeFlowLayout() -> UICollectionViewCompositionalLayout {
@@ -114,10 +132,6 @@ private extension MainViewController {
                 return self.makePopularLiveChannelLayout()
             case .categories:
                 return self.makeImageOnlyLayout()
-//            case .romance:
-//                return self.makeRomanceLayout()
-//            case .comedy:
-//                return self.makeComedyLayout()
             }
             
         }
@@ -238,10 +252,7 @@ private extension MainViewController {
        
        return section
     }
-//    
-//    func makeComedyLayout() -> NSCollectionLayoutSection {
-//        
-//    }
+
     
     func makeHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
         
@@ -255,6 +266,14 @@ private extension MainViewController {
         
         return header
         
+    }
+    
+    @objc
+    func didChangeValue(sender: UISegmentedControl) {
+        if initializeCode {
+            sender.selectedSegmentIndex = 0
+        }
+        headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
     }
     
 }

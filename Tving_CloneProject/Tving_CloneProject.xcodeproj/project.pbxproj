@@ -40,6 +40,8 @@
 		CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC12BD789FF00560D26 /* UIStackView+.swift */; };
 		CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC32BD9542000560D26 /* ImageOnlyCell.swift */; };
 		CA902EC62BDAA0E200560D26 /* PopularLiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC52BDAA0E200560D26 /* PopularLiveCell.swift */; };
+		CA902EC82BDB8D3900560D26 /* UnderlineSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC72BDB8D3900560D26 /* UnderlineSegmentedControlView.swift */; };
+		CA902ECA2BDB8E5C00560D26 /* HeaderCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC92BDB8E5C00560D26 /* HeaderCategoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		CA902EC12BD789FF00560D26 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		CA902EC32BD9542000560D26 /* ImageOnlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOnlyCell.swift; sourceTree = "<group>"; };
 		CA902EC52BDAA0E200560D26 /* PopularLiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularLiveCell.swift; sourceTree = "<group>"; };
+		CA902EC72BDB8D3900560D26 /* UnderlineSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControlView.swift; sourceTree = "<group>"; };
+		CA902EC92BDB8E5C00560D26 /* HeaderCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCategoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 				CA1F68F22BD5698C00439E33 /* MainPosterView.swift */,
 				CA1F68F42BD578B500439E33 /* NavigationBarView.swift */,
 				CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */,
+				CA902EC72BDB8D3900560D26 /* UnderlineSegmentedControlView.swift */,
+				CA902EC92BDB8E5C00560D26 /* HeaderCategoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -385,6 +391,8 @@
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
 				CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */,
 				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
+				CA902ECA2BDB8E5C00560D26 /* HeaderCategoryView.swift in Sources */,
+				CA902EC82BDB8D3900560D26 /* UnderlineSegmentedControlView.swift in Sources */,
 				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
 				CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */,
 				CA1F68FB2BD5886600439E33 /* MainPosterCell.swift in Sources */,
