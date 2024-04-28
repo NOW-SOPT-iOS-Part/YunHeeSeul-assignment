@@ -77,7 +77,7 @@ private extension WelcomeViewController {
         self.navigationController?.navigationBar.isHidden = true
         
         logoImageView.do {
-            $0.image = UIImage(resource: .tvingLogo)
+            $0.image = UIImage(resource: .redTvingLogo)
         }
         
         welcomeLabel.do {
@@ -92,7 +92,7 @@ private extension WelcomeViewController {
             $0.setTitleColor(UIColor(resource: .white), for: .normal)
             $0.layer.cornerRadius = 3
             $0.backgroundColor = UIColor(resource: .red)
-            $0.addTarget(self, action: #selector(popToLoginVC), for: .touchUpInside)
+            $0.addTarget(self, action: #selector(pushToMainVC), for: .touchUpInside)
         }
         
     }
@@ -103,8 +103,10 @@ private extension WelcomeViewController {
     }
     
     @objc
-    func popToLoginVC() {
-        self.navigationController?.popViewController(animated: true)
+    func pushToMainVC() {
+        let tabBarVC = TabBarViewController()
+        self.navigationController?.pushViewController(tabBarVC, animated: true)
+//        self.navigationController?.popViewController(animated: true)
     }
     
 }
