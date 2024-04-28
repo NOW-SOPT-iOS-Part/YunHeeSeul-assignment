@@ -106,7 +106,6 @@ private extension WelcomeViewController {
     func pushToMainVC() {
         let tabBarVC = TabBarViewController()
         self.navigationController?.pushViewController(tabBarVC, animated: true)
-//        self.navigationController?.popViewController(animated: true)
     }
     
 }

@@ -10,16 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
-
-enum MainSection {
-    case mainPoster([Contents])
-    case recommendedContents([Contents])
-    case popularLiveChannel([Contents])
-    case paramounts([Contents])
-    case categories([Contents])
-}
-
 class MainViewController: UIViewController {
+    
+    enum MainSection {
+        case mainPoster([Contents])
+        case recommendedContents([Contents])
+        case popularLiveChannel([Contents])
+        case paramounts([Contents])
+        case categories([Contents])
+    }
+    
     
     // MARK: - UI Properties
         
@@ -28,6 +28,14 @@ class MainViewController: UIViewController {
     private let navigationBarView = NavigationBarView()
     
     private let headerCategoryView = HeaderCategoryView()
+    
+    private let realTimeView = UIView()
+    
+    private let tvProgramView = UIView()
+    
+    private let movieView = UIView()
+    
+    private let paramountView = UIView()
     
     
     // MARK: - Properties
@@ -42,6 +50,8 @@ class MainViewController: UIViewController {
     
     private var initializeCode: Bool = true
     
+    private var selectedTabBarIndex: Int = 0
+    
     
     // MARK: - Life Cycles
     
@@ -54,7 +64,6 @@ class MainViewController: UIViewController {
         setSegmentDidChange()
     }
 
-
 }
 
 
@@ -64,9 +73,15 @@ private extension MainViewController {
 
     func setHierarchy() {
         
-        self.view.addSubviews(mainCollectionView)
-        mainCollectionView.addSubviews(navigationBarView, headerCategoryView)
-        
+        self.view.addSubviews(mainCollectionView, 
+                              navigationBarView,
+                              headerCategoryView,
+                              realTimeView,
+                              tvProgramView,
+                              movieView,
+                              paramountView)
+        self.view.bringSubviewToFront(navigationBarView)
+        self.view.bringSubviewToFront(headerCategoryView)
     }
     
     func setLayout() {
@@ -86,7 +101,23 @@ private extension MainViewController {
             $0.width.equalToSuperview()
             $0.height.equalTo(40)
         }
-
+        
+        realTimeView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        tvProgramView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        movieView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        paramountView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
     }
     
     func setStyle() {
@@ -112,12 +143,46 @@ private extension MainViewController {
             $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
         }
         
+        realTimeView.do {
+            $0.isHidden = true
+            $0.backgroundColor = UIColor(resource: .grey1)
+        }
+        
+        tvProgramView.do {
+            $0.isHidden = true
+            $0.backgroundColor = UIColor(resource: .grey2)
+        }
+        
+        movieView.do {
+            $0.isHidden = true
+            $0.backgroundColor = UIColor(resource: .grey3)
+        }
+        
+        paramountView.do {
+            $0.isHidden = true
+            $0.backgroundColor = UIColor(resource: .grey4)
+        }
+        
     }
     
     
     func setSegmentDidChange() {
         self.didChangeValue(sender: self.headerCategoryView.segmentedControlView)
         self.initializeCode = false
+    }
+    
+    func setSegmentView(selectedIndex: Int) {
+        
+        let views = [mainCollectionView, realTimeView, tvProgramView, movieView, paramountView]
+        
+        for index in 0...4 {
+            if index == selectedIndex {
+                views[index].isHidden = false
+            } else {
+                views[index].isHidden = true
+            }
+        }
+        
     }
     
     func makeFlowLayout() -> UICollectionViewCompositionalLayout {
@@ -138,19 +203,13 @@ private extension MainViewController {
     }
     
     func makeMainPosterLayout() -> NSCollectionLayoutSection {
-        // item
-       let itemSize = NSCollectionLayoutSize(
-           widthDimension: .fractionalWidth(1),
-           heightDimension: .fractionalHeight(1))
+
+       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
        let item = NSCollectionLayoutItem(layoutSize: itemSize)
        
-       // group
-       let groupSize = NSCollectionLayoutSize(
-           widthDimension: .fractionalWidth(1),
-           heightDimension: .fractionalHeight(550 / 812))
+       let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(550 / 812))
        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
        
-       // section
        let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, 
@@ -163,18 +222,14 @@ private extension MainViewController {
     
     func makeImageNTitleLayout() -> NSCollectionLayoutSection {
         
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, 
                                                      leading: 0,
                                                      bottom: 0,
                                                      trailing: 8)
         
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(98 / 375),
-            heightDimension: .fractionalHeight(170 / 812))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(98 / 375), heightDimension: .fractionalHeight(170 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 14, 
                                                       leading: 0,
@@ -196,18 +251,14 @@ private extension MainViewController {
     
     func makePopularLiveChannelLayout() -> NSCollectionLayoutSection {
         
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0,
                                                      leading: 0,
                                                      bottom: 0,
                                                      trailing: 8)
         
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(160 / 375),
-            heightDimension: .fractionalHeight(140 / 812))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(160 / 375), heightDimension: .fractionalHeight(140 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 8,
                                                       leading: 0,
@@ -228,29 +279,26 @@ private extension MainViewController {
     }
 
     func makeImageOnlyLayout() -> NSCollectionLayoutSection {
-        // item
-       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                             heightDimension: .fractionalHeight(1))
-       let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0,
                                                      leading: 0,
                                                      bottom: 0,
                                                      trailing: 8)
        
-       // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
-                                              heightDimension: .fractionalHeight(58 / 812))
-       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-       
-       // section
-       let section = NSCollectionLayoutSection(group: group)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(58 / 812))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 40.0
+        let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 0,
                                                         leading: 15,
-                                                        bottom: 40,
+                                                        bottom: tabBarHeight + 10,
                                                         trailing: 0)
        
-       return section
+        return section
     }
 
     
@@ -270,9 +318,7 @@ private extension MainViewController {
     
     @objc
     func didChangeValue(sender: UISegmentedControl) {
-        if initializeCode {
-            sender.selectedSegmentIndex = 0
-        }
+        setSegmentView(selectedIndex: sender.selectedSegmentIndex)
         headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
     }
     
