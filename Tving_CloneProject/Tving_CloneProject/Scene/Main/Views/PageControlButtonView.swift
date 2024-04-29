@@ -30,14 +30,21 @@ class PageControlButtonView: UICollectionReusableView {
         didSet {
             // 이전에 선택된 버튼을 찾기
             if let previousButton = buttonCollectionView.cellForItem(at: IndexPath(item: prevIndex, section: 0)) as? PagerButtonCell {
-                previousButton.pagerButton.backgroundColor = UIColor(resource: .grey3)
-                previousButton.pagerButton.isSelected = false
+                if prevIndex != index {
+                    previousButton.pagerButton.backgroundColor = UIColor(resource: .grey3)
+                    previousButton.pagerButton.isSelected = false
+                }
             }
         }
     }
     
-    private var index: Int = 0 {
+    var index: Int = 0 {
         didSet {
+            // 현재 선택된 버튼을 찾기
+            if let presentButton = buttonCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? PagerButtonCell {
+                presentButton.pagerButton.backgroundColor = UIColor(resource: .white)
+                presentButton.pagerButton.isSelected = true
+            }
             prevIndex = oldValue
         }
     }
@@ -65,13 +72,6 @@ class PageControlButtonView: UICollectionReusableView {
     func didTapControlButton(_ sender: UIButton) {
         index = sender.tag
         self.delegate?.didTapControlButton(index: index)
-        
-        //이전과 같은 버튼을 탭하지 않는 경우
-        if prevIndex != index {
-            sender.isSelected = !sender.isSelected
-        }
-        sender.backgroundColor = !sender.isSelected ? UIColor(resource: .grey3) : UIColor(resource: .white)
-
     }
 }
 

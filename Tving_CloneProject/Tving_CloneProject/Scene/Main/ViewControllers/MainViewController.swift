@@ -357,12 +357,8 @@ extension MainViewController: MainPosterDelegate {
         currentPage = index
         
         if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0)) as? PageControlButtonView {
-            // "YourElementKind"에 해당하는 보조 뷰를 찾았을 때 해당 보조 뷰에 대한 작업 수행
-//            pageControlButtonView.buttonCollectionView.selectItem(at: IndexPath(item: currentPage, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-            pageControlButtonView.buttonCollectionView.selectItem(at: IndexPath(row: currentPage, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-            
+            pageControlButtonView.index = currentPage
         }
-
     }
         
 }
