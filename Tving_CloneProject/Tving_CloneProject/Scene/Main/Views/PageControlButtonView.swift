@@ -19,8 +19,10 @@ class PageControlButtonView: UICollectionReusableView {
     
     
     // MARK: - UI Properties
+    
+    private var initialCode: Bool = true
         
-    static let elementKinds: String = "PageControlButtonView"
+    static let elementKinds: String = "footer"
 
     weak var delegate: PageControlButtonDelegate?
 
@@ -31,8 +33,7 @@ class PageControlButtonView: UICollectionReusableView {
             // 이전에 선택된 버튼을 찾기
             if let previousButton = buttonCollectionView.cellForItem(at: IndexPath(item: prevIndex, section: 0)) as? PagerButtonCell {
                 if prevIndex != index {
-                    previousButton.pagerButton.backgroundColor = UIColor(resource: .grey3)
-                    previousButton.pagerButton.isSelected = false
+                    setButtonStyle(isSelected: false, button: previousButton.pagerButton)
                 }
             }
         }
@@ -42,8 +43,7 @@ class PageControlButtonView: UICollectionReusableView {
         didSet {
             // 현재 선택된 버튼을 찾기
             if let presentButton = buttonCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? PagerButtonCell {
-                presentButton.pagerButton.backgroundColor = UIColor(resource: .white)
-                presentButton.pagerButton.isSelected = true
+                setButtonStyle(isSelected: true, button: presentButton.pagerButton)
             }
             prevIndex = oldValue
         }
@@ -58,14 +58,11 @@ class PageControlButtonView: UICollectionReusableView {
         setHierarchy()
         setLayout()
         setStyle()
+        setDelegate()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setSelectedButtonStyle() {
-        
     }
     
     @objc
@@ -81,28 +78,38 @@ class PageControlButtonView: UICollectionReusableView {
 private extension PageControlButtonView {
     
     func setHierarchy() {
-        
         self.addSubview(buttonCollectionView)
-        
     }
     
     func setLayout() {
-        
         buttonCollectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.bottom.equalToSuperview()
         }
-        
     }
     
     func setStyle() {
-            
         buttonCollectionView.do {
             $0.dataSource = self
             $0.delegate = self
             $0.isUserInteractionEnabled = true
             $0.register(PagerButtonCell.self, forCellWithReuseIdentifier: PagerButtonCell.identifier)
             $0.backgroundColor = UIColor(resource: .black)
+        }
+    }
+    
+    func setDelegate() {
+        buttonCollectionView.dataSource = self
+        buttonCollectionView.delegate = self
+    }
+    
+    func setButtonStyle(isSelected: Bool, button: UIButton) {
+        if isSelected {
+            button.isSelected = true
+            button.backgroundColor = UIColor(resource: .white)
+        } else {
+            button.isSelected = false
+            button.backgroundColor = UIColor(resource: .grey3)
         }
     }
     
@@ -118,7 +125,7 @@ extension PageControlButtonView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 6 , height: 6)
+        return CGSize(width: 10 , height: 10)
     }
 }
 
@@ -136,12 +143,13 @@ extension PageControlButtonView: UICollectionViewDataSource {
         
         cell.pagerButton.tag = indexPath.row
         cell.pagerButton.addTarget(self, action: #selector(didTapControlButton(_:)), for: .touchUpInside)
-        if cell.pagerButton.tag == 0 {
-            cell.pagerButton.isSelected = true
-            cell.pagerButton.backgroundColor = UIColor(resource: .white)
-            index = 0
-        }
         
+        if indexPath.row == index {
+            setButtonStyle(isSelected: true, button: cell.pagerButton)
+        } else {
+            setButtonStyle(isSelected: false, button: cell.pagerButton)
+        }
+
         return cell
     }
     

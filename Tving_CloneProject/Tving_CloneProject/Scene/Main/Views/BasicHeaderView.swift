@@ -21,8 +21,9 @@ class BasicHeaderView: UICollectionReusableView {
     
     // MARK: - Properties
     
+    static let elementKinds: String = "header"
+
     static let identifier: String = "BasicHeaderView"
-    static let elementKinds: String = "BasicHeaderView"
 
     
     // MARK: - Life Cycles

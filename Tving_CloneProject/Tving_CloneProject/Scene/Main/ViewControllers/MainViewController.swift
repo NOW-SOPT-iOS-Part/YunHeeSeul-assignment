@@ -29,6 +29,8 @@ class MainViewController: UIViewController {
     
     private let headerCategoryView = HeaderCategoryView()
     
+    private let stickyHeaderCategoryView = HeaderCategoryView()
+    
     private let realTimeView = UIView()
     
     private let tvProgramView = UIView()
@@ -36,6 +38,8 @@ class MainViewController: UIViewController {
     private let movieView = UIView()
     
     private let paramountView = UIView()
+    
+    private let dimmedView = UIView()
     
     
     // MARK: - Properties
@@ -93,13 +97,18 @@ private extension MainViewController {
         
         self.view.addSubviews(mainCollectionView, 
                               navigationBarView,
+                              dimmedView,
                               headerCategoryView,
+//                              stickyHeaderCategoryView,
                               realTimeView,
                               tvProgramView,
                               movieView,
                               paramountView)
+//        mainCollectionView.addSubviews(navigationBarView, headerCategoryView)
+        dimmedView.addSubview(stickyHeaderCategoryView)
         self.view.bringSubviewToFront(navigationBarView)
         self.view.bringSubviewToFront(headerCategoryView)
+        self.view.bringSubviewToFront(stickyHeaderCategoryView)
     }
     
     func setLayout() {
@@ -116,6 +125,18 @@ private extension MainViewController {
         
         headerCategoryView.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(40)
+        }
+        
+        dimmedView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(ScreenUtils.getHeight(95))
+        }
+        
+        stickyHeaderCategoryView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(40)
         }
@@ -163,6 +184,16 @@ private extension MainViewController {
             $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
         }
         
+        stickyHeaderCategoryView.do {
+            $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
+            $0.isHidden = true
+        }
+        
+        dimmedView.do {
+            $0.isHidden = true
+            $0.backgroundColor = UIColor(resource: .black)
+        }
+        
         realTimeView.do {
             $0.isHidden = true
             $0.backgroundColor = UIColor(resource: .grey1)
@@ -201,16 +232,13 @@ private extension MainViewController {
         let views = [mainCollectionView, realTimeView, tvProgramView, movieView, paramountView]
         
         for index in 0...4 {
-            if index == selectedIndex {
-                views[index].isHidden = false
-            } else {
-                views[index].isHidden = true
-            }
+            views[index].isHidden = index == selectedIndex ? false : true
         }
         
     }
     
     func makeFlowLayout() -> UICollectionViewCompositionalLayout {
+        
         return UICollectionViewCompositionalLayout { section, ev -> NSCollectionLayoutSection? in
             
             switch self.dataSource[section] {
@@ -325,7 +353,16 @@ private extension MainViewController {
     @objc
     func didChangeValue(sender: UISegmentedControl) {
         setSegmentView(selectedIndex: sender.selectedSegmentIndex)
-        headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
+        
+        if stickyHeaderCategoryView.isHidden {
+            headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
+            stickyHeaderCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
+            stickyHeaderCategoryView.segmentedControlView.selectedSegmentIndex = headerCategoryView.segmentedControlView.selectedSegmentIndex
+        } else {
+            stickyHeaderCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
+            headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
+            headerCategoryView.segmentedControlView.selectedSegmentIndex = stickyHeaderCategoryView.segmentedControlView.selectedSegmentIndex
+        }
     }
     
 }
@@ -363,7 +400,31 @@ extension MainViewController: MainPosterDelegate {
         
 }
 
-extension MainViewController: UICollectionViewDelegate {}
+extension MainViewController: UICollectionViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // contentOffset.y: 손가락을 위로 올리면 + 값, 손가락을 아래로 내리면 - 값
+        let topPadding = scrollView.safeAreaInsets.top
+        
+        let shouldShowSticky = topPadding + scrollView.contentOffset.y > headerCategoryView.frame.minY
+        stickyHeaderCategoryView.isHidden = !shouldShowSticky
+        headerCategoryView.isHidden = shouldShowSticky
+        navigationBarView.isHidden = shouldShowSticky
+        dimmedView.isHidden = !shouldShowSticky
+        print(topPadding + scrollView.contentOffset.y)
+        
+        if !shouldShowSticky {
+            self.view.backgroundColor = .clear
+        } else {
+            for cell in mainCollectionView.visibleCells {
+                if let mainPosterCell = cell as? MainPosterCell {
+                    dimmedView.alpha = scrollView.contentOffset.y / 100
+                    mainPosterCell.alpha = 1 - scrollView.contentOffset.y / 500
+                }
+            }
+        }
+    }
+}
 
 extension MainViewController: UICollectionViewDataSource {
     
@@ -438,7 +499,7 @@ extension MainViewController: UICollectionViewDataSource {
                                                                                for: indexPath)
                     as? PageControlButtonView else { return UICollectionReusableView() }
             footer.delegate = self
-            footer.isUserInteractionEnabled = true
+//            footer.isUserInteractionEnabled = true
             
             return footer
         } else {
