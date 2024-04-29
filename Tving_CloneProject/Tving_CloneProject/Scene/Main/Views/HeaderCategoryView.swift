@@ -14,11 +14,7 @@ class HeaderCategoryView: UIView {
 
     // MARK: - UI Property
     
-    let segmentedControlView = UnderlineSegmentedControlView(items: ["홈",
-                                                                     "실시간",
-                                                                     "TV프로그램",
-                                                                     "영화",
-                                                                     "파라마운트+"])
+    let segmentedControlView = UnderlineSegmentedControlView(items: ["홈", "실시간", "TV프로그램", "영화", "파라마운트+"])
     
     
     // MARK: - Life Cycle

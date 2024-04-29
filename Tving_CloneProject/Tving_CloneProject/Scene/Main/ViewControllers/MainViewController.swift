@@ -79,12 +79,6 @@ class MainViewController: UIViewController {
         setDelegate()
         setSegmentDidChange()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-    }
 
 }
 
@@ -99,13 +93,13 @@ private extension MainViewController {
                               navigationBarView,
                               dimmedView,
                               headerCategoryView,
-//                              stickyHeaderCategoryView,
                               realTimeView,
                               tvProgramView,
                               movieView,
                               paramountView)
-//        mainCollectionView.addSubviews(navigationBarView, headerCategoryView)
         dimmedView.addSubview(stickyHeaderCategoryView)
+        
+        self.view.bringSubviewToFront(dimmedView)
         self.view.bringSubviewToFront(navigationBarView)
         self.view.bringSubviewToFront(headerCategoryView)
         self.view.bringSubviewToFront(stickyHeaderCategoryView)
@@ -141,20 +135,10 @@ private extension MainViewController {
             $0.height.equalTo(40)
         }
         
-        realTimeView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        tvProgramView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        movieView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        paramountView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        [realTimeView, tvProgramView, movieView, paramountView].forEach {
+            $0.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
         
     }
@@ -185,8 +169,8 @@ private extension MainViewController {
         }
         
         stickyHeaderCategoryView.do {
-            $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
             $0.isHidden = true
+            $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
         }
         
         dimmedView.do {
@@ -228,13 +212,11 @@ private extension MainViewController {
     }
     
     func setSegmentView(selectedIndex: Int) {
-        
         let views = [mainCollectionView, realTimeView, tvProgramView, movieView, paramountView]
         
         for index in 0...4 {
             views[index].isHidden = index == selectedIndex ? false : true
         }
-        
     }
     
     func makeFlowLayout() -> UICollectionViewCompositionalLayout {
@@ -373,15 +355,15 @@ private extension MainViewController {
 extension MainViewController: PageControlButtonDelegate {
     
     func didTapControlButton(index: Int) {
-        print("tap cell")
-
         currentPage = index
         
         let direction: UIPageViewController.NavigationDirection = prevValue < newValue ? .forward : .reverse
         for cell in mainCollectionView.visibleCells {
             if let mainPosterCell = cell as? MainPosterCell {
-                // "MainPoster" 셀을 찾았을 때 해당 셀에 대한 작업 수행
-                mainPosterCell.pageVC.setViewControllers([mainPosterCell.vcData[currentPage]], direction: direction, animated: true, completion: nil)
+                mainPosterCell.pageVC.setViewControllers([mainPosterCell.vcData[currentPage]], 
+                                                         direction: direction,
+                                                         animated: true,
+                                                         completion: nil)
             }
         }
     }
@@ -393,7 +375,8 @@ extension MainViewController: MainPosterDelegate {
     func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController]) {
         currentPage = index
         
-        if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0)) as? PageControlButtonView {
+        if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds,
+                                                                            at: IndexPath(item: 0, section: 0)) as? PageControlButtonView {
             pageControlButtonView.index = currentPage
         }
     }
@@ -407,15 +390,13 @@ extension MainViewController: UICollectionViewDelegate {
         let topPadding = scrollView.safeAreaInsets.top
         
         let shouldShowSticky = topPadding + scrollView.contentOffset.y > headerCategoryView.frame.minY
-        stickyHeaderCategoryView.isHidden = !shouldShowSticky
-        headerCategoryView.isHidden = shouldShowSticky
-        navigationBarView.isHidden = shouldShowSticky
-        dimmedView.isHidden = !shouldShowSticky
-        print(topPadding + scrollView.contentOffset.y)
         
-        if !shouldShowSticky {
-            self.view.backgroundColor = .clear
-        } else {
+        dimmedView.isHidden = !shouldShowSticky
+        navigationBarView.isHidden = shouldShowSticky
+        headerCategoryView.isHidden = shouldShowSticky
+        stickyHeaderCategoryView.isHidden = !shouldShowSticky
+        
+        if shouldShowSticky {
             for cell in mainCollectionView.visibleCells {
                 if let mainPosterCell = cell as? MainPosterCell {
                     dimmedView.alpha = scrollView.contentOffset.y / 100
@@ -479,8 +460,8 @@ extension MainViewController: UICollectionViewDataSource {
         if kind == BasicHeaderView.elementKinds {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, 
                                                                                withReuseIdentifier: BasicHeaderView.identifier,
-                                                                               for: indexPath)
-                    as? BasicHeaderView else { return UICollectionReusableView()}
+                                                                               for: indexPath) as? BasicHeaderView
+            else { return UICollectionReusableView() }
             
             switch dataSource[indexPath.section] {
             case .mainPoster, .categories:
@@ -496,11 +477,10 @@ extension MainViewController: UICollectionViewDataSource {
         } else if kind == PageControlButtonView.elementKinds {
             guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                withReuseIdentifier: PageControlButtonView.identifier,
-                                                                               for: indexPath)
-                    as? PageControlButtonView else { return UICollectionReusableView() }
-            footer.delegate = self
-//            footer.isUserInteractionEnabled = true
+                                                                               for: indexPath) as? PageControlButtonView
+            else { return UICollectionReusableView() }
             
+            footer.delegate = self
             return footer
         } else {
             return UICollectionReusableView()

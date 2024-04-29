@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 protocol MainPosterDelegate: AnyObject {
+    
     func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController])
 }
 
@@ -22,21 +23,15 @@ final class MainPosterCell: UICollectionViewCell {
     
     
     // MARK: - Properties
-    
+        
+    var vcData: [UIViewController] = []
+
     weak var delegate: MainPosterDelegate?
     
-    var vcData: [UIViewController] = []
+    private let imageData = Contents.mainPoster()
 
     static let identifier: String = "MainPosterCell"
     
-    
-//    lazy  var vcData: [UIViewController] = [] {
-//        didSet {
-//            setVCInPageVC()
-//        }
-//    }
-    
-    private let imageData = Contents.mainPoster()
     
     // MARK: - Life Cycles
     
@@ -54,10 +49,6 @@ final class MainPosterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setCurrentPage(index: Int) {
-        
-    }
-    
 }
 
 
@@ -70,7 +61,6 @@ private extension MainPosterCell {
     }
     
     func setLayout() {
-        
         pageVC.view.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -78,7 +68,6 @@ private extension MainPosterCell {
     }
     
     func setPageVC() {
-                
         imageData.forEach {
             let vc = UIViewController()
             
@@ -123,20 +112,26 @@ extension MainPosterCell: UIPageViewControllerDelegate {
 extension MainPosterCell: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        
         guard let index = vcData.firstIndex(of: viewController) else { return nil }
+        
         let previousIndex = index - 1
         if previousIndex < 0 {
             return nil
         }
+        
         return vcData[previousIndex]
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        
         guard let index = vcData.firstIndex(of: viewController) else { return nil }
+        
         let nextIndex = index + 1
         if nextIndex == vcData.count {
             return nil
         }
+        
         return vcData[nextIndex]
     }
 }

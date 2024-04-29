@@ -83,34 +83,27 @@ private extension PageControlButtonView {
     
     func setLayout() {
         buttonCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
     }
     
     func setStyle() {
         buttonCollectionView.do {
-            $0.dataSource = self
-            $0.delegate = self
             $0.isUserInteractionEnabled = true
-            $0.register(PagerButtonCell.self, forCellWithReuseIdentifier: PagerButtonCell.identifier)
             $0.backgroundColor = UIColor(resource: .black)
+            $0.register(PagerButtonCell.self, forCellWithReuseIdentifier: PagerButtonCell.identifier)
         }
     }
     
     func setDelegate() {
-        buttonCollectionView.dataSource = self
         buttonCollectionView.delegate = self
+        buttonCollectionView.dataSource = self
     }
     
     func setButtonStyle(isSelected: Bool, button: UIButton) {
-        if isSelected {
-            button.isSelected = true
-            button.backgroundColor = UIColor(resource: .white)
-        } else {
-            button.isSelected = false
-            button.backgroundColor = UIColor(resource: .grey3)
-        }
+        button.isSelected = isSelected ? true : false
+        button.backgroundColor = isSelected ? UIColor(resource: .white) : UIColor(resource: .grey3)
     }
     
 }
@@ -125,7 +118,7 @@ extension PageControlButtonView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 10 , height: 10)
+        return CGSize(width: 6 , height: 6)
     }
 }
 
