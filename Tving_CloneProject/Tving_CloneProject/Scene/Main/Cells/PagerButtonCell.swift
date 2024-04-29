@@ -14,7 +14,7 @@ class PagerButtonCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
-    private let pagerButton = UIButton()
+    let pagerButton = UIButton()
         
     
     // MARK: - Properties
@@ -62,6 +62,7 @@ private extension PagerButtonCell {
         pagerButton.do {
             $0.layer.cornerRadius = 2
             $0.backgroundColor = .grey3
+            $0.isUserInteractionEnabled = true
         }
         
     }

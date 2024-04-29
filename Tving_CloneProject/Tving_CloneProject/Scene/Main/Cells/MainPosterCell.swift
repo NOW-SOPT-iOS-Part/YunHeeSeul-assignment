@@ -10,55 +10,52 @@ import UIKit
 import SnapKit
 import Then
 
+protocol MainPosterDelegate: AnyObject {
+    func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController])
+}
+
 final class MainPosterCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
-    private let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-    
-    private let buttonCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     
     
     // MARK: - Properties
     
+    weak var delegate: MainPosterDelegate?
+    
+    var vcData: [UIViewController] = []
+
     static let identifier: String = "MainPosterCell"
     
-    lazy  var vcData: [UIViewController] = [] {
-        didSet {
-            setVCInPageVC()
-        }
-    }
     
-    var imageData = Contents.mainPoster()
+//    lazy  var vcData: [UIViewController] = [] {
+//        didSet {
+//            setVCInPageVC()
+//        }
+//    }
+    
+    private let imageData = Contents.mainPoster()
     
     // MARK: - Life Cycles
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setPageVC()
         setHierarchy()
         setLayout()
-        setStyle()
+        setDelegate()
+        setVCInPageVC()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setPageVC(contents: Contents) {
+    func setCurrentPage(index: Int) {
         
-        let vc = UIViewController()
-        
-        let imageView = UIImageView()
-        imageView.image = contents.image
-        
-        vc.view.addSubview(imageView)
-        imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        vcData.append(vc)
-            
     }
     
 }
@@ -69,33 +66,32 @@ final class MainPosterCell: UICollectionViewCell {
 private extension MainPosterCell {
     
     func setHierarchy() {
-        self.addSubviews(pageVC.view, buttonCollectionView)
+        self.addSubview(pageVC.view)
     }
     
     func setLayout() {
         
         pageVC.view.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(500))
-        }
-        
-        buttonCollectionView.snp.makeConstraints {
-            $0.top.equalTo(pageVC.view.snp.bottom).offset(22)
-            $0.leading.equalToSuperview().inset(20)
-            $0.width.equalTo(ScreenUtils.getWidth(60))
-            $0.height.equalTo(4)
+            $0.edges.equalToSuperview()
         }
         
     }
     
-    func setStyle() {
-        
-        buttonCollectionView.do {
-            $0.dataSource = self
-            $0.delegate = self
-            $0.register(PagerButtonCell.self, forCellWithReuseIdentifier: PagerButtonCell.identifier)
-            $0.backgroundColor = UIColor(resource: .black)
+    func setPageVC() {
+                
+        imageData.forEach {
+            let vc = UIViewController()
+            
+            let imageView = UIImageView()
+            imageView.image = $0.image
+            
+            vc.view.addSubview(imageView)
+            imageView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+            vcData += [vc]
         }
+            
     }
     
     func setVCInPageVC() {
@@ -104,35 +100,43 @@ private extension MainPosterCell {
         }
     }
     
+    func setDelegate() {
+        pageVC.delegate = self
+        pageVC.dataSource = self
+    }
+    
 }
 
-
-// MARK: - Delegates
-
-extension MainPosterCell: UICollectionViewDelegateFlowLayout {
+extension MainPosterCell: UIPageViewControllerDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return ScreenUtils.getWidth(4)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 4 , height: 4)
-    }
-}
-
-extension MainPosterCell: UICollectionViewDelegate {}
-
-extension MainPosterCell: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Contents.mainPoster().count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagerButtonCell.identifier, for: indexPath) as? PagerButtonCell
-        else { return UICollectionViewCell() }
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-        return cell
+        guard let currentVC = pageViewController.viewControllers?.first,
+              let currentIndex = vcData.firstIndex(of: currentVC) else { return }
+        
+        self.delegate?.didSwipePoster(index: currentIndex, vc: pageViewController, vcData: vcData)
+        
     }
     
+}
+
+extension MainPosterCell: UIPageViewControllerDataSource {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = vcData.firstIndex(of: viewController) else { return nil }
+        let previousIndex = index - 1
+        if previousIndex < 0 {
+            return nil
+        }
+        return vcData[previousIndex]
+    }
+
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = vcData.firstIndex(of: viewController) else { return nil }
+        let nextIndex = index + 1
+        if nextIndex == vcData.count {
+            return nil
+        }
+        return vcData[nextIndex]
+    }
 }

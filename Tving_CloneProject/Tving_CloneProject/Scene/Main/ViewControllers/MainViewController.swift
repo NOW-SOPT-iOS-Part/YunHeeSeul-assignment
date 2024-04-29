@@ -48,6 +48,17 @@ class MainViewController: UIViewController {
         MainSection.categories(Contents.category())
     ]
     
+    private var prevValue: Int = 0
+    
+    private var newValue: Int = 0
+    
+    private var currentPage: Int = 0 {
+        didSet {
+            prevValue = oldValue
+            newValue = currentPage
+        }
+    }
+    
     private var initializeCode: Bool = true
     
     private var selectedTabBarIndex: Int = 0
@@ -61,7 +72,14 @@ class MainViewController: UIViewController {
         setHierarchy()
         setLayout()
         setStyle()
+        setDelegate()
         setSegmentDidChange()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
     }
 
 }
@@ -125,9 +143,8 @@ private extension MainViewController {
         self.navigationController?.navigationBar.isHidden = true
         
         mainCollectionView.do {
-            $0.delegate = self
-            $0.dataSource = self
             $0.backgroundColor = .black
+            $0.showsVerticalScrollIndicator = false
             $0.contentInsetAdjustmentBehavior = .never
             $0.register(ImageOnlyCell.self, forCellWithReuseIdentifier: ImageOnlyCell.identifier)
             $0.register(MainPosterCell.self, forCellWithReuseIdentifier:MainPosterCell.identifier)
@@ -136,6 +153,9 @@ private extension MainViewController {
             $0.register(BasicHeaderView.self,
                         forSupplementaryViewOfKind: BasicHeaderView.elementKinds,
                         withReuseIdentifier: BasicHeaderView.identifier)
+            $0.register(PageControlButtonView.self,
+                        forSupplementaryViewOfKind: PageControlButtonView.elementKinds,
+                        withReuseIdentifier: PageControlButtonView.identifier)
 
         }
         
@@ -163,6 +183,11 @@ private extension MainViewController {
             $0.backgroundColor = UIColor(resource: .grey4)
         }
         
+    }
+    
+    func setDelegate() {
+        mainCollectionView.delegate = self
+        mainCollectionView.dataSource = self
     }
     
     
@@ -198,7 +223,6 @@ private extension MainViewController {
             case .categories:
                 return self.makeImageOnlyLayout()
             }
-            
         }
     }
     
@@ -212,10 +236,10 @@ private extension MainViewController {
        
        let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, 
-                                                        leading: 0,
-                                                        bottom: 23,
-                                                        trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 23, trailing: 0)
+        
+        let footer = makePageControlButtonView()
+        section.boundarySupplementaryItems = [footer]
        
        return section
     }
@@ -224,24 +248,15 @@ private extension MainViewController {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, 
-                                                     leading: 0,
-                                                     bottom: 0,
-                                                     trailing: 8)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(98 / 375), heightDimension: .fractionalHeight(170 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 14, 
-                                                      leading: 0,
-                                                      bottom: 0, 
-                                                      trailing: 0)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 14, leading: 0, bottom: 0, trailing: 0)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, 
-                                                        leading: 15,
-                                                        bottom: 40,
-                                                        trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 40, trailing: 0)
         
         let header = makeHeaderView()
         section.boundarySupplementaryItems = [header]
@@ -253,24 +268,15 @@ private extension MainViewController {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
-                                                     leading: 0,
-                                                     bottom: 0,
-                                                     trailing: 8)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(160 / 375), heightDimension: .fractionalHeight(140 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8,
-                                                      leading: 0,
-                                                      bottom: 0,
-                                                      trailing: 0)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0,
-                                                        leading: 15,
-                                                        bottom: 40,
-                                                        trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 40, trailing: 0)
         
         let header = makeHeaderView()
         section.boundarySupplementaryItems = [header]
@@ -282,10 +288,7 @@ private extension MainViewController {
 
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
-                                                     leading: 0,
-                                                     bottom: 0,
-                                                     trailing: 8)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(58 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -293,10 +296,7 @@ private extension MainViewController {
         let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 40.0
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0,
-                                                        leading: 15,
-                                                        bottom: tabBarHeight + 10,
-                                                        trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: tabBarHeight + 10, trailing: 0)
        
         return section
     }
@@ -304,15 +304,21 @@ private extension MainViewController {
     
     func makeHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
         
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(25))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: BasicHeaderView.identifier,
-            alignment: .top)
-        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(25))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: BasicHeaderView.elementKinds,
+                                                                 alignment: .top)
         return header
+        
+    }
+    
+    func makePageControlButtonView() -> NSCollectionLayoutBoundarySupplementaryItem {
+        
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(36))
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize,
+                                                                 elementKind: PageControlButtonView.elementKinds,
+                                                                 alignment: .bottom)
+        return footer
         
     }
     
@@ -322,6 +328,43 @@ private extension MainViewController {
         headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
     }
     
+}
+
+
+// MARK: - Delegates
+
+extension MainViewController: PageControlButtonDelegate {
+    
+    func didTapControlButton(index: Int) {
+        print("tap cell")
+
+        currentPage = index
+        
+        let direction: UIPageViewController.NavigationDirection = prevValue < newValue ? .forward : .reverse
+        for cell in mainCollectionView.visibleCells {
+            if let mainPosterCell = cell as? MainPosterCell {
+                // "MainPoster" 셀을 찾았을 때 해당 셀에 대한 작업 수행
+                mainPosterCell.pageVC.setViewControllers([mainPosterCell.vcData[currentPage]], direction: direction, animated: true, completion: nil)
+            }
+        }
+    }
+    
+}
+
+extension MainViewController: MainPosterDelegate {
+    
+    func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController]) {
+        currentPage = index
+        
+        if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0)) as? PageControlButtonView {
+            // "YourElementKind"에 해당하는 보조 뷰를 찾았을 때 해당 보조 뷰에 대한 작업 수행
+//            pageControlButtonView.buttonCollectionView.selectItem(at: IndexPath(item: currentPage, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+            pageControlButtonView.buttonCollectionView.selectItem(at: IndexPath(row: currentPage, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+            
+        }
+
+    }
+        
 }
 
 extension MainViewController: UICollectionViewDelegate {}
@@ -334,8 +377,9 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch dataSource[section] {
-        case .mainPoster(let data),
-                .recommendedContents(let data),
+        case .mainPoster(_):
+            return 1
+        case .recommendedContents(let data),
                 .popularLiveChannel(let data),
                 .paramounts(let data),
                 .categories(let data):
@@ -349,11 +393,10 @@ extension MainViewController: UICollectionViewDataSource {
         case .mainPoster(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
                     as? MainPosterCell else { return UICollectionViewCell() }
-            
-            cell.setPageVC(contents: Contents.mainPoster()[indexPath.row])
+            cell.delegate = self
             return cell
             
-        case .recommendedContents(let data):
+        case .recommendedContents(let data), .paramounts(let data):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
                     as? ImageWithTitleCell else { return UICollectionViewCell() }
             cell.setCell(contents: data[indexPath.row])
@@ -365,18 +408,13 @@ extension MainViewController: UICollectionViewDataSource {
             cell.setCell(contents: data[indexPath.row])
             return cell
             
-        case .paramounts(let data):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
-                    as? ImageWithTitleCell else { return UICollectionViewCell() }
-            cell.setCell(contents: data[indexPath.row])
-            return cell
-            
         case .categories(let data):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOnlyCell.identifier, for: indexPath)
                     as? ImageOnlyCell else { return UICollectionViewCell() }
             cell.setCell(contents: data[indexPath.row])
             return cell
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -398,11 +436,19 @@ extension MainViewController: UICollectionViewDataSource {
                 header.bindTitle(headerTitle: "1화 무료! 파라마운트+ 인기 시리즈")
             }
             return header
+        } else if kind == PageControlButtonView.elementKinds {
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                               withReuseIdentifier: PageControlButtonView.identifier,
+                                                                               for: indexPath)
+                    as? PageControlButtonView else { return UICollectionReusableView() }
+            footer.delegate = self
+            footer.isUserInteractionEnabled = true
+            
+            return footer
         } else {
             return UICollectionReusableView()
         }
         
     }
-    
     
 }

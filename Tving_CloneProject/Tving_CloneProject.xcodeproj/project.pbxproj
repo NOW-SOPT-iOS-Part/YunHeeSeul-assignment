@@ -46,6 +46,7 @@
 		CA902EF52BDE9E4800560D26 /* ToBeReleasedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EF42BDE9E4800560D26 /* ToBeReleasedViewController.swift */; };
 		CA902EF72BDE9E5E00560D26 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EF62BDE9E5E00560D26 /* SearchViewController.swift */; };
 		CA902EF92BDE9E6700560D26 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EF82BDE9E6700560D26 /* HistoryViewController.swift */; };
+		CA902EFB2BDEB51500560D26 /* PageControlButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EFA2BDEB51500560D26 /* PageControlButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		CA902EF42BDE9E4800560D26 /* ToBeReleasedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToBeReleasedViewController.swift; sourceTree = "<group>"; };
 		CA902EF62BDE9E5E00560D26 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		CA902EF82BDE9E6700560D26 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		CA902EFA2BDEB51500560D26 /* PageControlButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */,
 				CA902EC72BDB8D3900560D26 /* UnderlineSegmentedControlView.swift */,
 				CA902EC92BDB8E5C00560D26 /* HeaderCategoryView.swift */,
+				CA902EFA2BDEB51500560D26 /* PageControlButtonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */,
 				CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */,
 				CA902EC62BDAA0E200560D26 /* PopularLiveCell.swift in Sources */,
+				CA902EFB2BDEB51500560D26 /* PageControlButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
