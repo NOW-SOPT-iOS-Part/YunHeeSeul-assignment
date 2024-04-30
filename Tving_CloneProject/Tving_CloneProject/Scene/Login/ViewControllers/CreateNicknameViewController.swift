@@ -65,7 +65,7 @@ private extension CreateNicknameViewController {
         }
         
         bottomSheetView.snp.makeConstraints {
-            $0.height.equalTo(ScreenUtils.getHeight(406))
+            $0.height.equalTo(406)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
@@ -77,7 +77,7 @@ private extension CreateNicknameViewController {
         nicknameTextField.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(ScreenUtils.getHeight(52))
+            $0.height.equalTo(52)
         }
         
         warningLabel.snp.makeConstraints {
@@ -88,7 +88,7 @@ private extension CreateNicknameViewController {
         saveButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(ScreenUtils.getHeight(52))
+            $0.height.equalTo(52)
         }
 
     }

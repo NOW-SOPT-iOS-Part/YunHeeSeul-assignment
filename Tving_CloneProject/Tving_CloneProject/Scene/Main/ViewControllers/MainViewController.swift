@@ -67,6 +67,10 @@ class MainViewController: UIViewController {
     
     private var selectedTabBarIndex: Int = 0
     
+    private var shouldShowSticky: Bool = false
+    
+    let topSafeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0.0
+    
     
     // MARK: - Life Cycles
     
@@ -102,7 +106,6 @@ private extension MainViewController {
         self.view.bringSubviewToFront(dimmedView)
         self.view.bringSubviewToFront(navigationBarView)
         self.view.bringSubviewToFront(headerCategoryView)
-        self.view.bringSubviewToFront(stickyHeaderCategoryView)
     }
     
     func setLayout() {
@@ -112,9 +115,9 @@ private extension MainViewController {
         }
         
         navigationBarView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(55)
+            $0.top.equalToSuperview().inset(topSafeAreaHeight)
             $0.width.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(30))
+            $0.height.equalTo(30)
         }
         
         headerCategoryView.snp.makeConstraints {
@@ -126,7 +129,7 @@ private extension MainViewController {
         dimmedView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(95))
+            $0.height.equalTo(topSafeAreaHeight + 40)
         }
         
         stickyHeaderCategoryView.snp.makeConstraints {
@@ -208,6 +211,7 @@ private extension MainViewController {
     
     func setSegmentDidChange() {
         self.didChangeValue(sender: self.headerCategoryView.segmentedControlView)
+        self.didChangeValue(sender: self.stickyHeaderCategoryView.segmentedControlView)
         self.initializeCode = false
     }
     
@@ -389,7 +393,7 @@ extension MainViewController: UICollectionViewDelegate {
         // contentOffset.y: 손가락을 위로 올리면 + 값, 손가락을 아래로 내리면 - 값
         let topPadding = scrollView.safeAreaInsets.top
         
-        let shouldShowSticky = topPadding + scrollView.contentOffset.y > headerCategoryView.frame.minY
+        shouldShowSticky = topPadding + scrollView.contentOffset.y > headerCategoryView.frame.minY
         
         dimmedView.isHidden = !shouldShowSticky
         navigationBarView.isHidden = shouldShowSticky

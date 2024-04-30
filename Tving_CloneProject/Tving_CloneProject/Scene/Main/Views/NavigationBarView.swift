@@ -56,7 +56,7 @@ private extension NavigationBarView {
         
         profileImage.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.width.equalTo(ScreenUtils.getWidth(30))
+            $0.width.equalTo(30)
             $0.trailing.equalToSuperview().inset(10)
         }
         

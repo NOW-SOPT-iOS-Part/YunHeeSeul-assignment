@@ -53,20 +53,18 @@ private extension WelcomeViewController {
         logoImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(60)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(211))
+            $0.height.equalTo(211)
         }
         
         welcomeLabel.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(67)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(ScreenUtils.getWidth(245))
+            $0.leading.trailing.equalToSuperview().inset(65)
         }
         
         goToMainButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(66)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(ScreenUtils.getWidth(335))
-            $0.height.equalTo(ScreenUtils.getHeight(52))
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(52)
         }
 
     }
