@@ -35,6 +35,9 @@
 		CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531F2BC6F6BE00B15E91 /* LoginView.swift */; };
 		CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953212BC6FA9F00B15E91 /* Constant.swift */; };
 		CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */; };
+		CA8496DF2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496DE2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift */; };
+		CA8496E22BE7E36D0064E0CC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA8496E12BE7E36D0064E0CC /* Moya */; };
+		CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E42BE7E54D0064E0CC /* Config.swift */; };
 		CA902EBC2BD6F9F900560D26 /* ImageWithTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */; };
 		CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */; };
 		CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC12BD789FF00560D26 /* UIStackView+.swift */; };
@@ -77,6 +80,8 @@
 		CA39531F2BC6F6BE00B15E91 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CA3953212BC6FA9F00B15E91 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtils.swift; sourceTree = "<group>"; };
+		CA8496DE2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieInfoResponseDTO.swift; sourceTree = "<group>"; };
+		CA8496E42BE7E54D0064E0CC /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithTitleCell.swift; sourceTree = "<group>"; };
 		CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHeaderView.swift; sourceTree = "<group>"; };
 		CA902EC12BD789FF00560D26 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -98,6 +103,7 @@
 			files = (
 				CA3953052BC4527D00B15E91 /* SnapKit in Frameworks */,
 				CA3953152BC45CA700B15E91 /* Then in Frameworks */,
+				CA8496E22BE7E36D0064E0CC /* Moya in Frameworks */,
 				CA3953072BC4527D00B15E91 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +182,7 @@
 		CA3952E42BC31F9900B15E91 /* Tving_CloneProject */ = {
 			isa = PBXGroup;
 			children = (
+				CA8496DA2BE7D6550064E0CC /* Network */,
 				CA3952FB2BC448AE00B15E91 /* Application */,
 				CA3952FA2BC4488E00B15E91 /* Scene */,
 				CA3952F92BC4488700B15E91 /* Global */,
@@ -187,6 +194,7 @@
 		CA3952F92BC4488700B15E91 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				CA8496E32BE7E5410064E0CC /* Setting */,
 				CA902EEB2BDE9CA900560D26 /* Components */,
 				CA3953232BC6FB0500B15E91 /* Utils */,
 				CA3952FE2BC448FA00B15E91 /* Literals */,
@@ -310,6 +318,46 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		CA8496DA2BE7D6550064E0CC /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CA8496DC2BE7D6840064E0CC /* DTO */,
+				CA8496DB2BE7D67E0064E0CC /* Services */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		CA8496DB2BE7D67E0064E0CC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		CA8496DC2BE7D6840064E0CC /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				CA8496DD2BE7D6A60064E0CC /* Main */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		CA8496DD2BE7D6A60064E0CC /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				CA8496DE2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		CA8496E32BE7E5410064E0CC /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				CA8496E42BE7E54D0064E0CC /* Config.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		CA902EEB2BDE9CA900560D26 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +434,7 @@
 				CA3953042BC4527D00B15E91 /* SnapKit */,
 				CA3953062BC4527D00B15E91 /* SnapKit-Dynamic */,
 				CA3953142BC45CA700B15E91 /* Then */,
+				CA8496E12BE7E36D0064E0CC /* Moya */,
 			);
 			productName = Tving_CloneProject;
 			productReference = CA3952E22BC31F9900B15E91 /* Tving_CloneProject.app */;
@@ -418,6 +467,7 @@
 			packageReferences = (
 				CA3953032BC4527D00B15E91 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				CA3953132BC45CA700B15E91 /* XCRemoteSwiftPackageReference "Then" */,
+				CA8496E02BE7E36D0064E0CC /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = CA3952E32BC31F9900B15E91 /* Products */;
 			projectDirPath = "";
@@ -465,6 +515,7 @@
 				CA902EED2BDE9CD800560D26 /* TabBarViewController.swift in Sources */,
 				CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */,
 				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
+				CA8496DF2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift in Sources */,
 				CA902ECA2BDB8E5C00560D26 /* HeaderCategoryView.swift in Sources */,
 				CA902EC82BDB8D3900560D26 /* UnderlineSegmentedControlView.swift in Sources */,
 				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
@@ -478,6 +529,7 @@
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
 				CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */,
 				CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */,
+				CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */,
 				CA902EC62BDAA0E200560D26 /* PopularLiveCell.swift in Sources */,
 				CA902EFB2BDEB51500560D26 /* PageControlButtonView.swift in Sources */,
 			);
@@ -621,6 +673,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D3HYNZN587;
@@ -630,6 +683,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				KEY = 21a98e0d1c73a682a1447c84d9e956a3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -648,6 +702,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D3HYNZN587;
@@ -657,6 +712,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				KEY = 21a98e0d1c73a682a1447c84d9e956a3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -710,6 +766,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		CA8496E02BE7E36D0064E0CC /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -727,6 +791,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA3953132BC45CA700B15E91 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		CA8496E12BE7E36D0064E0CC /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA8496E02BE7E36D0064E0CC /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
