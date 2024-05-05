@@ -35,9 +35,9 @@
 		CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531F2BC6F6BE00B15E91 /* LoginView.swift */; };
 		CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953212BC6FA9F00B15E91 /* Constant.swift */; };
 		CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */; };
-		CA8496DF2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496DE2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift */; };
 		CA8496E22BE7E36D0064E0CC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA8496E12BE7E36D0064E0CC /* Moya */; };
 		CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E42BE7E54D0064E0CC /* Config.swift */; };
+		CA8496E72BE7E8E60064E0CC /* GetMovieResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */; };
 		CA902EBC2BD6F9F900560D26 /* ImageWithTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */; };
 		CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */; };
 		CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC12BD789FF00560D26 /* UIStackView+.swift */; };
@@ -80,8 +80,8 @@
 		CA39531F2BC6F6BE00B15E91 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CA3953212BC6FA9F00B15E91 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtils.swift; sourceTree = "<group>"; };
-		CA8496DE2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieInfoResponseDTO.swift; sourceTree = "<group>"; };
 		CA8496E42BE7E54D0064E0CC /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieResponseModel.swift; sourceTree = "<group>"; };
 		CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithTitleCell.swift; sourceTree = "<group>"; };
 		CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHeaderView.swift; sourceTree = "<group>"; };
 		CA902EC12BD789FF00560D26 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -147,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				CA1F68F72BD57D3A00439E33 /* Contents.swift */,
+				CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -321,7 +322,6 @@
 		CA8496DA2BE7D6550064E0CC /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				CA8496DC2BE7D6840064E0CC /* DTO */,
 				CA8496DB2BE7D67E0064E0CC /* Services */,
 			);
 			path = Network;
@@ -332,22 +332,6 @@
 			children = (
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		CA8496DC2BE7D6840064E0CC /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-				CA8496DD2BE7D6A60064E0CC /* Main */,
-			);
-			path = DTO;
-			sourceTree = "<group>";
-		};
-		CA8496DD2BE7D6A60064E0CC /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				CA8496DE2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift */,
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 		CA8496E32BE7E5410064E0CC /* Setting */ = {
@@ -515,7 +499,6 @@
 				CA902EED2BDE9CD800560D26 /* TabBarViewController.swift in Sources */,
 				CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */,
 				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
-				CA8496DF2BE7D7150064E0CC /* GetMovieInfoResponseDTO.swift in Sources */,
 				CA902ECA2BDB8E5C00560D26 /* HeaderCategoryView.swift in Sources */,
 				CA902EC82BDB8D3900560D26 /* UnderlineSegmentedControlView.swift in Sources */,
 				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
@@ -523,6 +506,7 @@
 				CA1F68FB2BD5886600439E33 /* MainPosterCell.swift in Sources */,
 				CA1F68F32BD5698C00439E33 /* MainPosterView.swift in Sources */,
 				CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */,
+				CA8496E72BE7E8E60064E0CC /* GetMovieResponseModel.swift in Sources */,
 				CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */,
 				CA902EF72BDE9E5E00560D26 /* SearchViewController.swift in Sources */,
 				CA1F68FD2BD58ED700439E33 /* PagerButtonCell.swift in Sources */,
