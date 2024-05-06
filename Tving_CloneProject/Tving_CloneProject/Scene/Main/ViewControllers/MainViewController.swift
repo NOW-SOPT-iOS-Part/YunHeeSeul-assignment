@@ -10,16 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MainViewController: UIViewController {
-    
-    enum MainSection {
-        case mainPoster
-        case recommendedContents
-        case popularLiveChannel
-        case paramounts
-        case categories
-    }
-    
+class MainViewController: UIViewController {    
     
     // MARK: - UI Properties
         
@@ -41,6 +32,8 @@ class MainViewController: UIViewController {
     
     private let dimmedView = UIView()
     
+    private var loadingIndicator = UIActivityIndicatorView()
+    
     
     // MARK: - Properties
     
@@ -54,13 +47,7 @@ class MainViewController: UIViewController {
 
     private var categoryData: [Contents] = []
     
-    private lazy var dataSource: [MainSection] = [
-        MainSection.mainPoster,
-        MainSection.recommendedContents,
-        MainSection.popularLiveChannel,
-        MainSection.paramounts,
-        MainSection.categories
-    ]
+    private let dataSource: [MainSection] = MainSection.dataSource
     
     private var prevValue: Int = 0
     
@@ -112,9 +99,9 @@ private extension MainViewController {
                               liveView,
                               tvProgramView,
                               movieView,
-                              paramountView)
+                              paramountView,
+                              loadingIndicator)
         dimmedView.addSubview(stickyHeaderCategoryView)
-        
         self.view.bringSubviewToFront(dimmedView)
         self.view.bringSubviewToFront(navigationBarView)
         self.view.bringSubviewToFront(headerCategoryView)
@@ -182,6 +169,11 @@ private extension MainViewController {
             $0.backgroundColor = UIColor(resource: .black)
         }
         
+        loadingIndicator.do {
+            $0.frame = view.bounds
+            $0.color = UIColor(resource: .white)
+            $0.backgroundColor = UIColor(resource: .black)
+        }
     }
     
     func setDelegate() {
@@ -333,13 +325,13 @@ private extension MainViewController {
     func getMovieInfo() {
         let currentDate = calculateDate()
         
+        loadingIndicator.startAnimating()
+        
         MainService.shared.getMovieList(date: currentDate) { response in
             switch response {
             case .success(let data):
                 guard let data = data as? GetMovieResponseModel else { return }
-
                 var count = 0
-
                 for i in data.boxOfficeResult.dailyBoxOfficeList {
                     self.mainData.append(Contents(image: Contents.posterImages[count]))
                     self.recommendedData.append(Contents(image: Contents.posterImages[count], title: i.movieNm))
@@ -352,6 +344,7 @@ private extension MainViewController {
                                                      rating: i.salesShare))
                     count+=1
                 }
+                self.loadingIndicator.stopAnimating()
                 self.mainCollectionView.reloadData()
                 
             default:
@@ -363,9 +356,7 @@ private extension MainViewController {
     func calculateDate() -> String {
 
         let today = Date()
-
         let calendar = Calendar.current
-
         var dateComponents = DateComponents()
         dateComponents.day = -1
 
@@ -423,10 +414,8 @@ extension MainViewController: MainPosterDelegate {
     func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController]) {
         currentPage = index
         
-        if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds,
-                                                                            at: IndexPath(item: 0, section: 0)) as? PageControlButtonView {
-            pageControlButtonView.index = currentPage
-        }
+        if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0))
+            as? PageControlButtonView { pageControlButtonView.index = currentPage }
     }
         
 }
@@ -511,10 +500,8 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == BasicHeaderView.elementKinds {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, 
-                                                                               withReuseIdentifier: BasicHeaderView.identifier,
-                                                                               for: indexPath) as? BasicHeaderView
-            else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BasicHeaderView.identifier, for: indexPath)
+                    as? BasicHeaderView else { return UICollectionReusableView() }
             
             switch dataSource[indexPath.section] {
             case .mainPoster, .categories:
@@ -528,10 +515,8 @@ extension MainViewController: UICollectionViewDataSource {
             }
             return header
         } else if kind == PageControlButtonView.elementKinds {
-            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                               withReuseIdentifier: PageControlButtonView.identifier,
-                                                                               for: indexPath) as? PageControlButtonView
-            else { return UICollectionReusableView() }
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PageControlButtonView.identifier, for: indexPath)
+                    as? PageControlButtonView else { return UICollectionReusableView() }
             
             footer.buttonCount = mainData.count
             footer.delegate = self

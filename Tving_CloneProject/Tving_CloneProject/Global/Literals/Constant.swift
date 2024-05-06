@@ -13,3 +13,19 @@ enum Constant {
         public static let height = UIScreen.main.bounds.height
     }
 }
+
+enum MainSection {
+    case mainPoster
+    case recommendedContents
+    case popularLiveChannel
+    case paramounts
+    case categories
+    
+    static let dataSource: [MainSection] = [
+        MainSection.mainPoster,
+        MainSection.recommendedContents,
+        MainSection.popularLiveChannel,
+        MainSection.paramounts,
+        MainSection.categories
+    ]
+}
