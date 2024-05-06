@@ -38,6 +38,10 @@
 		CA8496E22BE7E36D0064E0CC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA8496E12BE7E36D0064E0CC /* Moya */; };
 		CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E42BE7E54D0064E0CC /* Config.swift */; };
 		CA8496E72BE7E8E60064E0CC /* GetMovieResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */; };
+		CA8496EA2BE89A850064E0CC /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E92BE89A840064E0CC /* BaseTargetType.swift */; };
+		CA8496EE2BE8A1680064E0CC /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496ED2BE8A1680064E0CC /* MainService.swift */; };
+		CA8496F02BE8A5880064E0CC /* MoyaPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496EF2BE8A5880064E0CC /* MoyaPlugin.swift */; };
+		CA8496F22BE8A6700064E0CC /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496F12BE8A6700064E0CC /* NetworkResult.swift */; };
 		CA902EBC2BD6F9F900560D26 /* ImageWithTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */; };
 		CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */; };
 		CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC12BD789FF00560D26 /* UIStackView+.swift */; };
@@ -82,6 +86,10 @@
 		CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtils.swift; sourceTree = "<group>"; };
 		CA8496E42BE7E54D0064E0CC /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieResponseModel.swift; sourceTree = "<group>"; };
+		CA8496E92BE89A840064E0CC /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
+		CA8496ED2BE8A1680064E0CC /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
+		CA8496EF2BE8A5880064E0CC /* MoyaPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaPlugin.swift; sourceTree = "<group>"; };
+		CA8496F12BE8A6700064E0CC /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithTitleCell.swift; sourceTree = "<group>"; };
 		CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHeaderView.swift; sourceTree = "<group>"; };
 		CA902EC12BD789FF00560D26 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -322,16 +330,18 @@
 		CA8496DA2BE7D6550064E0CC /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				CA8496DB2BE7D67E0064E0CC /* Services */,
+				CA8496E82BE7EB390064E0CC /* Base */,
+				CA8496DB2BE7D67E0064E0CC /* Main */,
 			);
 			path = Network;
 			sourceTree = "<group>";
 		};
-		CA8496DB2BE7D67E0064E0CC /* Services */ = {
+		CA8496DB2BE7D67E0064E0CC /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				CA8496ED2BE8A1680064E0CC /* MainService.swift */,
 			);
-			path = Services;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		CA8496E32BE7E5410064E0CC /* Setting */ = {
@@ -340,6 +350,16 @@
 				CA8496E42BE7E54D0064E0CC /* Config.swift */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		CA8496E82BE7EB390064E0CC /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				CA8496E92BE89A840064E0CC /* BaseTargetType.swift */,
+				CA8496EF2BE8A5880064E0CC /* MoyaPlugin.swift */,
+				CA8496F12BE8A6700064E0CC /* NetworkResult.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		CA902EEB2BDE9CA900560D26 /* Components */ = {
@@ -487,11 +507,13 @@
 				CA902EF92BDE9E6700560D26 /* HistoryViewController.swift in Sources */,
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
 				CA1F68F02BD5691D00439E33 /* MainViewController.swift in Sources */,
+				CA8496F22BE8A6700064E0CC /* NetworkResult.swift in Sources */,
 				CA902EBC2BD6F9F900560D26 /* ImageWithTitleCell.swift in Sources */,
 				CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */,
 				CA902EF52BDE9E4800560D26 /* ToBeReleasedViewController.swift in Sources */,
 				CA39531C2BC5A75C00B15E91 /* WelcomeViewController.swift in Sources */,
 				CA3953022BC44BCD00B15E91 /* UITextField+.swift in Sources */,
+				CA8496EE2BE8A1680064E0CC /* MainService.swift in Sources */,
 				CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */,
 				CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
@@ -510,6 +532,8 @@
 				CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */,
 				CA902EF72BDE9E5E00560D26 /* SearchViewController.swift in Sources */,
 				CA1F68FD2BD58ED700439E33 /* PagerButtonCell.swift in Sources */,
+				CA8496F02BE8A5880064E0CC /* MoyaPlugin.swift in Sources */,
+				CA8496EA2BE89A850064E0CC /* BaseTargetType.swift in Sources */,
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
 				CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */,
 				CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */,
