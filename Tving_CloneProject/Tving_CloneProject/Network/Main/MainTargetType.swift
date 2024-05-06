@@ -6,3 +6,26 @@
 //
 
 import Foundation
+
+import Moya
+
+enum MainTargetType {
+    case getMovieList(date: String)
+}
+
+extension MainTargetType: BaseTargetType {
+    
+    var utilPath: String {
+        return 
+    }
+    
+    var path: String {
+        <#code#>
+    }
+    
+    var task: Moya.Task {
+        <#code#>
+    }
+    
+    
+}
