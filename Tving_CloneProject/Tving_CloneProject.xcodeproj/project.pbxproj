@@ -42,6 +42,10 @@
 		CA8496EE2BE8A1680064E0CC /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496ED2BE8A1680064E0CC /* MainService.swift */; };
 		CA8496F02BE8A5880064E0CC /* MoyaPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496EF2BE8A5880064E0CC /* MoyaPlugin.swift */; };
 		CA8496F22BE8A6700064E0CC /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496F12BE8A6700064E0CC /* NetworkResult.swift */; };
+		CA8496F62BE947040064E0CC /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496F52BE947040064E0CC /* LiveView.swift */; };
+		CA8496F82BE947F90064E0CC /* TVProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496F72BE947F90064E0CC /* TVProgramView.swift */; };
+		CA8496FA2BE9482C0064E0CC /* MovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496F92BE9482C0064E0CC /* MovieView.swift */; };
+		CA8496FC2BE948590064E0CC /* ParamountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496FB2BE948590064E0CC /* ParamountView.swift */; };
 		CA902EBC2BD6F9F900560D26 /* ImageWithTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */; };
 		CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */; };
 		CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA902EC12BD789FF00560D26 /* UIStackView+.swift */; };
@@ -90,6 +94,10 @@
 		CA8496ED2BE8A1680064E0CC /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
 		CA8496EF2BE8A5880064E0CC /* MoyaPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaPlugin.swift; sourceTree = "<group>"; };
 		CA8496F12BE8A6700064E0CC /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
+		CA8496F52BE947040064E0CC /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
+		CA8496F72BE947F90064E0CC /* TVProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVProgramView.swift; sourceTree = "<group>"; };
+		CA8496F92BE9482C0064E0CC /* MovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieView.swift; sourceTree = "<group>"; };
+		CA8496FB2BE948590064E0CC /* ParamountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamountView.swift; sourceTree = "<group>"; };
 		CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithTitleCell.swift; sourceTree = "<group>"; };
 		CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicHeaderView.swift; sourceTree = "<group>"; };
 		CA902EC12BD789FF00560D26 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -147,6 +155,10 @@
 				CA902EC72BDB8D3900560D26 /* UnderlineSegmentedControlView.swift */,
 				CA902EC92BDB8E5C00560D26 /* HeaderCategoryView.swift */,
 				CA902EFA2BDEB51500560D26 /* PageControlButtonView.swift */,
+				CA8496F52BE947040064E0CC /* LiveView.swift */,
+				CA8496F72BE947F90064E0CC /* TVProgramView.swift */,
+				CA8496F92BE9482C0064E0CC /* MovieView.swift */,
+				CA8496FB2BE948590064E0CC /* ParamountView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -504,6 +516,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA8496FC2BE948590064E0CC /* ParamountView.swift in Sources */,
 				CA902EF92BDE9E6700560D26 /* HistoryViewController.swift in Sources */,
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
 				CA1F68F02BD5691D00439E33 /* MainViewController.swift in Sources */,
@@ -529,13 +542,16 @@
 				CA1F68F32BD5698C00439E33 /* MainPosterView.swift in Sources */,
 				CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */,
 				CA8496E72BE7E8E60064E0CC /* GetMovieResponseModel.swift in Sources */,
+				CA8496F82BE947F90064E0CC /* TVProgramView.swift in Sources */,
 				CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */,
 				CA902EF72BDE9E5E00560D26 /* SearchViewController.swift in Sources */,
+				CA8496F62BE947040064E0CC /* LiveView.swift in Sources */,
 				CA1F68FD2BD58ED700439E33 /* PagerButtonCell.swift in Sources */,
 				CA8496F02BE8A5880064E0CC /* MoyaPlugin.swift in Sources */,
 				CA8496EA2BE89A850064E0CC /* BaseTargetType.swift in Sources */,
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
 				CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */,
+				CA8496FA2BE9482C0064E0CC /* MovieView.swift in Sources */,
 				CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */,
 				CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */,
 				CA902EC62BDAA0E200560D26 /* PopularLiveCell.swift in Sources */,
