@@ -44,15 +44,13 @@ class PopularLiveCell: UICollectionViewCell {
        fatalError("init(coder:) has not been implemented")
    }
    
-   func setCell(contents: Contents) {
-       
-       let ranking = contents.ranking ?? 0
-       let rating = contents.rating ?? 0
-       
+   func setCell(contents: Contents) {       
        posterImageView.image = contents.image
-       rankingLabel.text = "\(ranking)"
+       rankingLabel.text = contents.ranking
        channelLabel.text = contents.channelName
        programTitleLabel.text = contents.title
+       
+       let rating = contents.rating ?? ""
        ratingLabel.text = "\(rating)%"
    }
 
@@ -85,7 +83,7 @@ private extension PopularLiveCell {
        channelInfoStackView.snp.makeConstraints {
            $0.top.equalTo(posterImageView.snp.bottom).offset(10)
            $0.leading.equalTo(rankingLabel.snp.trailing).offset(8)
-           $0.bottom.equalToSuperview()
+           $0.bottom.trailing.equalToSuperview()
        }
        
    }
