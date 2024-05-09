@@ -62,6 +62,7 @@ private extension MovieView {
         
         dailyBoxOfficeCollectionView.do {
             $0.backgroundColor = UIColor(resource: .black)
+            $0.showsVerticalScrollIndicator = false
         }
         
         loadingIndicator.do {

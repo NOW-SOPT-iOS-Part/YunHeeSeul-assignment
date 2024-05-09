@@ -73,7 +73,6 @@ class DailyBoxOfficeCell: UICollectionViewCell {
         }
         
         movieInfoStackView.snp.makeConstraints {
-//            $0.top.equalTo(rankingLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(rankingLabel)
             $0.bottom.equalToSuperview().inset(40)
         }
@@ -84,14 +83,12 @@ class DailyBoxOfficeCell: UICollectionViewCell {
         
         self.do {
             $0.layer.cornerRadius = 10
-            $0.backgroundColor = UIColor(resource: .black)
-            $0.layer.borderColor = UIColor(resource: .red).withAlphaComponent(0.3).cgColor
-            $0.layer.borderWidth = 2
+            $0.backgroundColor = UIColor(resource: .grey2).withAlphaComponent(0.5)
         }
         
         rankingLabel.do {
             $0.font = UIFont.pretendard(.head1)
-            $0.textColor = UIColor(resource: .white)
+            $0.textColor = UIColor(resource: .grey4)
             $0.textAlignment = .left
         }
         
