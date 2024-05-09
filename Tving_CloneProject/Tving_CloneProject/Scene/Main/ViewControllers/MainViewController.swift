@@ -65,9 +65,7 @@ class MainViewController: UIViewController {
     private var selectedTabBarIndex: Int = 0
     
     private var shouldShowSticky: Bool = false
-    
-    let topSafeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0.0
-    
+        
     
     // MARK: - Life Cycles
     
@@ -114,7 +112,7 @@ private extension MainViewController {
         }
         
         navigationBarView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(topSafeAreaHeight)
+            $0.top.equalToSuperview().inset(Constant.Screen.topSafeAreaHeight)
             $0.width.equalToSuperview()
             $0.height.equalTo(30)
         }
@@ -128,7 +126,7 @@ private extension MainViewController {
         dimmedView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(topSafeAreaHeight + 40)
+            $0.height.equalTo(Constant.Screen.topSafeAreaHeight + 40)
         }
         
         stickyHeaderCategoryView.snp.makeConstraints {
