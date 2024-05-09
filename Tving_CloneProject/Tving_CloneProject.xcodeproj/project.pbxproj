@@ -13,6 +13,7 @@
 		CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68F72BD57D3A00439E33 /* Contents.swift */; };
 		CA1F68FB2BD5886600439E33 /* MainPosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68FA2BD5886600439E33 /* MainPosterCell.swift */; };
 		CA1F68FD2BD58ED700439E33 /* PagerButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68FC2BD58ED700439E33 /* PagerButtonCell.swift */; };
+		CA22B3C52BED37090013B7AB /* DailyBoxOfficeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA22B3C42BED37090013B7AB /* DailyBoxOfficeCell.swift */; };
 		CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952E52BC31F9900B15E91 /* AppDelegate.swift */; };
 		CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952E72BC31F9900B15E91 /* SceneDelegate.swift */; };
 		CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3952E92BC31F9900B15E91 /* LoginViewController.swift */; };
@@ -67,6 +68,7 @@
 		CA1F68F72BD57D3A00439E33 /* Contents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contents.swift; sourceTree = "<group>"; };
 		CA1F68FA2BD5886600439E33 /* MainPosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPosterCell.swift; sourceTree = "<group>"; };
 		CA1F68FC2BD58ED700439E33 /* PagerButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerButtonCell.swift; sourceTree = "<group>"; };
+		CA22B3C42BED37090013B7AB /* DailyBoxOfficeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBoxOfficeCell.swift; sourceTree = "<group>"; };
 		CA3952E22BC31F9900B15E91 /* Tving_CloneProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tving_CloneProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3952E52BC31F9900B15E91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA3952E72BC31F9900B15E91 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				CA902EBB2BD6F9F900560D26 /* ImageWithTitleCell.swift */,
 				CA902EC32BD9542000560D26 /* ImageOnlyCell.swift */,
 				CA902EC52BDAA0E200560D26 /* PopularLiveCell.swift */,
+				CA22B3C42BED37090013B7AB /* DailyBoxOfficeCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				CA8496EE2BE8A1680064E0CC /* MainService.swift in Sources */,
 				CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */,
 				CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */,
+				CA22B3C52BED37090013B7AB /* DailyBoxOfficeCell.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
 				CA902EED2BDE9CD800560D26 /* TabBarViewController.swift in Sources */,

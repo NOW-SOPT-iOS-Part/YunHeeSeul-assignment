@@ -82,6 +82,42 @@ private extension MovieView {
         dailyBoxOfficeCollectionView.dataSource = self
     }
     
+    func getDailyBoxOffice() {
+        
+        let date = calculateDate()
+        
+        loadingIndicator.startAnimating()
+        
+        MainService.shared.getMovieList(date: date) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? GetMovieResponseModel else { return }
+                self.dailyBoxOfficeData = data.boxOfficeResult.dailyBoxOfficeList
+                
+                self.loadingIndicator.stopAnimating()
+                self.dailyBoxOfficeCollectionView.reloadData()
+                
+            default:
+                return 
+            }
+        }
+    }
+    
+    func calculateDate() -> String {
+
+        let today = Date()
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.day = -1
+
+        if let oneDayAgo = calendar.date(byAdding: dateComponents, to: today) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            
+            let oneDayAgoString = dateFormatter.string(from: oneDayAgo)
+            return oneDayAgoString
+        } else {
+            return ""
         }
     }
     
