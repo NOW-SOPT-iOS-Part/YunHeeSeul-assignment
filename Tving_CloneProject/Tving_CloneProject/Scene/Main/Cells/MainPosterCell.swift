@@ -28,8 +28,6 @@ final class MainPosterCell: UICollectionViewCell {
 
     weak var delegate: MainPosterDelegate?
     
-    private let imageData = Contents.mainPoster()
-
     static let identifier: String = "MainPosterCell"
     
     
@@ -38,17 +36,32 @@ final class MainPosterCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setPageVC()
         setHierarchy()
         setLayout()
         setDelegate()
-        setVCInPageVC()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setPageVC(imageData: [Contents]) {
+        imageData.forEach {
+            let vc = UIViewController()
+            
+            let imageView = UIImageView()
+            imageView.image = $0.image
+            
+            vc.view.addSubview(imageView)
+            imageView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+            vcData += [vc]
+        }
+        
+        setVCInPageVC()
+            
+    }
 }
 
 
@@ -65,22 +78,6 @@ private extension MainPosterCell {
             $0.edges.equalToSuperview()
         }
         
-    }
-    
-    func setPageVC() {
-        imageData.forEach {
-            let vc = UIViewController()
-            
-            let imageView = UIImageView()
-            imageView.image = $0.image
-            
-            vc.view.addSubview(imageView)
-            imageView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-            vcData += [vc]
-        }
-            
     }
     
     func setVCInPageVC() {

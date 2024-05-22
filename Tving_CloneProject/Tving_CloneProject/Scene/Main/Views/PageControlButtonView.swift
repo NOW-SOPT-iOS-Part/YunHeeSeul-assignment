@@ -49,6 +49,12 @@ class PageControlButtonView: UICollectionReusableView {
         }
     }
     
+    var buttonCount: Int = 0 {
+        didSet {
+            buttonCollectionView.reloadData()
+        }
+    }
+    
     
     // MARK: - Life Cycles
     
@@ -127,7 +133,7 @@ extension PageControlButtonView: UICollectionViewDelegate {}
 extension PageControlButtonView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Contents.mainPoster().count
+        return buttonCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

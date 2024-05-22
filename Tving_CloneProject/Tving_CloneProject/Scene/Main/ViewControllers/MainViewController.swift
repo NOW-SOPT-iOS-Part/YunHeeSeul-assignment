@@ -10,16 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MainViewController: UIViewController {
-    
-    enum MainSection {
-        case mainPoster([Contents])
-        case recommendedContents([Contents])
-        case popularLiveChannel([Contents])
-        case paramounts([Contents])
-        case categories([Contents])
-    }
-    
+class MainViewController: UIViewController {    
     
     // MARK: - UI Properties
         
@@ -31,26 +22,32 @@ class MainViewController: UIViewController {
     
     private let stickyHeaderCategoryView = HeaderCategoryView()
     
-    private let realTimeView = UIView()
+    private let liveView = LiveView()
     
-    private let tvProgramView = UIView()
+    private let tvProgramView = TVProgramView()
     
-    private let movieView = UIView()
+    private let movieView = MovieView()
     
-    private let paramountView = UIView()
+    private let paramountView = ParamountView()
     
     private let dimmedView = UIView()
+    
+    private var loadingIndicator = UIActivityIndicatorView()
     
     
     // MARK: - Properties
     
-    private let dataSource: [MainSection] = [
-        MainSection.mainPoster(Contents.mainPoster()),
-        MainSection.recommendedContents(Contents.recommended()),
-        MainSection.popularLiveChannel(Contents.popularChannel()),
-        MainSection.paramounts(Contents.paramounts()),
-        MainSection.categories(Contents.category())
-    ]
+    private var mainData: [Contents] = []
+    
+    private var recommendedData: [Contents] = []
+
+    private var popularData: [Contents] = []
+
+    private var paramountsData: [Contents] = []
+
+    private var categoryData: [Contents] = []
+    
+    private let dataSource: [MainSection] = MainSection.dataSource
     
     private var prevValue: Int = 0
     
@@ -68,19 +65,19 @@ class MainViewController: UIViewController {
     private var selectedTabBarIndex: Int = 0
     
     private var shouldShowSticky: Bool = false
-    
-    let topSafeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0.0
-    
+        
     
     // MARK: - Life Cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        getMovieInfo()
         setHierarchy()
         setLayout()
         setStyle()
         setDelegate()
+        registerCell()
         setSegmentDidChange()
     }
 
@@ -97,12 +94,12 @@ private extension MainViewController {
                               navigationBarView,
                               dimmedView,
                               headerCategoryView,
-                              realTimeView,
+                              liveView,
                               tvProgramView,
                               movieView,
-                              paramountView)
+                              paramountView,
+                              loadingIndicator)
         dimmedView.addSubview(stickyHeaderCategoryView)
-        
         self.view.bringSubviewToFront(dimmedView)
         self.view.bringSubviewToFront(navigationBarView)
         self.view.bringSubviewToFront(headerCategoryView)
@@ -115,21 +112,21 @@ private extension MainViewController {
         }
         
         navigationBarView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(topSafeAreaHeight)
+            $0.top.equalToSuperview().inset(Constant.Screen.topSafeAreaHeight)
             $0.width.equalToSuperview()
             $0.height.equalTo(30)
         }
         
         headerCategoryView.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom)
-            $0.width.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(40)
         }
         
         dimmedView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(topSafeAreaHeight + 40)
+            $0.height.equalTo(Constant.Screen.topSafeAreaHeight + 40)
         }
         
         stickyHeaderCategoryView.snp.makeConstraints {
@@ -138,7 +135,7 @@ private extension MainViewController {
             $0.height.equalTo(40)
         }
         
-        [realTimeView, tvProgramView, movieView, paramountView].forEach {
+        [liveView, tvProgramView, movieView, paramountView].forEach {
             $0.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -154,17 +151,6 @@ private extension MainViewController {
             $0.backgroundColor = .black
             $0.showsVerticalScrollIndicator = false
             $0.contentInsetAdjustmentBehavior = .never
-            $0.register(ImageOnlyCell.self, forCellWithReuseIdentifier: ImageOnlyCell.identifier)
-            $0.register(MainPosterCell.self, forCellWithReuseIdentifier:MainPosterCell.identifier)
-            $0.register(PopularLiveCell.self, forCellWithReuseIdentifier: PopularLiveCell.identifier)
-            $0.register(ImageWithTitleCell.self, forCellWithReuseIdentifier: ImageWithTitleCell.identifier)
-            $0.register(BasicHeaderView.self,
-                        forSupplementaryViewOfKind: BasicHeaderView.elementKinds,
-                        withReuseIdentifier: BasicHeaderView.identifier)
-            $0.register(PageControlButtonView.self,
-                        forSupplementaryViewOfKind: PageControlButtonView.elementKinds,
-                        withReuseIdentifier: PageControlButtonView.identifier)
-
         }
         
         headerCategoryView.do {
@@ -181,26 +167,11 @@ private extension MainViewController {
             $0.backgroundColor = UIColor(resource: .black)
         }
         
-        realTimeView.do {
-            $0.isHidden = true
-            $0.backgroundColor = UIColor(resource: .grey1)
+        loadingIndicator.do {
+            $0.frame = view.bounds
+            $0.color = UIColor(resource: .white)
+            $0.backgroundColor = UIColor(resource: .black)
         }
-        
-        tvProgramView.do {
-            $0.isHidden = true
-            $0.backgroundColor = UIColor(resource: .grey2)
-        }
-        
-        movieView.do {
-            $0.isHidden = true
-            $0.backgroundColor = UIColor(resource: .grey3)
-        }
-        
-        paramountView.do {
-            $0.isHidden = true
-            $0.backgroundColor = UIColor(resource: .grey4)
-        }
-        
     }
     
     func setDelegate() {
@@ -208,6 +179,20 @@ private extension MainViewController {
         mainCollectionView.dataSource = self
     }
     
+    func registerCell() {
+        mainCollectionView.do {
+            $0.register(ImageOnlyCell.self, forCellWithReuseIdentifier: ImageOnlyCell.identifier)
+            $0.register(MainPosterCell.self, forCellWithReuseIdentifier:MainPosterCell.identifier)
+            $0.register(PopularLiveCell.self, forCellWithReuseIdentifier: PopularLiveCell.identifier)
+            $0.register(ImageWithTitleCell.self, forCellWithReuseIdentifier: ImageWithTitleCell.identifier)
+            $0.register(BasicHeaderView.self,
+                        forSupplementaryViewOfKind: BasicHeaderView.elementKinds,
+                        withReuseIdentifier: BasicHeaderView.identifier)
+            $0.register(PageControlButtonView.self,
+                        forSupplementaryViewOfKind: PageControlButtonView.elementKinds,
+                        withReuseIdentifier: PageControlButtonView.identifier)
+        }
+    }
     
     func setSegmentDidChange() {
         self.didChangeValue(sender: self.headerCategoryView.segmentedControlView)
@@ -216,7 +201,7 @@ private extension MainViewController {
     }
     
     func setSegmentView(selectedIndex: Int) {
-        let views = [mainCollectionView, realTimeView, tvProgramView, movieView, paramountView]
+        let views = [mainCollectionView, liveView, tvProgramView, movieView, paramountView]
         
         for index in 0...4 {
             views[index].isHidden = index == selectedIndex ? false : true
@@ -314,7 +299,6 @@ private extension MainViewController {
        
         return section
     }
-
     
     func makeHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
         
@@ -334,6 +318,55 @@ private extension MainViewController {
                                                                  alignment: .bottom)
         return footer
         
+    }
+    
+    func getMovieInfo() {
+        let currentDate = calculateDate()
+        
+        loadingIndicator.startAnimating()
+        
+        MainService.shared.getMovieList(date: currentDate) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? GetMovieResponseModel else { return }
+                var count = 0
+                for i in data.boxOfficeResult.dailyBoxOfficeList {
+                    self.mainData.append(Contents(image: Contents.posterImages[count]))
+                    self.recommendedData.append(Contents(image: Contents.posterImages[count], title: i.movieNm))
+                    self.paramountsData.append(Contents(image: Contents.posterImages[count], title: i.movieNm))
+                    self.categoryData.append(Contents(image: Contents.categoryImages[count]))
+                    self.popularData.append(Contents(image: Contents.posterImages[count],
+                                                     title: i.movieNm,
+                                                     ranking: "\(count + 1)",
+                                                     channelName: "tvn",
+                                                     rating: i.salesShare))
+                    count+=1
+                }
+                self.loadingIndicator.stopAnimating()
+                self.mainCollectionView.reloadData()
+                
+            default:
+                return
+            }
+        }
+    }
+    
+    func calculateDate() -> String {
+
+        let today = Date()
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.day = -1
+
+        if let oneDayAgo = calendar.date(byAdding: dateComponents, to: today) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            
+            let oneDayAgoString = dateFormatter.string(from: oneDayAgo)
+            return oneDayAgoString
+        } else {
+            return ""
+        }
     }
     
     @objc
@@ -379,10 +412,8 @@ extension MainViewController: MainPosterDelegate {
     func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController]) {
         currentPage = index
         
-        if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds,
-                                                                            at: IndexPath(item: 0, section: 0)) as? PageControlButtonView {
-            pageControlButtonView.index = currentPage
-        }
+        if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0))
+            as? PageControlButtonView { pageControlButtonView.index = currentPage }
     }
         
 }
@@ -419,41 +450,46 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch dataSource[section] {
-        case .mainPoster(_):
+        case .mainPoster:
             return 1
-        case .recommendedContents(let data),
-                .popularLiveChannel(let data),
-                .paramounts(let data),
-                .categories(let data):
-            return data.count
+        case .recommendedContents:
+            return recommendedData.count
+        case .popularLiveChannel:
+            return popularData.count
+        case .paramounts:
+            return paramountsData.count
+        case .categories:
+            return categoryData.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch dataSource[indexPath.section] {
-        case .mainPoster(_):
+        case .mainPoster:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
                     as? MainPosterCell else { return UICollectionViewCell() }
+            cell.setPageVC(imageData: mainData)
             cell.delegate = self
             return cell
             
-        case .recommendedContents(let data), .paramounts(let data):
+        case .recommendedContents, .paramounts:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
                     as? ImageWithTitleCell else { return UICollectionViewCell() }
+            let data = dataSource[indexPath.section] == .recommendedContents ? recommendedData : paramountsData
             cell.setCell(contents: data[indexPath.row])
             return cell
             
-        case .popularLiveChannel(let data):
+        case .popularLiveChannel:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularLiveCell.identifier, for: indexPath)
                     as? PopularLiveCell else { return UICollectionViewCell() }
-            cell.setCell(contents: data[indexPath.row])
+            cell.setCell(contents: popularData[indexPath.row])
             return cell
             
-        case .categories(let data):
+        case .categories:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOnlyCell.identifier, for: indexPath)
                     as? ImageOnlyCell else { return UICollectionViewCell() }
-            cell.setCell(contents: data[indexPath.row])
+            cell.setCell(contents: categoryData[indexPath.row])
             return cell
         }
         
@@ -462,10 +498,8 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == BasicHeaderView.elementKinds {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, 
-                                                                               withReuseIdentifier: BasicHeaderView.identifier,
-                                                                               for: indexPath) as? BasicHeaderView
-            else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BasicHeaderView.identifier, for: indexPath)
+                    as? BasicHeaderView else { return UICollectionReusableView() }
             
             switch dataSource[indexPath.section] {
             case .mainPoster, .categories:
@@ -479,11 +513,10 @@ extension MainViewController: UICollectionViewDataSource {
             }
             return header
         } else if kind == PageControlButtonView.elementKinds {
-            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                               withReuseIdentifier: PageControlButtonView.identifier,
-                                                                               for: indexPath) as? PageControlButtonView
-            else { return UICollectionReusableView() }
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PageControlButtonView.identifier, for: indexPath)
+                    as? PageControlButtonView else { return UICollectionReusableView() }
             
+            footer.buttonCount = mainData.count
             footer.delegate = self
             return footer
         } else {
