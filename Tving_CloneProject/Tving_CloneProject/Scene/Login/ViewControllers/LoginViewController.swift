@@ -72,15 +72,14 @@ private extension LoginViewController {
         
         loginView.snp.makeConstraints {
             $0.top.equalTo(loginLabel.snp.bottom).offset(30)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(ScreenUtils.getWidth(335))
-            $0.height.equalTo(ScreenUtils.getHeight(186))
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(186)
         }
         
         findIdLabel.snp.makeConstraints {
             $0.top.equalTo(loginView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(85)
-            $0.width.equalTo(ScreenUtils.getWidth(65))
+//            $0.trailing.equalToSuperview().inset(225)
         }
         
         divider.snp.makeConstraints {
@@ -93,7 +92,7 @@ private extension LoginViewController {
         findPwLabel.snp.makeConstraints {
             $0.top.equalTo(loginView.snp.bottom).offset(30)
             $0.leading.equalTo(divider.snp.trailing).offset(35)
-            $0.width.equalTo(ScreenUtils.getWidth(75))
+//            $0.width.equalTo(ScreenUtils.getWidth(75))
         }
         
         messageLabel.snp.makeConstraints {

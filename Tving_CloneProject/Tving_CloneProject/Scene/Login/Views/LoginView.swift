@@ -69,19 +69,19 @@ private extension LoginView {
         
         idTextField.snp.makeConstraints {
             $0.top.centerX.width.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(52))
+            $0.height.equalTo(52)
         }
         
         pwTextField.snp.makeConstraints {
             $0.top.equalTo(idTextField.snp.bottom).offset(7)
             $0.centerX.width.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(52))
+            $0.height.equalTo(52)
         }
         
         loginButton.snp.makeConstraints {
             $0.top.equalTo(pwTextField.snp.bottom).offset(20)
             $0.centerX.width.equalToSuperview()
-            $0.height.equalTo(ScreenUtils.getHeight(52))
+            $0.height.equalTo(52)
         }
         
     }
