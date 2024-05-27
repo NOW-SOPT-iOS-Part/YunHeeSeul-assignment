@@ -21,7 +21,7 @@ class MovieView: UIView {
     
     // MARK: - Properties
     
-    private var mainViewModel: MainViewModel = MainViewModel()
+    private var dailyBoxOfficeData: [DailyBoxOfficeList] = []
     
     
     // MARK: - Life Cycles
@@ -29,13 +29,12 @@ class MovieView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        getDailyBoxOffice()
         setHierarchy()
         setLayout()
         setStyle()
         setDelegate()
         registerCell()
-        setViewModel()
-        mainViewModel.getDailyBoxOffice()
     }
     
     required init?(coder: NSCoder) {
@@ -73,22 +72,6 @@ private extension MovieView {
         }
     }
     
-    func setViewModel() {
-        mainViewModel.didUpdateNetworkResult = { [weak self]  _ in
-            DispatchQueue.main.async {
-                self?.dailyBoxOfficeCollectionView.reloadData()
-            }
-        }
-        
-        mainViewModel.didChangeLoadingIndicator = { [weak self] isLoading in
-            if isLoading {
-                self?.loadingIndicator.startAnimating()
-            } else {
-                self?.loadingIndicator.stopAnimating()
-            }
-        }
-    }
-    
     func registerCell() {
         
         dailyBoxOfficeCollectionView.register(DailyBoxOfficeCell.self, forCellWithReuseIdentifier: DailyBoxOfficeCell.identifier)
@@ -98,6 +81,45 @@ private extension MovieView {
         
         dailyBoxOfficeCollectionView.delegate = self
         dailyBoxOfficeCollectionView.dataSource = self
+    }
+    
+    func getDailyBoxOffice() {
+        
+        let date = calculateDate()
+        
+        loadingIndicator.startAnimating()
+        
+        MainService.shared.getMovieList(date: date) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? GetMovieResponseModel else { return }
+                self.dailyBoxOfficeData = data.boxOfficeResult.dailyBoxOfficeList
+                
+                self.loadingIndicator.stopAnimating()
+                self.dailyBoxOfficeCollectionView.reloadData()
+                
+            default:
+                return 
+            }
+        }
+    }
+    
+    func calculateDate() -> String {
+
+        let today = Date()
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.day = -1
+
+        if let oneDayAgo = calendar.date(byAdding: dateComponents, to: today) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            
+            let oneDayAgoString = dateFormatter.string(from: oneDayAgo)
+            return oneDayAgoString
+        } else {
+            return ""
+        }
     }
     
 }
@@ -126,13 +148,13 @@ extension MovieView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return mainViewModel.fetchDailyBoxOfficeData().count
+        return self.dailyBoxOfficeData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DailyBoxOfficeCell.identifier, for: indexPath) as? DailyBoxOfficeCell else { return UICollectionViewCell() }
-        cell.setCell(contents: mainViewModel.fetchDailyBoxOfficeData()[indexPath.row])
+        cell.setCell(contents: dailyBoxOfficeData[indexPath.row])
         
         return cell
     }
@@ -141,4 +163,3 @@ extension MovieView: UICollectionViewDataSource {
     
     
 }
-

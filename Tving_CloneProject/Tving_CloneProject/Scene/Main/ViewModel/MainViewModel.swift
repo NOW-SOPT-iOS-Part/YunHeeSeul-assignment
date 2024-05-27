@@ -37,6 +37,8 @@ final class MainViewModel {
 
     private var categoryData: [Contents] = []
     
+    private var dailyBoxOfficeData: [DailyBoxOfficeList] = []
+    
     let dataSource: [MainSection] = MainSection.dataSource
     
 }
@@ -63,6 +65,10 @@ extension MainViewModel {
         return self.popularData
     }
     
+    func fetchDailyBoxOfficeData() -> [DailyBoxOfficeList] {
+        return self.dailyBoxOfficeData
+    }
+    
     func getMovieInfo() {
         let currentDate = calculateDate()
         
@@ -85,6 +91,27 @@ extension MainViewModel {
                                                      rating: i.salesShare))
                     count+=1
                 }
+                self.isLoading = false
+                self.isSuccess = true
+                
+            default:
+                return
+            }
+        }
+    }
+    
+    func getDailyBoxOffice() {
+        
+        let date = calculateDate()
+        
+        self.isLoading = true
+        
+        MainService.shared.getMovieList(date: date) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? GetMovieResponseModel else { return }
+                self.dailyBoxOfficeData = data.boxOfficeResult.dailyBoxOfficeList
+                
                 self.isLoading = false
                 self.isSuccess = true
                 

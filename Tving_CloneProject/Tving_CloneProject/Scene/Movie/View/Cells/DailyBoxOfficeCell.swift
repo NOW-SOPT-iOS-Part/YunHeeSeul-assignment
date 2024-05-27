@@ -1,3 +1,4 @@
+//
 //  DailyBoxOfficeCell.swift
 //  Tving_CloneProject
 //
@@ -119,4 +120,3 @@ class DailyBoxOfficeCell: UICollectionViewCell {
     }
     
  }
-
