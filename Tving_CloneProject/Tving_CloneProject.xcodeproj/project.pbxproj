@@ -36,6 +36,7 @@
 		CA3953202BC6F6BE00B15E91 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39531F2BC6F6BE00B15E91 /* LoginView.swift */; };
 		CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953212BC6FA9F00B15E91 /* Constant.swift */; };
 		CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */; };
+		CA3BA70F2BFE7E9800F77616 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */; };
 		CA8496E22BE7E36D0064E0CC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA8496E12BE7E36D0064E0CC /* Moya */; };
 		CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E42BE7E54D0064E0CC /* Config.swift */; };
 		CA8496E72BE7E8E60064E0CC /* GetMovieResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */; };
@@ -91,6 +92,7 @@
 		CA39531F2BC6F6BE00B15E91 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CA3953212BC6FA9F00B15E91 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		CA3953242BC6FB1100B15E91 /* ScreenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenUtils.swift; sourceTree = "<group>"; };
+		CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CA8496E42BE7E54D0064E0CC /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieResponseModel.swift; sourceTree = "<group>"; };
 		CA8496E92BE89A840064E0CC /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
@@ -133,7 +135,7 @@
 		CA1F68ED2BD568F300439E33 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				CA1F68F92BD5884200439E33 /* Cells */,
+				CA3BA70D2BFE7E8700F77616 /* ViewModel */,
 				CA1F68F62BD57D2900439E33 /* Models */,
 				CA1F68F12BD5697500439E33 /* Views */,
 				CA1F68EE2BD5690000439E33 /* ViewControllers */,
@@ -152,6 +154,7 @@
 		CA1F68F12BD5697500439E33 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CA1F68F92BD5884200439E33 /* Cells */,
 				CA1F68F22BD5698C00439E33 /* MainPosterView.swift */,
 				CA1F68F42BD578B500439E33 /* NavigationBarView.swift */,
 				CA902EBF2BD6FE1400560D26 /* BasicHeaderView.swift */,
@@ -342,6 +345,14 @@
 				CA39531B2BC5A75C00B15E91 /* WelcomeViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CA3BA70D2BFE7E8700F77616 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CA8496DA2BE7D6550064E0CC /* Network */ = {
@@ -556,6 +567,7 @@
 				CA8496F02BE8A5880064E0CC /* MoyaPlugin.swift in Sources */,
 				CA8496EA2BE89A850064E0CC /* BaseTargetType.swift in Sources */,
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
+				CA3BA70F2BFE7E9800F77616 /* MainViewModel.swift in Sources */,
 				CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */,
 				CA8496FA2BE9482C0064E0CC /* MovieView.swift in Sources */,
 				CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */,
