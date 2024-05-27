@@ -10,10 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-class MainViewController: UIViewController {    
+class MainViewController: UIViewController {
     
     // MARK: - UI Properties
-        
+    
     private lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.makeFlowLayout())
     
     private let navigationBarView = NavigationBarView()
@@ -37,17 +37,7 @@ class MainViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var mainData: [Contents] = []
-    
-    private var recommendedData: [Contents] = []
-
-    private var popularData: [Contents] = []
-
-    private var paramountsData: [Contents] = []
-
-    private var categoryData: [Contents] = []
-    
-    private let dataSource: [MainSection] = MainSection.dataSource
+    private var mainViewModel: MainViewModel = MainViewModel()
     
     private var prevValue: Int = 0
     
@@ -65,32 +55,33 @@ class MainViewController: UIViewController {
     private var selectedTabBarIndex: Int = 0
     
     private var shouldShowSticky: Bool = false
-        
+    
     
     // MARK: - Life Cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        getMovieInfo()
+        
         setHierarchy()
         setLayout()
         setStyle()
         setDelegate()
         registerCell()
+        setViewModel()
+        mainViewModel.getMovieInfo()
         setSegmentDidChange()
     }
-
+    
 }
 
 
 // MARK: - Private Methods
 
 private extension MainViewController {
-
+    
     func setHierarchy() {
         
-        self.view.addSubviews(mainCollectionView, 
+        self.view.addSubviews(mainCollectionView,
                               navigationBarView,
                               dimmedView,
                               headerCategoryView,
@@ -174,6 +165,24 @@ private extension MainViewController {
         }
     }
     
+    func setViewModel() {
+        mainViewModel.didUpdateNetworkResult = { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.mainCollectionView.reloadData()
+            }
+        }
+        
+        mainViewModel.didChangeLoadingIndicator = { [weak self] isLoading in
+            DispatchQueue.main.async {
+                if isLoading {
+                    self?.loadingIndicator.startAnimating()
+                } else {
+                    self?.loadingIndicator.stopAnimating()
+                }
+            }
+        }
+    }
+    
     func setDelegate() {
         mainCollectionView.delegate = self
         mainCollectionView.dataSource = self
@@ -212,7 +221,7 @@ private extension MainViewController {
         
         return UICollectionViewCompositionalLayout { section, ev -> NSCollectionLayoutSection? in
             
-            switch self.dataSource[section] {
+            switch self.mainViewModel.dataSource[section] {
             case .mainPoster:
                 return self.makeMainPosterLayout()
             case .recommendedContents, .paramounts:
@@ -226,21 +235,21 @@ private extension MainViewController {
     }
     
     func makeMainPosterLayout() -> NSCollectionLayoutSection {
-
-       let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-       let item = NSCollectionLayoutItem(layoutSize: itemSize)
-       
-       let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(550 / 812))
-       let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-       
-       let section = NSCollectionLayoutSection(group: group)
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(550 / 812))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 23, trailing: 0)
         
         let footer = makePageControlButtonView()
         section.boundarySupplementaryItems = [footer]
-       
-       return section
+        
+        return section
     }
     
     func makeImageNTitleLayout() -> NSCollectionLayoutSection {
@@ -259,7 +268,7 @@ private extension MainViewController {
         
         let header = makeHeaderView()
         section.boundarySupplementaryItems = [header]
-       
+        
         return section
     }
     
@@ -279,16 +288,16 @@ private extension MainViewController {
         
         let header = makeHeaderView()
         section.boundarySupplementaryItems = [header]
-       
+        
         return section
     }
-
+    
     func makeImageOnlyLayout() -> NSCollectionLayoutSection {
-
+        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
-       
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(58 / 812))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
@@ -296,7 +305,7 @@ private extension MainViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: tabBarHeight + 10, trailing: 0)
-       
+        
         return section
     }
     
@@ -318,55 +327,6 @@ private extension MainViewController {
                                                                  alignment: .bottom)
         return footer
         
-    }
-    
-    func getMovieInfo() {
-        let currentDate = calculateDate()
-        
-        loadingIndicator.startAnimating()
-        
-        MainService.shared.getMovieList(date: currentDate) { response in
-            switch response {
-            case .success(let data):
-                guard let data = data as? GetMovieResponseModel else { return }
-                var count = 0
-                for i in data.boxOfficeResult.dailyBoxOfficeList {
-                    self.mainData.append(Contents(image: Contents.posterImages[count]))
-                    self.recommendedData.append(Contents(image: Contents.posterImages[count], title: i.movieNm))
-                    self.paramountsData.append(Contents(image: Contents.posterImages[count], title: i.movieNm))
-                    self.categoryData.append(Contents(image: Contents.categoryImages[count]))
-                    self.popularData.append(Contents(image: Contents.posterImages[count],
-                                                     title: i.movieNm,
-                                                     ranking: "\(count + 1)",
-                                                     channelName: "tvn",
-                                                     rating: i.salesShare))
-                    count+=1
-                }
-                self.loadingIndicator.stopAnimating()
-                self.mainCollectionView.reloadData()
-                
-            default:
-                return
-            }
-        }
-    }
-    
-    func calculateDate() -> String {
-
-        let today = Date()
-        let calendar = Calendar.current
-        var dateComponents = DateComponents()
-        dateComponents.day = -1
-
-        if let oneDayAgo = calendar.date(byAdding: dateComponents, to: today) {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyyMMdd"
-            
-            let oneDayAgoString = dateFormatter.string(from: oneDayAgo)
-            return oneDayAgoString
-        } else {
-            return ""
-        }
     }
     
     @objc
@@ -397,7 +357,7 @@ extension MainViewController: PageControlButtonDelegate {
         let direction: UIPageViewController.NavigationDirection = prevValue < newValue ? .forward : .reverse
         for cell in mainCollectionView.visibleCells {
             if let mainPosterCell = cell as? MainPosterCell {
-                mainPosterCell.pageVC.setViewControllers([mainPosterCell.vcData[currentPage]], 
+                mainPosterCell.pageVC.setViewControllers([mainPosterCell.vcData[currentPage]],
                                                          direction: direction,
                                                          animated: true,
                                                          completion: nil)
@@ -415,7 +375,7 @@ extension MainViewController: MainPosterDelegate {
         if let pageControlButtonView = mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0))
             as? PageControlButtonView { pageControlButtonView.index = currentPage }
     }
-        
+    
 }
 
 extension MainViewController: UICollectionViewDelegate {
@@ -445,51 +405,53 @@ extension MainViewController: UICollectionViewDelegate {
 extension MainViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return dataSource.count
+        return mainViewModel.dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch dataSource[section] {
+        switch self.mainViewModel.dataSource[section] {
         case .mainPoster:
             return 1
         case .recommendedContents:
-            return recommendedData.count
+            return mainViewModel.fetchRecommendedData().count
         case .popularLiveChannel:
-            return popularData.count
+            return mainViewModel.fetchPopularData().count
         case .paramounts:
-            return paramountsData.count
+            return mainViewModel.fetchParamountsData().count
         case .categories:
-            return categoryData.count
+            return mainViewModel.fetchCategoryData().count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        switch dataSource[indexPath.section] {
+        switch self.mainViewModel.dataSource[indexPath.section] {
         case .mainPoster:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
                     as? MainPosterCell else { return UICollectionViewCell() }
-            cell.setPageVC(imageData: mainData)
+            cell.setPageVC(imageData: mainViewModel.fetchMainData())
             cell.delegate = self
             return cell
             
         case .recommendedContents, .paramounts:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
                     as? ImageWithTitleCell else { return UICollectionViewCell() }
-            let data = dataSource[indexPath.section] == .recommendedContents ? recommendedData : paramountsData
+            let data = mainViewModel.dataSource[indexPath.section] == .recommendedContents
+            ? mainViewModel.fetchRecommendedData()
+            : mainViewModel.fetchParamountsData()
             cell.setCell(contents: data[indexPath.row])
             return cell
             
         case .popularLiveChannel:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularLiveCell.identifier, for: indexPath)
                     as? PopularLiveCell else { return UICollectionViewCell() }
-            cell.setCell(contents: popularData[indexPath.row])
+            cell.setCell(contents: mainViewModel.fetchPopularData()[indexPath.row])
             return cell
             
         case .categories:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOnlyCell.identifier, for: indexPath)
                     as? ImageOnlyCell else { return UICollectionViewCell() }
-            cell.setCell(contents: categoryData[indexPath.row])
+            cell.setCell(contents: mainViewModel.fetchCategoryData()[indexPath.row])
             return cell
         }
         
@@ -501,7 +463,7 @@ extension MainViewController: UICollectionViewDataSource {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BasicHeaderView.identifier, for: indexPath)
                     as? BasicHeaderView else { return UICollectionReusableView() }
             
-            switch dataSource[indexPath.section] {
+            switch self.mainViewModel.dataSource[indexPath.section] {
             case .mainPoster, .categories:
                 return header
             case .recommendedContents:
@@ -516,7 +478,7 @@ extension MainViewController: UICollectionViewDataSource {
             guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PageControlButtonView.identifier, for: indexPath)
                     as? PageControlButtonView else { return UICollectionReusableView() }
             
-            footer.buttonCount = mainData.count
+            footer.buttonCount = mainViewModel.fetchMainData().count
             footer.delegate = self
             return footer
         } else {
