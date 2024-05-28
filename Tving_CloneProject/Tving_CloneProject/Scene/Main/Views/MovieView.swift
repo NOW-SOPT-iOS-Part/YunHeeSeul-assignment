@@ -47,12 +47,10 @@ class MovieView: UIView {
 private extension MovieView {
     
     func setHierarchy() {
-        
         self.addSubviews(dailyBoxOfficeCollectionView, loadingIndicator)
     }
     
     func setLayout() {
-        
         dailyBoxOfficeCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(Constant.Screen.topSafeAreaHeight + 80)
             $0.horizontalEdges.bottom.equalToSuperview().inset(10)
@@ -60,7 +58,6 @@ private extension MovieView {
     }
     
     func setStyle() {
-        
         dailyBoxOfficeCollectionView.do {
             $0.backgroundColor = UIColor(resource: .black)
             $0.showsVerticalScrollIndicator = false
@@ -90,12 +87,10 @@ private extension MovieView {
     }
     
     func registerCell() {
-        
         dailyBoxOfficeCollectionView.register(DailyBoxOfficeCell.self, forCellWithReuseIdentifier: DailyBoxOfficeCell.identifier)
     }
     
     func setDelegate() {
-        
         dailyBoxOfficeCollectionView.delegate = self
         dailyBoxOfficeCollectionView.dataSource = self
     }

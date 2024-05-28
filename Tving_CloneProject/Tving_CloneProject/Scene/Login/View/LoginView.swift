@@ -61,12 +61,10 @@ class LoginView: UIView {
 private extension LoginView {
     
     func setHierarchy() {
-        
         self.addSubviews(idTextField, pwTextField, loginButton)
     }
     
     func setLayout() {
-        
         idTextField.snp.makeConstraints {
             $0.top.centerX.width.equalToSuperview()
             $0.height.equalTo(52)

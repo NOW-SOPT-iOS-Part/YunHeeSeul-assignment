@@ -128,8 +128,6 @@ extension PageControlButtonView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension PageControlButtonView: UICollectionViewDelegate {}
-
 extension PageControlButtonView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
