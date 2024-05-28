@@ -38,6 +38,8 @@ class LoginView: UIView {
     
     weak var delegate: LoginViewDelegate?
     
+    private let loginViewModel: LoginViewModel = LoginViewModel()
+    
     
     // MARK: - Life Cycles
     
@@ -85,7 +87,6 @@ private extension LoginView {
     }
     
     func setStyle() {
-        
         self.backgroundColor = UIColor(resource: .black)
         
         idTextField.do {
@@ -201,17 +202,17 @@ private extension LoginView {
     
     @objc
     func textFieldChange() {
-        let id = self.idTextField.text ?? ""
-        let pw = self.pwTextField.text ?? ""
+        let id = self.idTextField.text
+        let pw = self.pwTextField.text
         
-        if !id.isEmpty {
+        if loginViewModel.checkId(id: id) {
             idClearButton.isHidden = false
         } else {
             pwClearButton.isHidden = false
             maskButton.isHidden = false
         }
         
-        setLoginButton(isEnabled: !id.isEmpty && !pw.isEmpty)
+        setLoginButton(isEnabled: loginViewModel.checkValid(id: id, pw: pw))
     }
     
     @objc
@@ -222,9 +223,9 @@ private extension LoginView {
     @objc
     func clearButtonTapped(_ sender: UIButton) {
         if sender.tag == 0 {
-            self.idTextField.text = ""
+            self.loginViewModel.clearText(textfield: self.idTextField)
         } else {
-            self.pwTextField.text = ""
+            self.loginViewModel.clearText(textfield: self.pwTextField)
         }
         setLoginButton(isEnabled: false)
     }
@@ -244,23 +245,11 @@ private extension LoginView {
 extension LoginView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing (_ textField: UITextField) {
-        
-        if textField.placeholder == "아이디" {
-            self.idTextField.layer.borderWidth = 1
-            self.idTextField.layer.borderColor = UIColor(resource: .grey2).cgColor
-        } else {
-            self.pwTextField.layer.borderWidth = 1
-            self.pwTextField.layer.borderColor = UIColor(resource: .grey2).cgColor
-        }
-        
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(resource: .grey2).cgColor
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        if textField.placeholder == "아이디" {
-            self.idTextField.layer.borderWidth = 0
-        } else {
-            self.pwTextField.layer.borderWidth = 0
-        }
+        textField.layer.borderWidth = 0
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
     // MARK: - UI Properties
     
