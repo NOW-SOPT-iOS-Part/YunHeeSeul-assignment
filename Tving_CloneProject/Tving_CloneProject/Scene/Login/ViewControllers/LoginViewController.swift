@@ -35,6 +35,8 @@ class LoginViewController: UIViewController {
     
     var nickname: String = ""
     
+    private let loginViewModel: LoginViewModel = LoginViewModel()
+    
     
     // MARK: - Life Cycles
     
@@ -180,7 +182,7 @@ extension LoginViewController: LoginViewDelegate {
     
     func pushToWelcomeVC(id: String) {
         let welcomeVC = WelcomeViewController()
-        welcomeVC.userInfo = nickname.isEmpty ? id : nickname
+        welcomeVC.userInfo = loginViewModel.checkValidNickname(nickname: self.nickname) ? nickname : id
         self.navigationController?.pushViewController(welcomeVC, animated: true)
     }
 }

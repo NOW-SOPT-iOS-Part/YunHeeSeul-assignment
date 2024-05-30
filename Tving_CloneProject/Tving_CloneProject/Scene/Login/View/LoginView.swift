@@ -205,13 +205,6 @@ private extension LoginView {
         let id = self.idTextField.text
         let pw = self.pwTextField.text
         
-        if loginViewModel.checkId(id: id) {
-            idClearButton.isHidden = false
-        } else {
-            pwClearButton.isHidden = false
-            maskButton.isHidden = false
-        }
-        
         setLoginButton(isEnabled: loginViewModel.checkValid(id: id, pw: pw))
     }
     
