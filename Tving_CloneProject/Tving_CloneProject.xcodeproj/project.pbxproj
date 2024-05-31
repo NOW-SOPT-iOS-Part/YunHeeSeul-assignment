@@ -37,6 +37,8 @@
 		CA3BA70F2BFE7E9800F77616 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */; };
 		CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D972C05B977006B8C35 /* LoginViewModel.swift */; };
 		CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D992C0866BA006B8C35 /* ObservablePattern.swift */; };
+		CA803D9C2C09C784006B8C35 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */; };
+		CA803D9E2C09C818006B8C35 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D9D2C09C818006B8C35 /* String+.swift */; };
 		CA8496E22BE7E36D0064E0CC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA8496E12BE7E36D0064E0CC /* Moya */; };
 		CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E42BE7E54D0064E0CC /* Config.swift */; };
 		CA8496E72BE7E8E60064E0CC /* GetMovieResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */; };
@@ -94,6 +96,8 @@
 		CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CA803D972C05B977006B8C35 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CA803D992C0866BA006B8C35 /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
+		CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		CA803D9D2C09C818006B8C35 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		CA8496E42BE7E54D0064E0CC /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		CA8496E62BE7E8E60064E0CC /* GetMovieResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieResponseModel.swift; sourceTree = "<group>"; };
 		CA8496E92BE89A840064E0CC /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 				CA3953162BC45DA300B15E91 /* UIFont+.swift */,
 				CA3953182BC47D3300B15E91 /* UILabel+.swift */,
 				CA902EC12BD789FF00560D26 /* UIStackView+.swift */,
+				CA803D9D2C09C818006B8C35 /* String+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */,
+				CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -562,6 +568,7 @@
 				CA902EED2BDE9CD800560D26 /* TabBarViewController.swift in Sources */,
 				CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */,
 				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
+				CA803D9C2C09C784006B8C35 /* MovieViewModel.swift in Sources */,
 				CA902ECA2BDB8E5C00560D26 /* HeaderCategoryView.swift in Sources */,
 				CA902EC82BDB8D3900560D26 /* UnderlineSegmentedControlView.swift in Sources */,
 				CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */,
@@ -579,6 +586,7 @@
 				CA8496F02BE8A5880064E0CC /* MoyaPlugin.swift in Sources */,
 				CA8496EA2BE89A850064E0CC /* BaseTargetType.swift in Sources */,
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
+				CA803D9E2C09C818006B8C35 /* String+.swift in Sources */,
 				CA3BA70F2BFE7E9800F77616 /* MainViewModel.swift in Sources */,
 				CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */,
 				CAB6E7EE2C04863200E49F9E /* MovieView.swift in Sources */,
