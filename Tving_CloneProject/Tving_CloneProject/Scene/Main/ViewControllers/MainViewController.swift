@@ -68,7 +68,7 @@ final class MainViewController: UIViewController {
         setDelegate()
         registerCell()
         setViewModel()
-        mainViewModel.getMovieInfo()
+        getMovieInfo()
         setSegmentDidChange()
     }
     
@@ -166,20 +166,26 @@ private extension MainViewController {
     }
     
     func setViewModel() {
-        mainViewModel.didUpdateNetworkResult = { [weak self] _ in
-            DispatchQueue.main.async {
+        mainViewModel.didUpdateNetworkResult.bind { [weak self] isSuccess in
+            guard let isSuccess else { return }
+            if isSuccess {
                 self?.mainCollectionView.reloadData()
             }
         }
         
-        mainViewModel.didChangeLoadingIndicator = { [weak self] isLoading in
-            DispatchQueue.main.async {
-                if isLoading {
-                    self?.loadingIndicator.startAnimating()
-                } else {
-                    self?.loadingIndicator.stopAnimating()
-                }
+        mainViewModel.didChangeLoadingIndicator.bind { [weak self] isLoading in
+            guard let isLoading else { return }
+            if isLoading {
+                self?.loadingIndicator.startAnimating()
+            } else {
+                self?.loadingIndicator.stopAnimating()
             }
+        }
+    }
+    
+    func getMovieInfo() {
+        if mainViewModel.getMovieInfo() {
+            self.mainCollectionView.reloadData()
         }
     }
     

@@ -11,21 +11,21 @@ final class MainViewModel: NSObject {
     
     // MARK: - Properties
     
-    private var isSuccess: Bool = false {
-        didSet {
-            self.didUpdateNetworkResult?(isSuccess)
-        }
-    }
+//    private var isSuccess: Bool = false {
+//        didSet {
+//            self.didUpdateNetworkResult?(isSuccess)
+//        }
+//    }
+//    
+//    private var isLoading: Bool = true {
+//        didSet {
+//            self.didChangeLoadingIndicator?(isLoading)
+//        }
+//    }
     
-    private var isLoading: Bool = true {
-        didSet {
-            self.didChangeLoadingIndicator?(isLoading)
-        }
-    }
+    var didUpdateNetworkResult: ObservablePattern<Bool> = ObservablePattern(false)
     
-    var didUpdateNetworkResult: ((Bool) -> Void)?
-    
-    var didChangeLoadingIndicator: ((Bool) -> Void)?
+    var didChangeLoadingIndicator: ObservablePattern<Bool> = ObservablePattern(true)
     
     private var mainData: [Contents] = []
     
@@ -36,19 +36,17 @@ final class MainViewModel: NSObject {
     private var paramountsData: [Contents] = []
 
     private var categoryData: [Contents] = []
-    
-    private var dailyBoxOfficeData: [DailyBoxOfficeList] = []
-    
+        
     let dataSource: [MainSection] = MainSection.dataSource
     
 }
 
 extension MainViewModel {
     
-    func getMovieInfo() {
-        let currentDate = calculateDate()
+    func getMovieInfo() -> Bool {
+        let currentDate = String.calculateDate()
         
-        self.isLoading = true
+        self.didChangeLoadingIndicator.value = true
         
         MainService.shared.getMovieList(date: currentDate) { response in
             switch response {
@@ -67,53 +65,18 @@ extension MainViewModel {
                                                      rating: i.salesShare))
                     count+=1
                 }
-                self.isLoading = false
-                self.isSuccess = true
+                self.didChangeLoadingIndicator.value = false
+                self.didUpdateNetworkResult.value = true
                 
             default:
+                self.didUpdateNetworkResult.value = false
                 return
             }
         }
+        guard let networkResult = self.didUpdateNetworkResult.value else { return false}
+        return networkResult
     }
-    
-    func getDailyBoxOffice() {
-        
-        let date = calculateDate()
-        
-        self.isLoading = true
-        
-        MainService.shared.getMovieList(date: date) { response in
-            switch response {
-            case .success(let data):
-                guard let data = data as? GetMovieResponseModel else { return }
-                self.dailyBoxOfficeData = data.boxOfficeResult.dailyBoxOfficeList
-                
-                self.isLoading = false
-                self.isSuccess = true
-                
-            default:
-                return
-            }
-        }
-    }
-    
-    func calculateDate() -> String {
 
-        let today = Date()
-        let calendar = Calendar.current
-        var dateComponents = DateComponents()
-        dateComponents.day = -1
-
-        if let oneDayAgo = calendar.date(byAdding: dateComponents, to: today) {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyyMMdd"
-            
-            let oneDayAgoString = dateFormatter.string(from: oneDayAgo)
-            return oneDayAgoString
-        } else {
-            return ""
-        }
-    }
 }
 
 extension MainViewModel: UICollectionViewDataSource {
