@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ObservablePattern<T> { // --- a
+final class ObservablePattern<T> { // --- a
 
     var value: T? { // --- b
         didSet {

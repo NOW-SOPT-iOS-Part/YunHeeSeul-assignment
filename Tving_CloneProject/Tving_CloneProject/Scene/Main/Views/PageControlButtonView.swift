@@ -11,7 +11,7 @@ protocol PageControlButtonDelegate: AnyObject {
     func didTapControlButton(index: Int)
 }
 
-class PageControlButtonView: UICollectionReusableView {
+final class PageControlButtonView: UICollectionReusableView {
     
     // MARK: - UI Properties
     

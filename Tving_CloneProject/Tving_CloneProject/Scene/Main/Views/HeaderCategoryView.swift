@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class HeaderCategoryView: UIView {
+final class HeaderCategoryView: UIView {
 
     // MARK: - UI Property
     

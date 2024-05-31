@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class WelcomeViewController: UIViewController {
+final class WelcomeViewController: UIViewController {
     
     // MARK: - UI Properties
     
@@ -49,7 +49,6 @@ private extension WelcomeViewController {
     }
     
     func setLayout() {
-        
         logoImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(60)
             $0.leading.trailing.equalToSuperview()
@@ -70,7 +69,6 @@ private extension WelcomeViewController {
     }
     
     func setStyle() {
-        
         self.view.backgroundColor = UIColor(resource: .black)
         self.navigationController?.navigationBar.isHidden = true
         

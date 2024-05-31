@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MovieView: UIView {
+final class MovieView: UIView {
     
     // MARK: - UI Properties
     

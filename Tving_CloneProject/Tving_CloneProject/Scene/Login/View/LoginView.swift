@@ -11,7 +11,7 @@ protocol LoginViewDelegate: AnyObject {
     func pushToWelcomeVC(id: String)
 }
 
-class LoginView: UIView {
+final class LoginView: UIView {
 
     // MARK: - UI Properties
     

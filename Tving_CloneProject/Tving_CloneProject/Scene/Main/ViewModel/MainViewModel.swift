@@ -11,18 +11,6 @@ final class MainViewModel: NSObject {
     
     // MARK: - Properties
     
-//    private var isSuccess: Bool = false {
-//        didSet {
-//            self.didUpdateNetworkResult?(isSuccess)
-//        }
-//    }
-//    
-//    private var isLoading: Bool = true {
-//        didSet {
-//            self.didChangeLoadingIndicator?(isLoading)
-//        }
-//    }
-    
     var didUpdateNetworkResult: ObservablePattern<Bool> = ObservablePattern(false)
     
     var didChangeLoadingIndicator: ObservablePattern<Bool> = ObservablePattern(true)
@@ -30,13 +18,13 @@ final class MainViewModel: NSObject {
     private var mainData: [Contents] = []
     
     private var recommendedData: [Contents] = []
-
+    
     private var popularData: [Contents] = []
-
+    
     private var paramountsData: [Contents] = []
-
+    
     private var categoryData: [Contents] = []
-        
+    
     let dataSource: [MainSection] = MainSection.dataSource
     
 }
@@ -76,7 +64,7 @@ extension MainViewModel {
         guard let networkResult = self.didUpdateNetworkResult.value else { return false}
         return networkResult
     }
-
+    
 }
 
 extension MainViewModel: UICollectionViewDataSource {

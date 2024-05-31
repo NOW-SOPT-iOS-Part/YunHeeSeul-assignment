@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class LiveView: UIView {
+final class LiveView: UIView {
 
     // MARK: - UI Properties
     

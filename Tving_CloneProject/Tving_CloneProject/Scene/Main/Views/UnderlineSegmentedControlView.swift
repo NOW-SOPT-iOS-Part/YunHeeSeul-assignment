@@ -36,7 +36,6 @@ final class UnderlineSegmentedControlView: UISegmentedControl {
     }
     
     func moveUnderlineView(to index: Int) {
-        
         underlineView.backgroundColor = UIColor(resource: .white)
 
         guard let text = self.titleForSegment(at: index),

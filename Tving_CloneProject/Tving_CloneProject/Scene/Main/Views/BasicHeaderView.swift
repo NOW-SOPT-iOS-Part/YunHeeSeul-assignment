@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class BasicHeaderView: UICollectionReusableView {
+final class BasicHeaderView: UICollectionReusableView {
     
     // MARK: - UI Properties
     
@@ -52,13 +52,10 @@ class BasicHeaderView: UICollectionReusableView {
 private extension BasicHeaderView {
     
     func setHierarchy() {
-        
         self.addSubviews(titleLabel, viewAllButton)
-        
     }
     
     func setLayout() {
-        
         titleLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -73,7 +70,6 @@ private extension BasicHeaderView {
     }
     
     func setStyle() {
-        
         titleLabel.do {
             $0.font = UIFont.pretendard(.subhead3)
             $0.textColor = UIColor(resource: .white)

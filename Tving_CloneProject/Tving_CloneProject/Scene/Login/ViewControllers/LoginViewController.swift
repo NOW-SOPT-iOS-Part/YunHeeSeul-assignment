@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
     // MARK: - UI Properties
     

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class TVProgramView: UIView {
+final class TVProgramView: UIView {
 
     // MARK: - UI Properties
     

@@ -11,7 +11,7 @@ protocol CreateNicknameVCDelegate: AnyObject {
     func saveUserNickname(nickname: String)
 }
 
-class CreateNicknameViewController: UIViewController {
+final class CreateNicknameViewController: UIViewController {
     
     // MARK: - UI Properties
     

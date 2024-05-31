@@ -40,7 +40,7 @@ extension MovieViewModel {
                 return
             }
         }
-        guard let networkResult = self.didUpdateNetworkResult.value else { return false}
+        guard let networkResult = self.didUpdateNetworkResult.value else { return false }
         return networkResult
     }
 }
