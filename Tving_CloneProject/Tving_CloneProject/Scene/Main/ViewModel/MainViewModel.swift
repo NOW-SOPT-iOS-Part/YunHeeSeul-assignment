@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MainViewModel {
+final class MainViewModel: NSObject {
     
     // MARK: - Properties
     
@@ -44,30 +44,6 @@ final class MainViewModel {
 }
 
 extension MainViewModel {
-    
-    func fetchMainData() -> [Contents] {
-        return self.mainData
-    }
-    
-    func fetchRecommendedData() -> [Contents] {
-        return self.recommendedData
-    }
-    
-    func fetchParamountsData() -> [Contents] {
-        return self.paramountsData
-    }
-    
-    func fetchCategoryData() -> [Contents] {
-        return self.categoryData
-    }
-    
-    func fetchPopularData() -> [Contents] {
-        return self.popularData
-    }
-    
-    func fetchDailyBoxOfficeData() -> [DailyBoxOfficeList] {
-        return self.dailyBoxOfficeData
-    }
     
     func getMovieInfo() {
         let currentDate = calculateDate()
@@ -139,3 +115,89 @@ extension MainViewModel {
         }
     }
 }
+
+extension MainViewModel: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return dataSource.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch self.dataSource[section] {
+        case .mainPoster:
+            return 1
+        case .recommendedContents:
+            return recommendedData.count
+        case .popularLiveChannel:
+            return popularData.count
+        case .paramounts:
+            return paramountsData.count
+        case .categories:
+            return categoryData.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        switch self.dataSource[indexPath.section] {
+        case .mainPoster:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
+                    as? MainPosterCell else { return UICollectionViewCell() }
+            cell.setPageVC(imageData: mainData)
+            return cell
+            
+        case .recommendedContents, .paramounts:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
+                    as? ImageWithTitleCell else { return UICollectionViewCell() }
+            let data = dataSource[indexPath.section] == .recommendedContents
+            ? recommendedData
+            : paramountsData
+            cell.setCell(contents: data[indexPath.row])
+            return cell
+            
+        case .popularLiveChannel:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularLiveCell.identifier, for: indexPath)
+                    as? PopularLiveCell else { return UICollectionViewCell() }
+            cell.setCell(contents: popularData[indexPath.row])
+            return cell
+            
+        case .categories:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOnlyCell.identifier, for: indexPath)
+                    as? ImageOnlyCell else { return UICollectionViewCell() }
+            cell.setCell(contents: categoryData[indexPath.row])
+            return cell
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == BasicHeaderView.elementKinds {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BasicHeaderView.identifier, for: indexPath)
+                    as? BasicHeaderView else { return UICollectionReusableView() }
+            
+            switch self.dataSource[indexPath.section] {
+            case .mainPoster, .categories:
+                return header
+            case .recommendedContents:
+                header.bindTitle(headerTitle: "티빙에서 꼭 봐야하는 콘텐츠")
+            case .popularLiveChannel:
+                header.bindTitle(headerTitle: "인기 LIVE 채널")
+            case .paramounts:
+                header.bindTitle(headerTitle: "1화 무료! 파라마운트+ 인기 시리즈")
+            }
+            return header
+        } else if kind == PageControlButtonView.elementKinds {
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PageControlButtonView.identifier, for: indexPath)
+                    as? PageControlButtonView else { return UICollectionReusableView() }
+            
+            footer.buttonCount = mainData.count
+            return footer
+        } else {
+            return UICollectionReusableView()
+        }
+        
+    }
+    
+}
+

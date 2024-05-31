@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
     
     var isActivate: Bool = false
     
-    var nickname: String = ""
+    var nickname: String? = nil
     
     private let loginViewModel: LoginViewModel = LoginViewModel()
     
@@ -81,7 +81,6 @@ private extension LoginViewController {
         findIdLabel.snp.makeConstraints {
             $0.top.equalTo(loginView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(85)
-//            $0.trailing.equalToSuperview().inset(225)
         }
         
         divider.snp.makeConstraints {
@@ -94,7 +93,6 @@ private extension LoginViewController {
         findPwLabel.snp.makeConstraints {
             $0.top.equalTo(loginView.snp.bottom).offset(30)
             $0.leading.equalTo(divider.snp.trailing).offset(35)
-//            $0.width.equalTo(ScreenUtils.getWidth(75))
         }
         
         messageLabel.snp.makeConstraints {
