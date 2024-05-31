@@ -21,7 +21,7 @@ class MovieView: UIView {
     
     // MARK: - Properties
     
-    private var mainViewModel: MainViewModel = MainViewModel()
+    private var movieViewModel: MovieViewModel = MovieViewModel()
     
     
     // MARK: - Life Cycles
@@ -35,7 +35,7 @@ class MovieView: UIView {
         setDelegate()
         registerCell()
         setViewModel()
-        mainViewModel.getDailyBoxOffice()
+        getDailyBoxOffice()
     }
     
     required init?(coder: NSCoder) {
@@ -71,18 +71,27 @@ private extension MovieView {
     }
     
     func setViewModel() {
-        mainViewModel.didUpdateNetworkResult = { [weak self]  _ in
-            DispatchQueue.main.async {
+        movieViewModel.didUpdateNetworkResult.bind { [weak self] isSuccess in
+            guard let isSuccess else { return }
+            if isSuccess {
                 self?.dailyBoxOfficeCollectionView.reloadData()
             }
         }
         
-        mainViewModel.didChangeLoadingIndicator = { [weak self] isLoading in
+        movieViewModel.didChangeLoadingIndicator.bind { [weak self] isLoading in
+            guard let isLoading else { return }
             if isLoading {
                 self?.loadingIndicator.startAnimating()
             } else {
                 self?.loadingIndicator.stopAnimating()
             }
+        }
+
+    }
+    
+    func getDailyBoxOffice() {
+        if movieViewModel.getDailyBoxOffice() {
+            self.dailyBoxOfficeCollectionView.reloadData()
         }
     }
     
@@ -92,9 +101,9 @@ private extension MovieView {
     
     func setDelegate() {
         dailyBoxOfficeCollectionView.delegate = self
-        dailyBoxOfficeCollectionView.dataSource = self
+        dailyBoxOfficeCollectionView.dataSource = movieViewModel
     }
-    
+
 }
 
 extension MovieView: UICollectionViewDelegateFlowLayout {
@@ -114,26 +123,6 @@ extension MovieView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
-    
-}
-
-extension MovieView: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return mainViewModel.fetchDailyBoxOfficeData().count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DailyBoxOfficeCell.identifier, for: indexPath) as? DailyBoxOfficeCell else { return UICollectionViewCell() }
-        cell.setCell(contents: mainViewModel.fetchDailyBoxOfficeData()[indexPath.row])
-        
-        return cell
-    }
-    
-    
-    
     
 }
 
