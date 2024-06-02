@@ -101,7 +101,7 @@ private extension MovieView {
     
     func setDelegate() {
         dailyBoxOfficeCollectionView.delegate = self
-        dailyBoxOfficeCollectionView.dataSource = movieViewModel
+        dailyBoxOfficeCollectionView.dataSource = self
     }
 
 }
@@ -126,3 +126,17 @@ extension MovieView: UICollectionViewDelegateFlowLayout {
     
 }
 
+extension MovieView: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return movieViewModel.fetchData().count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DailyBoxOfficeCell.identifier, for: indexPath) as? DailyBoxOfficeCell else { return UICollectionViewCell() }
+        cell.setCell(contents: movieViewModel.fetchData()[indexPath.row])
+        
+        return cell
+    }
+    
+}

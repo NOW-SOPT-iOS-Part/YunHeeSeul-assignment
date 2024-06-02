@@ -5,13 +5,13 @@
 //  Created by 윤희슬 on 5/31/24.
 //
 
-import UIKit
+import Foundation
 
-final class MovieViewModel: NSObject {
+final class MovieViewModel {
     
     // MARK: - Properties
     
-    private var dailyBoxOfficeData: [DailyBoxOfficeList] = []
+    private var dailyBoxOfficeData: ObservablePattern<[DailyBoxOfficeList]> = ObservablePattern([])
     
     var didUpdateNetworkResult: ObservablePattern<Bool> = ObservablePattern(false)
     
@@ -20,6 +20,10 @@ final class MovieViewModel: NSObject {
 }
 
 extension MovieViewModel {
+    
+    func fetchData() -> [DailyBoxOfficeList] {
+        return self.dailyBoxOfficeData.value ?? []
+    }
     
     func getDailyBoxOffice() -> Bool {
         let date = String.calculateDate()
@@ -30,7 +34,7 @@ extension MovieViewModel {
             switch response {
             case .success(let data):
                 guard let data = data as? GetMovieResponseModel else { return }
-                self.dailyBoxOfficeData = data.boxOfficeResult.dailyBoxOfficeList
+                self.dailyBoxOfficeData.value = data.boxOfficeResult.dailyBoxOfficeList
                 
                 self.didChangeLoadingIndicator.value = false
                 self.didUpdateNetworkResult.value = true
@@ -43,19 +47,4 @@ extension MovieViewModel {
         guard let networkResult = self.didUpdateNetworkResult.value else { return false }
         return networkResult
     }
-}
-
-extension MovieViewModel: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dailyBoxOfficeData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DailyBoxOfficeCell.identifier, for: indexPath) as? DailyBoxOfficeCell else { return UICollectionViewCell() }
-        cell.setCell(contents: dailyBoxOfficeData[indexPath.row])
-        
-        return cell
-    }
-    
 }

@@ -191,7 +191,7 @@ private extension MainViewController {
     
     func setDelegate() {
         mainCollectionView.delegate = self
-        mainCollectionView.dataSource = mainViewModel
+        mainCollectionView.dataSource = self
     }
     
     func registerCell() {
@@ -386,21 +386,6 @@ extension MainViewController: MainPosterDelegate {
 
 extension MainViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        switch cell {
-        case let mainPosterCell as MainPosterCell:
-            mainPosterCell.delegate = self
-        default:
-            break
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        if let footer = view as? PageControlButtonView {
-            footer.delegate = self
-        }
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // contentOffset.y: 손가락을 위로 올리면 + 값, 손가락을 아래로 내리면 - 값
         let topPadding = scrollView.safeAreaInsets.top
@@ -422,3 +407,91 @@ extension MainViewController: UICollectionViewDelegate {
         }
     }
 }
+
+extension MainViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return mainViewModel.dataSource.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch mainViewModel.dataSource[section] {
+        case .mainPoster:
+            return 1
+        case .recommendedContents:
+            return mainViewModel.fetchData(type: .recommendedContents).count
+        case .popularLiveChannel:
+            return mainViewModel.fetchData(type: .popularLiveChannel).count
+        case .paramounts:
+            return mainViewModel.fetchData(type: .paramounts).count
+        case .categories:
+            return mainViewModel.fetchData(type: .categories).count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        switch mainViewModel.dataSource[indexPath.section] {
+        case .mainPoster:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainPosterCell.identifier, for: indexPath)
+                    as? MainPosterCell else { return UICollectionViewCell() }
+            cell.setPageVC(imageData: mainViewModel.fetchData(type: .mainPoster))
+            cell.delegate = self
+            return cell
+            
+        case .recommendedContents, .paramounts:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageWithTitleCell.identifier, for: indexPath)
+                    as? ImageWithTitleCell else { return UICollectionViewCell() }
+            let data = mainViewModel.dataSource[indexPath.section] == .recommendedContents
+            ? mainViewModel.fetchData(type: .recommendedContents)
+            : mainViewModel.fetchData(type: .paramounts)
+            cell.setCell(contents: data[indexPath.row])
+            return cell
+            
+        case .popularLiveChannel:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularLiveCell.identifier, for: indexPath)
+                    as? PopularLiveCell else { return UICollectionViewCell() }
+            cell.setCell(contents: mainViewModel.fetchData(type: .popularLiveChannel)[indexPath.row])
+            return cell
+            
+        case .categories:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOnlyCell.identifier, for: indexPath)
+                    as? ImageOnlyCell else { return UICollectionViewCell() }
+            cell.setCell(contents: mainViewModel.fetchData(type: .categories)[indexPath.row])
+            return cell
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == BasicHeaderView.elementKinds {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BasicHeaderView.identifier, for: indexPath)
+                    as? BasicHeaderView else { return UICollectionReusableView() }
+            
+            switch mainViewModel.dataSource[indexPath.section] {
+            case .mainPoster, .categories:
+                return header
+            case .recommendedContents:
+                header.bindTitle(headerTitle: "티빙에서 꼭 봐야하는 콘텐츠")
+            case .popularLiveChannel:
+                header.bindTitle(headerTitle: "인기 LIVE 채널")
+            case .paramounts:
+                header.bindTitle(headerTitle: "1화 무료! 파라마운트+ 인기 시리즈")
+            }
+            return header
+        } else if kind == PageControlButtonView.elementKinds {
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: PageControlButtonView.identifier, for: indexPath)
+                    as? PageControlButtonView else { return UICollectionReusableView() }
+            
+            footer.buttonCount = mainViewModel.fetchData(type: .mainPoster).count
+            footer.delegate = self
+            return footer
+        } else {
+            return UICollectionReusableView()
+        }
+        
+    }
+    
+}
+
