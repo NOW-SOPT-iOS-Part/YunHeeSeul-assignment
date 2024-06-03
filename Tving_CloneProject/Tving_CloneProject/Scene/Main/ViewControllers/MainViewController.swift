@@ -26,7 +26,7 @@ final class MainViewController: UIViewController {
     
     private let tvProgramView = TVProgramView()
     
-    private let movieView = MovieView()
+    private let movieVC = MovieViewController()
     
     private let paramountView = ParamountView()
     
@@ -87,7 +87,7 @@ private extension MainViewController {
                               headerCategoryView,
                               liveView,
                               tvProgramView,
-                              movieView,
+                              movieVC.view,
                               paramountView,
                               loadingIndicator)
         dimmedView.addSubview(stickyHeaderCategoryView)
@@ -126,7 +126,7 @@ private extension MainViewController {
             $0.height.equalTo(40)
         }
         
-        [liveView, tvProgramView, movieView, paramountView].forEach {
+        [liveView, tvProgramView, movieVC.view, paramountView].forEach {
             $0.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -210,10 +210,10 @@ private extension MainViewController {
     }
     
     func setSegmentView(selectedIndex: Int) {
-        let views = [mainView, liveView, tvProgramView, movieView, paramountView]
+        let views = [mainView, liveView, tvProgramView, movieVC.view, paramountView]
         
         for index in 0...4 {
-            views[index].isHidden = index == selectedIndex ? false : true
+            views[index]?.isHidden = index == selectedIndex ? false : true
         }
     }
     
