@@ -2,7 +2,7 @@
 //  MainViewController.swift
 //  Tving_CloneProject
 //
-//  Created by 윤희슬 on 4/22/24.
+//  Created by 윤희슬 on 6/3/24.
 //
 
 import UIKit
@@ -11,34 +11,24 @@ import SnapKit
 import Then
 
 final class MainViewController: UIViewController {
+
+    // MARK: - UI Properties
+    
+    var mainView = MainView()
+
+    private var loadingIndicator = UIActivityIndicatorView()
+
     
     // MARK: - UI Properties
-        
-    private lazy var mainView = MainView(tabBarHeight: self.tabBarController?.tabBar.frame.height ?? 40.0)
     
-    private let navigationBarView = NavigationBarView()
-    
-    private let headerCategoryView = HeaderCategoryView()
-    
-    private let stickyHeaderCategoryView = HeaderCategoryView()
-    
-    private let liveView = LiveView()
-    
-    private let tvProgramView = TVProgramView()
-    
-    private let movieVC = MovieViewController()
-    
-    private let paramountView = ParamountView()
-    
-    private let dimmedView = UIView()
-    
-    private var loadingIndicator = UIActivityIndicatorView()
-    
-    
-    // MARK: - Properties
-    
+    var tabBarHeight: CGFloat = 0 {
+        didSet {
+            mainView.tabBarHeight = tabBarHeight
+        }
+    }
+
     private var mainViewModel: MainViewModel = MainViewModel()
-    
+        
     private var prevValue: Int = 0
     
     private var newValue: Int = 0
@@ -49,12 +39,6 @@ final class MainViewController: UIViewController {
             newValue = currentPage
         }
     }
-    
-    private var initializeCode: Bool = true
-    
-    private var selectedTabBarIndex: Int = 0
-    
-    private var shouldShowSticky: Bool = false
     
     
     // MARK: - Life Cycles
@@ -69,89 +53,23 @@ final class MainViewController: UIViewController {
         registerCell()
         setViewModel()
         getMovieInfo()
-        setSegmentDidChange()
     }
-    
+
 }
-
-
-// MARK: - Private Methods
 
 private extension MainViewController {
     
     func setHierarchy() {
-        
-        self.view.addSubviews(mainView,
-                              navigationBarView,
-                              dimmedView,
-                              headerCategoryView,
-                              liveView,
-                              tvProgramView,
-                              movieVC.view,
-                              paramountView,
-                              loadingIndicator)
-        dimmedView.addSubview(stickyHeaderCategoryView)
-        self.view.bringSubviewToFront(dimmedView)
-        self.view.bringSubviewToFront(navigationBarView)
-        self.view.bringSubviewToFront(headerCategoryView)
+        self.view.addSubviews(mainView, loadingIndicator)
     }
     
     func setLayout() {
-        
         mainView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        navigationBarView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(Constant.Screen.topSafeAreaHeight)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(30)
-        }
-        
-        headerCategoryView.snp.makeConstraints {
-            $0.top.equalTo(navigationBarView.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
-        }
-        
-        dimmedView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(Constant.Screen.topSafeAreaHeight + 40)
-        }
-        
-        stickyHeaderCategoryView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(40)
-        }
-        
-        [liveView, tvProgramView, movieVC.view, paramountView].forEach {
-            $0.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }
-        
     }
     
     func setStyle() {
-        
-        self.navigationController?.navigationBar.isHidden = true
-        
-        headerCategoryView.do {
-            $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
-        }
-        
-        stickyHeaderCategoryView.do {
-            $0.isHidden = true
-            $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)
-        }
-        
-        dimmedView.do {
-            $0.isHidden = true
-            $0.backgroundColor = UIColor(resource: .black)
-        }
-        
         loadingIndicator.do {
             $0.frame = view.bounds
             $0.color = UIColor(resource: .white)
@@ -184,7 +102,6 @@ private extension MainViewController {
     }
     
     func setDelegate() {
-        mainView.mainCollectionView.delegate = self
         mainView.mainCollectionView.dataSource = self
     }
     
@@ -202,93 +119,10 @@ private extension MainViewController {
                         withReuseIdentifier: PageControlButtonView.identifier)
         }
     }
-    
-    func setSegmentDidChange() {
-        self.didChangeValue(sender: self.headerCategoryView.segmentedControlView)
-        self.didChangeValue(sender: self.stickyHeaderCategoryView.segmentedControlView)
-        self.initializeCode = false
-    }
-    
-    func setSegmentView(selectedIndex: Int) {
-        let views = [mainView, liveView, tvProgramView, movieVC.view, paramountView]
-        
-        for index in 0...4 {
-            views[index]?.isHidden = index == selectedIndex ? false : true
-        }
-    }
-    
-    @objc
-    func didChangeValue(sender: UISegmentedControl) {
-        setSegmentView(selectedIndex: sender.selectedSegmentIndex)
-        
-        if stickyHeaderCategoryView.isHidden {
-            headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
-            stickyHeaderCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
-            stickyHeaderCategoryView.segmentedControlView.selectedSegmentIndex = headerCategoryView.segmentedControlView.selectedSegmentIndex
-        } else {
-            stickyHeaderCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
-            headerCategoryView.segmentedControlView.moveUnderlineView(to: sender.selectedSegmentIndex)
-            headerCategoryView.segmentedControlView.selectedSegmentIndex = stickyHeaderCategoryView.segmentedControlView.selectedSegmentIndex
-        }
-    }
-    
-}
 
+}
 
 // MARK: - Delegates
-
-extension MainViewController: PageControlButtonDelegate {
-    
-    func didTapControlButton(index: Int) {
-        currentPage = index
-        
-        let direction: UIPageViewController.NavigationDirection = prevValue < newValue ? .forward : .reverse
-        for cell in mainView.mainCollectionView.visibleCells {
-            if let mainPosterCell = cell as? MainPosterCell {
-                mainPosterCell.pageVC.setViewControllers([mainPosterCell.vcData[currentPage]],
-                                                         direction: direction,
-                                                         animated: true,
-                                                         completion: nil)
-            }
-        }
-    }
-    
-}
-
-extension MainViewController: MainPosterDelegate {
-    
-    func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController]) {
-        currentPage = index
-        
-        if let pageControlButtonView = mainView.mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0))
-            as? PageControlButtonView { pageControlButtonView.index = currentPage }
-    }
-    
-}
-
-extension MainViewController: UICollectionViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // contentOffset.y: 손가락을 위로 올리면 + 값, 손가락을 아래로 내리면 - 값
-        let topPadding = scrollView.safeAreaInsets.top
-        
-        shouldShowSticky = topPadding + scrollView.contentOffset.y > headerCategoryView.frame.minY
-        
-        dimmedView.isHidden = !shouldShowSticky
-        navigationBarView.isHidden = shouldShowSticky
-        headerCategoryView.isHidden = shouldShowSticky
-        stickyHeaderCategoryView.isHidden = !shouldShowSticky
-        
-        if shouldShowSticky {
-            for cell in mainView.mainCollectionView.visibleCells {
-                if let mainPosterCell = cell as? MainPosterCell {
-                    dimmedView.alpha = scrollView.contentOffset.y / 100
-                    mainPosterCell.alpha = 1 - scrollView.contentOffset.y / 500
-                }
-            }
-        }
-    }
-}
 
 extension MainViewController: UICollectionViewDataSource {
     
@@ -377,3 +211,31 @@ extension MainViewController: UICollectionViewDataSource {
     
 }
 
+extension MainViewController: PageControlButtonDelegate {
+    
+    func didTapControlButton(index: Int) {
+        currentPage = index
+        
+        let direction: UIPageViewController.NavigationDirection = prevValue < newValue ? .forward : .reverse
+        for cell in mainView.mainCollectionView.visibleCells {
+            if let mainPosterCell = cell as? MainPosterCell {
+                mainPosterCell.pageVC.setViewControllers([mainPosterCell.vcData[currentPage]],
+                                                         direction: direction,
+                                                         animated: true,
+                                                         completion: nil)
+            }
+        }
+    }
+    
+}
+
+extension MainViewController: MainPosterDelegate {
+    
+    func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController]) {
+        currentPage = index
+        
+        if let pageControlButtonView = mainView.mainCollectionView.supplementaryView(forElementKind: PageControlButtonView.elementKinds, at: IndexPath(item: 0, section: 0))
+            as? PageControlButtonView { pageControlButtonView.index = currentPage }
+    }
+    
+}

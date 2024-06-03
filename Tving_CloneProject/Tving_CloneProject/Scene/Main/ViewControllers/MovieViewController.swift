@@ -16,6 +16,8 @@ final class MovieViewController: UIViewController {
 
     private let movieView = MovieView()
     
+    private let loadingIndicator = UIActivityIndicatorView()
+
     
     // MARK: - Properties
 
@@ -23,15 +25,13 @@ final class MovieViewController: UIViewController {
     
     
     // MARK: - Life Cycles
-
-    override func loadView() {
-        self.view = movieView
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setHierarchy()
         setLayout()
+        setStyle()
         setDelegate()
         registerCell()
         setViewModel()
@@ -43,9 +43,21 @@ final class MovieViewController: UIViewController {
 
 private extension MovieViewController {
     
+    func setHierarchy() {
+        self.view.addSubviews(movieView, loadingIndicator)
+    }
+    
     func setLayout() {
         movieView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+    
+    func setStyle() {
+        loadingIndicator.do {
+            $0.frame = view.bounds
+            $0.color = UIColor(resource: .white)
+            $0.backgroundColor = UIColor(resource: .black)
         }
     }
     
@@ -60,9 +72,9 @@ private extension MovieViewController {
         movieViewModel.didChangeLoadingIndicator.bind { [weak self] isLoading in
             guard let isLoading else { return }
             if isLoading {
-                self?.movieView.loadingIndicator.startAnimating()
+                self?.loadingIndicator.startAnimating()
             } else {
-                self?.movieView.loadingIndicator.stopAnimating()
+                self?.loadingIndicator.stopAnimating()
             }
         }
 

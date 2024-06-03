@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA1F68F02BD5691D00439E33 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68EF2BD5691D00439E33 /* MainViewController.swift */; };
+		CA1F68F02BD5691D00439E33 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68EF2BD5691D00439E33 /* HomeViewController.swift */; };
 		CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68F42BD578B500439E33 /* NavigationBarView.swift */; };
 		CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68F72BD57D3A00439E33 /* Contents.swift */; };
 		CA1F68FB2BD5886600439E33 /* MainPosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1F68FA2BD5886600439E33 /* MainPosterCell.swift */; };
@@ -37,6 +37,7 @@
 		CA3BA70F2BFE7E9800F77616 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */; };
 		CA3D0C702C0D9D4500735097 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C6F2C0D9D4500735097 /* MainView.swift */; };
 		CA3D0C722C0DA4E700735097 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C712C0DA4E700735097 /* MovieViewController.swift */; };
+		CA3D0C762C0DACA600735097 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C752C0DACA600735097 /* MainViewController.swift */; };
 		CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D972C05B977006B8C35 /* LoginViewModel.swift */; };
 		CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D992C0866BA006B8C35 /* ObservablePattern.swift */; };
 		CA803D9C2C09C784006B8C35 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */; };
@@ -70,7 +71,7 @@
 
 /* Begin PBXFileReference section */
 		CA05B3AD2BF331B100DA77E1 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		CA1F68EF2BD5691D00439E33 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		CA1F68EF2BD5691D00439E33 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		CA1F68F42BD578B500439E33 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		CA1F68F72BD57D3A00439E33 /* Contents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contents.swift; sourceTree = "<group>"; };
 		CA1F68FA2BD5886600439E33 /* MainPosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPosterCell.swift; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		CA3BA70E2BFE7E9800F77616 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CA3D0C6F2C0D9D4500735097 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		CA3D0C712C0DA4E700735097 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
+		CA3D0C752C0DACA600735097 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CA803D972C05B977006B8C35 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CA803D992C0866BA006B8C35 /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -158,8 +160,9 @@
 		CA1F68EE2BD5690000439E33 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				CA1F68EF2BD5691D00439E33 /* MainViewController.swift */,
+				CA1F68EF2BD5691D00439E33 /* HomeViewController.swift */,
 				CA3D0C712C0DA4E700735097 /* MovieViewController.swift */,
+				CA3D0C752C0DACA600735097 /* MainViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -562,7 +565,7 @@
 				CA902EF92BDE9E6700560D26 /* HistoryViewController.swift in Sources */,
 				CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */,
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
-				CA1F68F02BD5691D00439E33 /* MainViewController.swift in Sources */,
+				CA1F68F02BD5691D00439E33 /* HomeViewController.swift in Sources */,
 				CA8496F22BE8A6700064E0CC /* NetworkResult.swift in Sources */,
 				CA3D0C702C0D9D4500735097 /* MainView.swift in Sources */,
 				CA902EBC2BD6F9F900560D26 /* ImageWithTitleCell.swift in Sources */,
@@ -600,6 +603,7 @@
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
 				CA803D9E2C09C818006B8C35 /* String+.swift in Sources */,
 				CA3BA70F2BFE7E9800F77616 /* MainViewModel.swift in Sources */,
+				CA3D0C762C0DACA600735097 /* MainViewController.swift in Sources */,
 				CA1F68F52BD578B500439E33 /* NavigationBarView.swift in Sources */,
 				CAB6E7EE2C04863200E49F9E /* MovieView.swift in Sources */,
 				CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */,

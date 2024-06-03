@@ -21,22 +21,21 @@ final class MainView: UIView {
     
     private var mainViewModel: MainViewModel = MainViewModel()
     
-    private var tabBarHeight: CGFloat = 0
+    var tabBarHeight: CGFloat = 0 {
+        didSet {
+            mainCollectionView.reloadData()
+        }
+    }
     
     
     // MARK: - Life Cycle
     
-    init(tabBarHeight: CGFloat) {
-        self.tabBarHeight = tabBarHeight
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         setHierarchy()
         setLayout()
         setStyle()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
     }
     
     required init?(coder: NSCoder) {
@@ -151,7 +150,7 @@ private extension MainView {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: tabBarHeight + 10, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: tabBarHeight + 40, trailing: 0)
         
         return section
     }
