@@ -13,20 +13,10 @@ import Then
 final class LoginViewController: UIViewController {
     
     // MARK: - UI Properties
-    
-    private let loginLabel = UILabel()
-    
+        
     private let loginView = LoginView()
     
-    private let findIdLabel = UILabel()
-    
-    private let findPwLabel = UILabel()
-    
-    private let divider = UIView()
-    
-    private let messageLabel = UILabel()
-    
-    private let createNicknameLabel = UILabel()
+    private let createView = CreateView()
     
     
     // MARK: - Properties
@@ -48,7 +38,7 @@ final class LoginViewController: UIViewController {
         setHierarchy()
         setLayout()
         setStyle()
-        setLoginView()
+        setView()
     }
     
 }
@@ -59,102 +49,27 @@ final class LoginViewController: UIViewController {
 private extension LoginViewController {
     
     func setHierarchy() {
-        self.view.addSubviews(loginLabel,
-                              loginView,
-                              findIdLabel,
-                              findPwLabel,
-                              divider,
-                              messageLabel,
-                              createNicknameLabel)
+        self.view.addSubviews(loginView, createView)
     }
     
     func setLayout() {
-        
-        loginLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(100)
-            $0.centerX.equalToSuperview()
-        }
-        
         loginView.snp.makeConstraints {
-            $0.top.equalTo(loginLabel.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(186)
+            $0.top.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(400)
         }
         
-        findIdLabel.snp.makeConstraints {
-            $0.top.equalTo(loginView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(85)
+        createView.snp.makeConstraints {
+            $0.top.equalTo(loginView.snp.bottom)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
-        
-        divider.snp.makeConstraints {
-            $0.top.equalTo(loginView.snp.bottom).offset(30)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(1)
-            $0.height.equalTo(12)
-        }
-        
-        findPwLabel.snp.makeConstraints {
-            $0.top.equalTo(loginView.snp.bottom).offset(30)
-            $0.leading.equalTo(divider.snp.trailing).offset(35)
-        }
-        
-        messageLabel.snp.makeConstraints {
-            $0.top.equalTo(findIdLabel.snp.bottom).offset(28)
-            $0.leading.equalToSuperview().inset(51)
-        }
-        
-        createNicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(findIdLabel.snp.bottom).offset(28)
-            $0.leading.equalTo(findPwLabel)
-            $0.width.equalTo(130)
-        }
-        
     }
     
     func setStyle() {
         self.view.backgroundColor = UIColor(resource: .black)
-        
-        loginLabel.do {
-            $0.text = "TVING ID 로그인"
-            $0.font = UIFont.pretendard(.body1)
-            $0.textColor = UIColor(resource: .grey1)
-        }
-        
-        findIdLabel.do {
-            $0.text = "아이디 찾기"
-            $0.font = UIFont.pretendard(.subhead4)
-            $0.textColor = UIColor(resource: .grey2)
-        }
-        
-        divider.do {
-            $0.backgroundColor = UIColor(resource: .grey4)
-        }
-        
-        findPwLabel.do {
-            $0.text = "비밀번호 찾기"
-            $0.font = UIFont.pretendard(.subhead4)
-            $0.textColor = UIColor(resource: .grey2)
-        }
-        
-        messageLabel.do {
-            $0.text = "아직 계정이 없으신가요?"
-            $0.font = UIFont.pretendard(.subhead4)
-            $0.textColor = UIColor(resource: .grey3)
-        }
-        
-        createNicknameLabel.do {
-            $0.text = "닉네임 만들러가기"
-            $0.font = UIFont.pretendard(.subhead4)
-            $0.textColor = UIColor(resource: .grey2)
-            $0.addUnderline()
-            
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(presentCreateNicknameVC))
-            $0.isUserInteractionEnabled = true
-            $0.addGestureRecognizer(gesture)
-        }
     }
     
-    func setLoginView() {
+    func setView() {
         self.loginView.do {
             $0.idTextField.delegate = self
             $0.idTextField.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
@@ -166,6 +81,12 @@ private extension LoginViewController {
             $0.pwClearButton.tag = 1
             $0.pwClearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
             $0.maskButton.addTarget(self, action: #selector(maskButtonTapped), for: .touchUpInside)
+        }
+        
+        self.createView.do {
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(presentCreateNicknameVC))
+            $0.createNicknameLabel.isUserInteractionEnabled = true
+            $0.createNicknameLabel.addGestureRecognizer(gesture)
         }
     }
     

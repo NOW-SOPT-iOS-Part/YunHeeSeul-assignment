@@ -14,6 +14,8 @@ final class LoginView: UIView {
 
     // MARK: - UI Properties
     
+    private let loginLabel = UILabel()
+
     let idTextField = UITextField()
     
     let pwTextField = UITextField()
@@ -67,12 +69,18 @@ final class LoginView: UIView {
 private extension LoginView {
     
     func setHierarchy() {
-        self.addSubviews(idTextField, pwTextField, loginButton)
+        self.addSubviews(loginLabel, idTextField, pwTextField, loginButton)
     }
     
     func setLayout() {
+        loginLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(100)
+            $0.centerX.equalToSuperview()
+        }
+        
         idTextField.snp.makeConstraints {
-            $0.top.centerX.width.equalToSuperview()
+            $0.top.equalTo(loginLabel.snp.bottom).offset(30)
+            $0.centerX.width.equalToSuperview()
             $0.height.equalTo(52)
         }
         
@@ -92,6 +100,12 @@ private extension LoginView {
     
     func setStyle() {
         self.backgroundColor = UIColor(resource: .black)
+        
+        loginLabel.do {
+            $0.text = "TVING ID 로그인"
+            $0.font = UIFont.pretendard(.body1)
+            $0.textColor = UIColor(resource: .grey1)
+        }
         
         idTextField.do {
             $0.setTextField(forBackgroundColor: UIColor(resource: .grey4),

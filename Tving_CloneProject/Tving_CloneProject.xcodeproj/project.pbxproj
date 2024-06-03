@@ -45,6 +45,7 @@
 		CA3D0C932C0E3DE400735097 /* CreateNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C922C0E3DE400735097 /* CreateNicknameView.swift */; };
 		CA3D0C952C0E40AB00735097 /* CreateNicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */; };
 		CA3D0C972C0E40D800735097 /* CreateNicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */; };
+		CA3D0C992C0E4A4800735097 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C982C0E4A4800735097 /* CreateView.swift */; };
 		CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D972C05B977006B8C35 /* LoginViewModel.swift */; };
 		CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D992C0866BA006B8C35 /* ObservablePattern.swift */; };
 		CA803D9C2C09C784006B8C35 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */; };
@@ -114,6 +115,7 @@
 		CA3D0C922C0E3DE400735097 /* CreateNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameView.swift; sourceTree = "<group>"; };
 		CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameViewModel.swift; sourceTree = "<group>"; };
 		CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameModel.swift; sourceTree = "<group>"; };
+		CA3D0C982C0E4A4800735097 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 		CA803D972C05B977006B8C35 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CA803D992C0866BA006B8C35 /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 			children = (
 				CA3952E92BC31F9900B15E91 /* LoginViewController.swift */,
 				CA39531F2BC6F6BE00B15E91 /* LoginView.swift */,
+				CA3D0C982C0E4A4800735097 /* CreateView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -693,6 +696,7 @@
 				CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
+				CA3D0C992C0E4A4800735097 /* CreateView.swift in Sources */,
 				CA902EED2BDE9CD800560D26 /* TabBarViewController.swift in Sources */,
 				CA1F68F82BD57D3A00439E33 /* Contents.swift in Sources */,
 				CA3953192BC47D3300B15E91 /* UILabel+.swift in Sources */,
