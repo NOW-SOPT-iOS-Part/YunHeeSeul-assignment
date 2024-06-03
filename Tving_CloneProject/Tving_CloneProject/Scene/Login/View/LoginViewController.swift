@@ -35,6 +35,8 @@ final class LoginViewController: UIViewController {
     
     var nickname: String? = nil
     
+    var loginModel: LoginModel = LoginModel(id: nil, pw: nil)
+    
     private let loginViewModel: LoginViewModel = LoginViewModel()
     
     
@@ -46,6 +48,7 @@ final class LoginViewController: UIViewController {
         setHierarchy()
         setLayout()
         setStyle()
+        setLoginView()
     }
     
 }
@@ -109,17 +112,12 @@ private extension LoginViewController {
     }
     
     func setStyle() {
-        
         self.view.backgroundColor = UIColor(resource: .black)
         
         loginLabel.do {
             $0.text = "TVING ID 로그인"
             $0.font = UIFont.pretendard(.body1)
             $0.textColor = UIColor(resource: .grey1)
-        }
-        
-        loginView.do {
-            $0.delegate = self
         }
         
         findIdLabel.do {
@@ -154,7 +152,21 @@ private extension LoginViewController {
             $0.isUserInteractionEnabled = true
             $0.addGestureRecognizer(gesture)
         }
-        
+    }
+    
+    func setLoginView() {
+        self.loginView.do {
+            $0.idTextField.delegate = self
+            $0.idTextField.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
+            $0.pwTextField.delegate = self
+            $0.pwTextField.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
+            $0.loginButton.addTarget(self, action: #selector(pushToWelcomeVC), for: .touchUpInside)
+            $0.idClearButton.tag = 0
+            $0.idClearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
+            $0.pwClearButton.tag = 1
+            $0.pwClearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
+            $0.maskButton.addTarget(self, action: #selector(maskButtonTapped), for: .touchUpInside)
+        }
     }
     
     @objc
@@ -163,6 +175,39 @@ private extension LoginViewController {
         createNicknameVC.delegate = self
         createNicknameVC.modalPresentationStyle = .overFullScreen
         self.present(createNicknameVC, animated: true)
+    }
+    
+    @objc
+    func textFieldChange() {
+        loginModel = LoginModel(id: self.loginView.idTextField.text, pw: self.loginView.idTextField.text)
+        self.isActivate = loginViewModel.checkValid(loginInfo: loginModel)
+        self.loginView.setLoginButton(isEnabled: self.isActivate)
+    }
+    
+    @objc
+    func maskButtonTapped() {
+        self.loginView.pwTextField.isSecureTextEntry = !self.loginView.pwTextField.isSecureTextEntry
+    }
+    
+    @objc
+    func clearButtonTapped(_ sender: UIButton) {
+        if sender.tag == 0 {
+            self.loginViewModel.clearText(textfield: self.loginView.idTextField)
+        } else {
+            self.loginViewModel.clearText(textfield: self.loginView.pwTextField)
+        }
+        self.isActivate = false
+        self.loginView.setLoginButton(isEnabled: self.isActivate)
+    }
+    
+    @objc
+    func pushToWelcomeVC() {
+        if isActivate {
+            guard let id = self.loginModel.id else { return }
+            let welcomeVC = WelcomeViewController()
+            welcomeVC.userInfo = loginViewModel.checkValidNickname(nickname: self.nickname) ? nickname : id
+            self.navigationController?.pushViewController(welcomeVC, animated: true)
+        }
     }
     
 }
@@ -176,11 +221,14 @@ extension LoginViewController: CreateNicknameVCDelegate {
     }
 }
 
-extension LoginViewController: LoginViewDelegate {
+extension LoginViewController: UITextFieldDelegate {
     
-    func pushToWelcomeVC(id: String) {
-        let welcomeVC = WelcomeViewController()
-        welcomeVC.userInfo = loginViewModel.checkValidNickname(nickname: self.nickname) ? nickname : id
-        self.navigationController?.pushViewController(welcomeVC, animated: true)
+    func textFieldDidBeginEditing (_ textField: UITextField) {
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(resource: .grey2).cgColor
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 0
     }
 }

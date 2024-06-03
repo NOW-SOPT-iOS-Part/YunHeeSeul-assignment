@@ -50,19 +50,13 @@ extension LoginViewModel {
         return true
     }
     
-    func checkValid(id: String?, pw: String?) -> Bool {
-        guard let id else {
-            errMessage.value = "아이디를 입력해주세요"
-            return false
-        }
+    func checkValid(loginInfo: LoginModel) -> Bool {
+        guard let id = loginInfo.id else { return false }
         self.id.value = id
         
-        guard let pw else {
-            errMessage.value = "비밀번호를 입력해주세요"
-            return false
-        }
+        guard let pw = loginInfo.pw else { return false }
         self.pw.value = pw
-        
+    
         return true
     }
     

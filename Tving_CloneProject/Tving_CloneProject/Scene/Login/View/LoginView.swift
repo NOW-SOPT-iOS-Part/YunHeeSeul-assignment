@@ -7,38 +7,28 @@
 
 import UIKit
 
-protocol LoginViewDelegate: AnyObject {
-    func pushToWelcomeVC(id: String)
-}
+import SnapKit
+import Then
 
 final class LoginView: UIView {
 
     // MARK: - UI Properties
     
-    private lazy var idTextField = UITextField()
+    let idTextField = UITextField()
     
-    private lazy var pwTextField = UITextField()
+    let pwTextField = UITextField()
     
-    private let loginButton = UIButton()
+    let loginButton = UIButton()
     
     private let idButtonBox = UIView()
     
     private let pwButtonBox = UIView()
     
-    private lazy var idClearButton = UIButton()
+    let idClearButton = UIButton()
     
-    private lazy var pwClearButton = UIButton()
+    let pwClearButton = UIButton()
     
-    private lazy var maskButton =  UIButton()
-    
-    
-    // MARK: - Properties
-    
-    var isActivate: Bool = false
-    
-    weak var delegate: LoginViewDelegate?
-    
-    private let loginViewModel: LoginViewModel = LoginViewModel()
+    let maskButton =  UIButton()
     
     
     // MARK: - Life Cycles
@@ -53,6 +43,20 @@ final class LoginView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setLoginButton(isEnabled: Bool) {
+        if isEnabled {
+            loginButton.backgroundColor = UIColor(resource: .red)
+            loginButton.setTitleColor(UIColor(resource: .white), for: .normal)
+            loginButton.layer.borderWidth = 0
+            loginButton.isEnabled = true
+        } else {
+            loginButton.backgroundColor = UIColor(resource: .black)
+            loginButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
+            loginButton.layer.borderWidth = 1
+            loginButton.isEnabled = false
+        }
     }
     
 }
@@ -110,9 +114,6 @@ private extension LoginView {
             }
             $0.rightView = idButtonBox
             $0.rightViewMode = .whileEditing
-            
-            $0.delegate = self
-            $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
         pwTextField.do {
@@ -142,9 +143,6 @@ private extension LoginView {
             }
             $0.rightView = pwButtonBox
             $0.rightViewMode = .whileEditing
-            
-            $0.delegate = self
-            $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
         loginButton.do {
@@ -153,7 +151,6 @@ private extension LoginView {
             $0.layer.cornerRadius = 3
             $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor(resource: .grey4).cgColor
-            $0.addTarget(self, action: #selector(pushToWelcomeVC), for: .touchUpInside)
         }
         
         idButtonBox.do {
@@ -162,8 +159,6 @@ private extension LoginView {
         
         idClearButton.do {
             $0.setImage(UIImage(resource: .clear), for: .normal)
-            $0.tag = 0
-            $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
         
         pwButtonBox.do {
@@ -172,77 +167,13 @@ private extension LoginView {
         
         pwClearButton.do {
             $0.setImage(UIImage(resource: .clear), for: .normal)
-            $0.tag = 1
-            $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
         
         maskButton.do {
             $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
             $0.tintColor = UIColor(resource: .grey3)
-            $0.addTarget(self, action: #selector(maskButtonTapped), for: .touchUpInside)
         }
         
     }
     
-    func setLoginButton(isEnabled: Bool) {
-        if isEnabled {
-            loginButton.backgroundColor = UIColor(resource: .red)
-            loginButton.setTitleColor(UIColor(resource: .white), for: .normal)
-            loginButton.layer.borderWidth = 0
-            loginButton.isEnabled = true
-            isActivate = true
-        } else {
-            loginButton.backgroundColor = UIColor(resource: .black)
-            loginButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
-            loginButton.layer.borderWidth = 1
-            loginButton.isEnabled = false
-            isActivate = false
-        }
-    }
-    
-    @objc
-    func textFieldChange() {
-        let id = self.idTextField.text
-        let pw = self.pwTextField.text
-        
-        setLoginButton(isEnabled: loginViewModel.checkValid(id: id, pw: pw))
-    }
-    
-    @objc
-    func maskButtonTapped() {
-        self.pwTextField.isSecureTextEntry = !self.pwTextField.isSecureTextEntry
-    }
-    
-    @objc
-    func clearButtonTapped(_ sender: UIButton) {
-        if sender.tag == 0 {
-            self.loginViewModel.clearText(textfield: self.idTextField)
-        } else {
-            self.loginViewModel.clearText(textfield: self.pwTextField)
-        }
-        setLoginButton(isEnabled: false)
-    }
-    
-    @objc
-    func pushToWelcomeVC() {
-        if isActivate {
-            let id = self.idTextField.text ?? ""
-            self.delegate?.pushToWelcomeVC(id: id)
-        }
-    }
-    
-}
-
-// MARK: - Delegates
-
-extension LoginView: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing (_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(resource: .grey2).cgColor
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 0
-    }
 }
