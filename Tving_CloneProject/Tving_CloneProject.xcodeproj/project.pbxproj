@@ -42,6 +42,9 @@
 		CA3D0C872C0E2FED00735097 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C862C0E2FED00735097 /* WelcomeViewModel.swift */; };
 		CA3D0C8A2C0E301300735097 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C892C0E301300735097 /* UserInfoModel.swift */; };
 		CA3D0C8D2C0E33C300735097 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C8C2C0E33C300735097 /* LoginModel.swift */; };
+		CA3D0C932C0E3DE400735097 /* CreateNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C922C0E3DE400735097 /* CreateNicknameView.swift */; };
+		CA3D0C952C0E40AB00735097 /* CreateNicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */; };
+		CA3D0C972C0E40D800735097 /* CreateNicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */; };
 		CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D972C05B977006B8C35 /* LoginViewModel.swift */; };
 		CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D992C0866BA006B8C35 /* ObservablePattern.swift */; };
 		CA803D9C2C09C784006B8C35 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */; };
@@ -108,6 +111,9 @@
 		CA3D0C862C0E2FED00735097 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		CA3D0C892C0E301300735097 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		CA3D0C8C2C0E33C300735097 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		CA3D0C922C0E3DE400735097 /* CreateNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameView.swift; sourceTree = "<group>"; };
+		CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameViewModel.swift; sourceTree = "<group>"; };
+		CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameModel.swift; sourceTree = "<group>"; };
 		CA803D972C05B977006B8C35 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CA803D992C0866BA006B8C35 /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -230,6 +236,7 @@
 		CA3952FA2BC4488E00B15E91 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				CA3D0C8E2C0E3DAD00735097 /* CreateNickname */,
 				CA3D0C7C2C0E295D00735097 /* Movie */,
 				CA3D0C772C0E28AA00735097 /* Main */,
 				CA902EF02BDE9E1200560D26 /* History */,
@@ -326,7 +333,6 @@
 		CA3953292BC6FC3D00B15E91 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */,
 				CA3952E92BC31F9900B15E91 /* LoginViewController.swift */,
 				CA39531F2BC6F6BE00B15E91 /* LoginView.swift */,
 			);
@@ -445,6 +451,41 @@
 			isa = PBXGroup;
 			children = (
 				CA3D0C8C2C0E33C300735097 /* LoginModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CA3D0C8E2C0E3DAD00735097 /* CreateNickname */ = {
+			isa = PBXGroup;
+			children = (
+				CA3D0C912C0E3DC800735097 /* Model */,
+				CA3D0C902C0E3DC200735097 /* ViewModel */,
+				CA3D0C8F2C0E3DBC00735097 /* View */,
+			);
+			path = CreateNickname;
+			sourceTree = "<group>";
+		};
+		CA3D0C8F2C0E3DBC00735097 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CA39531D2BC5AFE300B15E91 /* CreateNicknameViewController.swift */,
+				CA3D0C922C0E3DE400735097 /* CreateNicknameView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CA3D0C902C0E3DC200735097 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CA3D0C912C0E3DC800735097 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -674,6 +715,8 @@
 				CA8496F62BE947040064E0CC /* LiveView.swift in Sources */,
 				CA3D0C722C0DA4E700735097 /* MovieViewController.swift in Sources */,
 				CA1F68FD2BD58ED700439E33 /* PagerButtonCell.swift in Sources */,
+				CA3D0C972C0E40D800735097 /* CreateNicknameModel.swift in Sources */,
+				CA3D0C932C0E3DE400735097 /* CreateNicknameView.swift in Sources */,
 				CA8496F02BE8A5880064E0CC /* MoyaPlugin.swift in Sources */,
 				CA8496EA2BE89A850064E0CC /* BaseTargetType.swift in Sources */,
 				CA39531E2BC5AFE300B15E91 /* CreateNicknameViewController.swift in Sources */,
@@ -685,6 +728,7 @@
 				CA902EC42BD9542000560D26 /* ImageOnlyCell.swift in Sources */,
 				CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */,
 				CA902EC62BDAA0E200560D26 /* PopularLiveCell.swift in Sources */,
+				CA3D0C952C0E40AB00735097 /* CreateNicknameViewModel.swift in Sources */,
 				CA902EFB2BDEB51500560D26 /* PageControlButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

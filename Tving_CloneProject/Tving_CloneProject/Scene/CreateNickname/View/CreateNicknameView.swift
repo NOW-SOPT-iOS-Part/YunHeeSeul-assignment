@@ -1,66 +1,77 @@
 //
-//  CreateNicknameViewController.swift
+//  CreateNicknameView.swift
 //  Tving_CloneProject
 //
-//  Created by 윤희슬 on 4/10/24.
+//  Created by 윤희슬 on 6/4/24.
 //
 
 import UIKit
 
-protocol CreateNicknameVCDelegate: AnyObject {
-    func saveUserNickname(nickname: String)
-}
+import SnapKit
+import Then
 
-final class CreateNicknameViewController: UIViewController {
+final class CreateNicknameView: UIView {
     
     // MARK: - UI Properties
     
-    private let dimmedView = UIView()
+    let dimmedView = UIView()
     
     private let bottomSheetView = UIView()
     
     private let nicknameLabel = UILabel()
     
-    private let nicknameTextField = UITextField()
+    let nicknameTextField = UITextField()
     
-    private let saveButton = UIButton()
+    let saveButton = UIButton()
     
-    private let warningLabel = UILabel()
+    let warningLabel = UILabel()
     
     
     // MARK: - Properties
-    
-    var isActivate: Bool = false
-    
-    weak var delegate: CreateNicknameVCDelegate?
-    
+            
     private let loginViewModel: LoginViewModel = LoginViewModel()
     
     
     // MARK: - Life Cycles
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         setHierarchy()
         setLayout()
         setStyle()
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setSaveButton(isEnabled: Bool) {
+        if isEnabled {
+            saveButton.backgroundColor = UIColor(resource: .red)
+            saveButton.setTitleColor(UIColor(resource: .white), for: .normal)
+            saveButton.layer.borderWidth = 0
+            saveButton.isEnabled = true
+        } else {
+            saveButton.backgroundColor = UIColor(resource: .white)
+            saveButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
+            saveButton.layer.borderWidth = 1
+            saveButton.isEnabled = false
+        }
+    }
 }
 
 
 // MARK: - Private Methods
 
-private extension CreateNicknameViewController {
+private extension CreateNicknameView {
     
     func setHierarchy() {
-        self.view.addSubviews(dimmedView, bottomSheetView)
+        self.addSubviews(dimmedView, bottomSheetView)
         bottomSheetView.addSubviews(nicknameLabel, nicknameTextField, warningLabel, saveButton)
     }
     
     func setLayout() {
-        
         dimmedView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomSheetView.snp.top)
@@ -92,21 +103,13 @@ private extension CreateNicknameViewController {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(52)
         }
-
+        
     }
     
     func setStyle() {
-        self.view.backgroundColor = UIColor.clear
-        self.navigationController?.navigationBar.isHidden = true
-        self.tabBarController?.tabBar.isHidden = true
-        
         dimmedView.do {
             $0.alpha = 0.7
             $0.layer.backgroundColor = UIColor(resource: .black).cgColor
-            
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapDimmedView))
-            $0.isUserInteractionEnabled = true
-            $0.addGestureRecognizer(gesture)
         }
         
         bottomSheetView.do {
@@ -122,14 +125,12 @@ private extension CreateNicknameViewController {
         }
         
         nicknameTextField.do {
-            $0.setTextField(forBackgroundColor: UIColor(resource: .grey2), 
+            $0.setTextField(forBackgroundColor: UIColor(resource: .grey2),
                             forBorderColor: UIColor(resource: .grey2),
                             forBorderWidth: 0,
                             forCornerRadius: 3)
             $0.textColor = UIColor(resource: .grey4)
-            $0.delegate = self
             $0.setLeftPadding(amount: 23)
-            $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
         warningLabel.do {
@@ -145,63 +146,6 @@ private extension CreateNicknameViewController {
             $0.setTitleColor(UIColor(resource: .grey2), for: .normal)
             $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor(resource: .grey2).cgColor
-            $0.addTarget(self, action: #selector(popToLoginVC), for: .touchUpInside)
-        }
-        
-    }
-    
-    func setSaveButton(isEnabled: Bool) {
-        if isEnabled {
-            saveButton.backgroundColor = UIColor(resource: .red)
-            saveButton.setTitleColor(UIColor(resource: .white), for: .normal)
-            saveButton.layer.borderWidth = 0
-            saveButton.isEnabled = true
-            isActivate = true
-        } else {
-            saveButton.backgroundColor = UIColor(resource: .white)
-            saveButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
-            saveButton.layer.borderWidth = 1
-            saveButton.isEnabled = false
-            isActivate = false
-        }
-    }
-    
-    @objc
-    func textFieldChange() {
-        setSaveButton(isEnabled: loginViewModel.checkValidNickname(nickname: self.nicknameTextField.text))
-    }
-    
-    @objc
-    func popToLoginVC() {
-        if isActivate {
-            let nickname = self.nicknameTextField.text ?? ""
-            self.delegate?.saveUserNickname(nickname: nickname)
-            self.dismiss(animated: true)
-        }
-    }
-    
-    @objc
-    func didTapDimmedView(sender: UITapGestureRecognizer) {
-        self.dismiss(animated: true)
-    }
-    
-}
-
-// MARK: - Delegates
-
-extension CreateNicknameViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        // 입력된 문자열이 패턴과 일치하는지 확인
-        if loginViewModel.checkValidNickname(nickname: textField.text) {
-            self.warningLabel.isHidden = true
-            return true
-        } else {
-            self.warningLabel.isHidden = false
-            self.warningLabel.text = loginViewModel.fetchErrMessage()
-            setSaveButton(isEnabled: false)
-            return false
         }
     }
 }

@@ -203,9 +203,12 @@ private extension LoginViewController {
     @objc
     func pushToWelcomeVC() {
         if isActivate {
-            guard let id = self.loginModel.id else { return }
             let welcomeVC = WelcomeViewController()
-            welcomeVC.userInfo = loginViewModel.checkValidNickname(nickname: self.nickname) ? nickname : id
+            if loginViewModel.checkEmptyNickname(nickname: self.nickname) {
+                welcomeVC.userInfo = self.loginViewModel.id.value
+            } else {
+                welcomeVC.userInfo = self.loginViewModel.nickname.value
+             }
             self.navigationController?.pushViewController(welcomeVC, animated: true)
         }
     }
