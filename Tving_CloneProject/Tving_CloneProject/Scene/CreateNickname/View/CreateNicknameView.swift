@@ -31,6 +31,10 @@ final class CreateNicknameView: UIView {
             
     private let loginViewModel: LoginViewModel = LoginViewModel()
     
+    private let enabledButtonStatus = EnabledButton()
+    
+    private let disabledButtonStatus = DisabledSaveButton()
+    
     
     // MARK: - Life Cycles
     
@@ -48,15 +52,9 @@ final class CreateNicknameView: UIView {
     
     func setSaveButton(isEnabled: Bool) {
         if isEnabled {
-            saveButton.backgroundColor = UIColor(resource: .red)
-            saveButton.setTitleColor(UIColor(resource: .white), for: .normal)
-            saveButton.layer.borderWidth = 0
-            saveButton.isEnabled = true
+            saveButton.setEnabledButtonStatus(buttonStatus: enabledButtonStatus)
         } else {
-            saveButton.backgroundColor = UIColor(resource: .white)
-            saveButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
-            saveButton.layer.borderWidth = 1
-            saveButton.isEnabled = false
+            saveButton.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
         }
     }
 }
@@ -142,10 +140,9 @@ private extension CreateNicknameView {
         saveButton.do {
             $0.setTitle("저장하기", for: .normal)
             $0.layer.cornerRadius = 12
-            $0.backgroundColor = UIColor(resource: .white)
-            $0.setTitleColor(UIColor(resource: .grey2), for: .normal)
-            $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor(resource: .grey2).cgColor
+            $0.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
         }
     }
+
 }

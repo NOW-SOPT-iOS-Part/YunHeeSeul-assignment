@@ -46,6 +46,9 @@
 		CA3D0C952C0E40AB00735097 /* CreateNicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */; };
 		CA3D0C972C0E40D800735097 /* CreateNicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */; };
 		CA3D0C992C0E4A4800735097 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C982C0E4A4800735097 /* CreateView.swift */; };
+		CA3D0C9C2C10D5D500735097 /* EnabledButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9B2C10D5D500735097 /* EnabledButtonStatus.swift */; };
+		CA3D0C9E2C10DB6C00735097 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */; };
+		CA3D0CA02C10F47600735097 /* SelectedButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */; };
 		CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D972C05B977006B8C35 /* LoginViewModel.swift */; };
 		CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D992C0866BA006B8C35 /* ObservablePattern.swift */; };
 		CA803D9C2C09C784006B8C35 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */; };
@@ -116,6 +119,9 @@
 		CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameViewModel.swift; sourceTree = "<group>"; };
 		CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameModel.swift; sourceTree = "<group>"; };
 		CA3D0C982C0E4A4800735097 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		CA3D0C9B2C10D5D500735097 /* EnabledButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledButtonStatus.swift; sourceTree = "<group>"; };
+		CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedButtonStatus.swift; sourceTree = "<group>"; };
 		CA803D972C05B977006B8C35 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CA803D992C0866BA006B8C35 /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -225,6 +231,7 @@
 		CA3952F92BC4488700B15E91 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				CA3D0C9A2C10D5C200735097 /* Protocols */,
 				CA8496E32BE7E5410064E0CC /* Setting */,
 				CA902EEB2BDE9CA900560D26 /* Components */,
 				CA3953232BC6FB0500B15E91 /* Utils */,
@@ -270,6 +277,7 @@
 				CA3953182BC47D3300B15E91 /* UILabel+.swift */,
 				CA902EC12BD789FF00560D26 /* UIStackView+.swift */,
 				CA803D9D2C09C818006B8C35 /* String+.swift */,
+				CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -493,6 +501,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		CA3D0C9A2C10D5C200735097 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CA3D0C9B2C10D5D500735097 /* EnabledButtonStatus.swift */,
+				CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		CA803D962C05B959006B8C35 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +712,7 @@
 				CA902EC02BD6FE1400560D26 /* BasicHeaderView.swift in Sources */,
 				CA902EC22BD789FF00560D26 /* UIStackView+.swift in Sources */,
 				CA3952EA2BC31F9900B15E91 /* LoginViewController.swift in Sources */,
+				CA3D0C9E2C10DB6C00735097 /* UIButton+.swift in Sources */,
 				CA3952E62BC31F9900B15E91 /* AppDelegate.swift in Sources */,
 				CA3D0C992C0E4A4800735097 /* CreateView.swift in Sources */,
 				CA902EED2BDE9CD800560D26 /* TabBarViewController.swift in Sources */,
@@ -709,6 +727,7 @@
 				CAB6E7EC2C0485E300E49F9E /* DailyBoxOfficeCell.swift in Sources */,
 				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
 				CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */,
+				CA3D0CA02C10F47600735097 /* SelectedButtonStatus.swift in Sources */,
 				CA3D0C842C0E2ED300735097 /* WelcomeView.swift in Sources */,
 				CA1F68FB2BD5886600439E33 /* MainPosterCell.swift in Sources */,
 				CA3953252BC6FB1100B15E91 /* ScreenUtils.swift in Sources */,
@@ -733,6 +752,7 @@
 				CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */,
 				CA902EC62BDAA0E200560D26 /* PopularLiveCell.swift in Sources */,
 				CA3D0C952C0E40AB00735097 /* CreateNicknameViewModel.swift in Sources */,
+				CA3D0C9C2C10D5D500735097 /* EnabledButtonStatus.swift in Sources */,
 				CA902EFB2BDEB51500560D26 /* PageControlButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

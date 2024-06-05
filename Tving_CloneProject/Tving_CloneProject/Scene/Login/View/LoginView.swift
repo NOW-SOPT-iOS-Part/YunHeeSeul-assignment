@@ -33,6 +33,13 @@ final class LoginView: UIView {
     let maskButton =  UIButton()
     
     
+    // MARK: - UI Properties
+    
+    private let enabledButtonStatus = EnabledButton()
+    
+    private let disabledButtonStatus = DisabledLoginButton()
+    
+    
     // MARK: - Life Cycles
     
     override init(frame: CGRect) {
@@ -49,15 +56,9 @@ final class LoginView: UIView {
     
     func setLoginButton(isEnabled: Bool) {
         if isEnabled {
-            loginButton.backgroundColor = UIColor(resource: .red)
-            loginButton.setTitleColor(UIColor(resource: .white), for: .normal)
-            loginButton.layer.borderWidth = 0
-            loginButton.isEnabled = true
+            loginButton.setEnabledButtonStatus(buttonStatus: enabledButtonStatus)
         } else {
-            loginButton.backgroundColor = UIColor(resource: .black)
-            loginButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
-            loginButton.layer.borderWidth = 1
-            loginButton.isEnabled = false
+            loginButton.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
         }
     }
     
@@ -161,10 +162,9 @@ private extension LoginView {
         
         loginButton.do {
             $0.setTitle("로그인하기", for: .normal)
-            $0.setTitleColor(UIColor(resource: .grey2), for: .normal)
             $0.layer.cornerRadius = 3
-            $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor(resource: .grey4).cgColor
+            $0.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
         }
         
         idButtonBox.do {

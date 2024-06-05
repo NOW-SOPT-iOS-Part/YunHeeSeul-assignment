@@ -100,7 +100,7 @@ private extension LoginViewController {
     
     @objc
     func textFieldChange() {
-        loginModel = LoginModel(id: self.loginView.idTextField.text, pw: self.loginView.idTextField.text)
+        loginModel = LoginModel(id: self.loginView.idTextField.text, pw: self.loginView.pwTextField.text)
         self.isActivate = loginViewModel.checkValid(loginInfo: loginModel)
         self.loginView.setLoginButton(isEnabled: self.isActivate)
     }

@@ -28,10 +28,10 @@ extension LoginViewModel {
     }
     
     func checkValid(loginInfo: LoginModel) -> Bool {
-        guard let id = loginInfo.id else { return false }
+        guard let id = loginInfo.id, !id.isEmpty else { return false }
         self.id.value = id
         
-        guard let pw = loginInfo.pw else { return false }
+        guard let pw = loginInfo.pw, !pw.isEmpty else { return false }
         self.pw.value = pw
     
         return true

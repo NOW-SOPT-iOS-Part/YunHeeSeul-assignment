@@ -38,6 +38,7 @@ final class CreateNicknameViewController: UIViewController {
 
         setStyle()
         setCreateNicknameView()
+        setViewModel()
     }
 
 }
@@ -58,17 +59,31 @@ private extension CreateNicknameViewController {
             let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapDimmedView))
             $0.dimmedView.isUserInteractionEnabled = true
             $0.dimmedView.addGestureRecognizer(gesture)
-            $0.nicknameTextField.delegate = self
             $0.nicknameTextField.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
             $0.saveButton.addTarget(self, action: #selector(popToLoginVC), for: .touchUpInside)
         }
     }
     
+    func setViewModel() {
+        createNicknameViewModel.isValid.bind { [weak self] isValid in
+            guard let isValid else { return }
+            if isValid {
+                self?.createNicknameView.warningLabel.isHidden = true
+                self?.isActivate = true
+                self?.createNicknameView.setSaveButton(isEnabled: true)
+            } else {
+                self?.createNicknameView.warningLabel.isHidden = false
+                self?.createNicknameView.warningLabel.text = self?.createNicknameViewModel.fetchErrMessage()
+                self?.isActivate = false
+                self?.createNicknameView.setSaveButton(isEnabled: false)
+            }
+        }
+    }
+    
     @objc
     func textFieldChange() {
-        isActivate = createNicknameViewModel.checkValidNickname(
+        createNicknameViewModel.checkValidNickname(
             nicknameModel: CreateNicknameModel(nickname: self.createNicknameView.nicknameTextField.text))
-        createNicknameView.setSaveButton(isEnabled: isActivate)
     }
     
     @objc
@@ -85,24 +100,4 @@ private extension CreateNicknameViewController {
         self.dismiss(animated: true)
     }
     
-}
-
-// MARK: - Delegates
-
-extension CreateNicknameViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // 입력된 문자열이 패턴과 일치하는지 확인
-        if createNicknameViewModel.checkValidNickname(
-            nicknameModel: CreateNicknameModel(nickname: textField.text)) {
-            self.createNicknameView.warningLabel.isHidden = true
-            return true
-        } else {
-            self.createNicknameView.warningLabel.isHidden = false
-            self.createNicknameView.warningLabel.text = createNicknameViewModel.fetchErrMessage()
-            self.isActivate = false
-            self.createNicknameView.setSaveButton(isEnabled: false)
-            return false
-        }
-    }
 }
