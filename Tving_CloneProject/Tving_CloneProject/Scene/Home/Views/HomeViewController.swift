@@ -41,12 +41,6 @@ final class HomeViewController: UIViewController {
     
     private var shouldShowSticky: Bool = false
     
-    private var tabBarHeight: CGFloat = 0 {
-        didSet {
-            mainVC.tabBarHeight = tabBarHeight
-        }
-    }
-    
     
     // MARK: - Life Cycles
     
@@ -122,7 +116,6 @@ private extension HomeViewController {
     
     func setStyle() {
         self.navigationController?.navigationBar.isHidden = true
-        self.tabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 40
         
         headerCategoryView.do {
             $0.segmentedControlView.addTarget(self, action: #selector(didChangeValue(sender: )), for: .valueChanged)

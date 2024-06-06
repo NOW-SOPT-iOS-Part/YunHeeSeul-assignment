@@ -52,9 +52,9 @@ final class CreateNicknameView: UIView {
     
     func setSaveButton(isEnabled: Bool) {
         if isEnabled {
-            saveButton.setEnabledButtonStatus(buttonStatus: enabledButtonStatus)
+            saveButton.setButtonStatus(buttonStatus: enabledButtonStatus)
         } else {
-            saveButton.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
+            saveButton.setButtonStatus(buttonStatus: disabledButtonStatus)
         }
     }
 }
@@ -141,7 +141,7 @@ private extension CreateNicknameView {
             $0.setTitle("저장하기", for: .normal)
             $0.layer.cornerRadius = 12
             $0.layer.borderColor = UIColor(resource: .grey2).cgColor
-            $0.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
+            $0.setButtonStatus(buttonStatus: disabledButtonStatus)
         }
     }
 

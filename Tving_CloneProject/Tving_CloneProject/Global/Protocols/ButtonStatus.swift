@@ -17,6 +17,22 @@ protocol ButtonStatus {
     
     var isEnabled: Bool { get }
     
+    var isSelected: Bool { get }
+    
+}
+
+extension ButtonStatus {
+    
+    var bgColor: UIColor { return UIColor(resource: .white) }
+
+    var borderWidth: CGFloat { return 0 }
+    
+    var titleColor: UIColor { return UIColor(resource: .grey2) }
+    
+    var isEnabled: Bool { return false }
+    
+    var isSelected: Bool { return false }
+    
 }
 
 struct EnabledButton: ButtonStatus {
@@ -24,33 +40,39 @@ struct EnabledButton: ButtonStatus {
     var bgColor: UIColor = UIColor(resource: .red)
     
     var titleColor: UIColor = UIColor(resource: .white)
-    
-    var borderWidth: CGFloat = 0
-    
+        
     var isEnabled: Bool = true
     
 }
 
 struct DisabledSaveButton: ButtonStatus {
-    
-    var bgColor: UIColor = UIColor(resource: .white)
-    
-    var titleColor: UIColor = UIColor(resource: .grey2)
-    
+            
     var borderWidth: CGFloat = 1
-    
-    var isEnabled: Bool = false
-    
+        
 }
 
 struct DisabledLoginButton: ButtonStatus {
     
     var bgColor: UIColor = UIColor(resource: .black)
-    
-    var titleColor: UIColor = UIColor(resource: .grey2)
-    
+        
     var borderWidth: CGFloat = 1
+        
+}
+
+struct SelectedPageControlButton: ButtonStatus {
+        
+    var isSelected: Bool = true
     
-    var isEnabled: Bool = false
+    var isEnabled: Bool = true
     
+}
+
+struct NotSelectedPageControlButton: ButtonStatus {
+    
+    var bgColor: UIColor = UIColor(resource: .grey3)
+    
+    var isSelected: Bool = false
+    
+    var isEnabled: Bool = true
+
 }

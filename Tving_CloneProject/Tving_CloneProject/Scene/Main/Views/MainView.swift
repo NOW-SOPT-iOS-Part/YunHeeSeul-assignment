@@ -29,12 +29,6 @@ final class MainView: UIView {
     
     private let imageOnlyLayout: CompositionalLayout = ImageOnlyLayout()
     
-    var tabBarHeight: CGFloat = 0 {
-        didSet {
-            mainCollectionView.reloadData()
-        }
-    }
-    
     
     // MARK: - Life Cycle
     

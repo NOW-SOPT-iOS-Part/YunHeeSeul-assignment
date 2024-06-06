@@ -19,13 +19,7 @@ final class MainViewController: UIViewController {
     private var loadingIndicator = UIActivityIndicatorView()
 
     
-    // MARK: - UI Properties
-    
-    var tabBarHeight: CGFloat = 0 {
-        didSet {
-            mainView.tabBarHeight = tabBarHeight
-        }
-    }
+    // MARK: - Properties
 
     private var mainViewModel: MainViewModel = MainViewModel()
         

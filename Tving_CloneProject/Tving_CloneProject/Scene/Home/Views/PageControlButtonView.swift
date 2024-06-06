@@ -17,9 +17,9 @@ final class PageControlButtonView: UICollectionReusableView {
     
     let buttonCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    let selectedButton: SelectedButtonStatus = SelectedPageControlButton()
+    let selectedButton: ButtonStatus = SelectedPageControlButton()
     
-    let notSelectedButton: SelectedButtonStatus = NotSelectedPageControlButton()
+    let notSelectedButton: ButtonStatus = NotSelectedPageControlButton()
     
     
     // MARK: - UI Properties
@@ -113,9 +113,9 @@ private extension PageControlButtonView {
     
     func setButtonStyle(isSelected: Bool, button: UIButton) {
         if isSelected {
-            button.setSelectedButtonStatus(buttonStatus: selectedButton)
+            button.setButtonStatus(buttonStatus: selectedButton)
         } else {
-            button.setSelectedButtonStatus(buttonStatus: notSelectedButton)
+            button.setButtonStatus(buttonStatus: notSelectedButton)
         }
     }
     

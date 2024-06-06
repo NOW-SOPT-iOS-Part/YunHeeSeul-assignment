@@ -46,7 +46,7 @@
 		CA3D0C952C0E40AB00735097 /* CreateNicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */; };
 		CA3D0C972C0E40D800735097 /* CreateNicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */; };
 		CA3D0C992C0E4A4800735097 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C982C0E4A4800735097 /* CreateView.swift */; };
-		CA3D0C9C2C10D5D500735097 /* EnabledButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9B2C10D5D500735097 /* EnabledButtonStatus.swift */; };
+		CA3D0C9C2C10D5D500735097 /* ButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */; };
 		CA3D0C9E2C10DB6C00735097 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */; };
 		CA3D0CA02C10F47600735097 /* SelectedButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */; };
 		CA3D0CA22C11969100735097 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0CA12C11969100735097 /* CompositionalLayout.swift */; };
@@ -120,7 +120,7 @@
 		CA3D0C942C0E40AB00735097 /* CreateNicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameViewModel.swift; sourceTree = "<group>"; };
 		CA3D0C962C0E40D800735097 /* CreateNicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNicknameModel.swift; sourceTree = "<group>"; };
 		CA3D0C982C0E4A4800735097 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
-		CA3D0C9B2C10D5D500735097 /* EnabledButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledButtonStatus.swift; sourceTree = "<group>"; };
+		CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStatus.swift; sourceTree = "<group>"; };
 		CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedButtonStatus.swift; sourceTree = "<group>"; };
 		CA3D0CA12C11969100735097 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
@@ -506,7 +506,7 @@
 		CA3D0C9A2C10D5C200735097 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				CA3D0C9B2C10D5D500735097 /* EnabledButtonStatus.swift */,
+				CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */,
 				CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */,
 				CA3D0CA12C11969100735097 /* CompositionalLayout.swift */,
 			);
@@ -756,7 +756,7 @@
 				CA8496E52BE7E54D0064E0CC /* Config.swift in Sources */,
 				CA902EC62BDAA0E200560D26 /* PopularLiveCell.swift in Sources */,
 				CA3D0C952C0E40AB00735097 /* CreateNicknameViewModel.swift in Sources */,
-				CA3D0C9C2C10D5D500735097 /* EnabledButtonStatus.swift in Sources */,
+				CA3D0C9C2C10D5D500735097 /* ButtonStatus.swift in Sources */,
 				CA902EFB2BDEB51500560D26 /* PageControlButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

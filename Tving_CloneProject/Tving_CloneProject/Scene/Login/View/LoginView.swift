@@ -56,9 +56,9 @@ final class LoginView: UIView {
     
     func setLoginButton(isEnabled: Bool) {
         if isEnabled {
-            loginButton.setEnabledButtonStatus(buttonStatus: enabledButtonStatus)
+            loginButton.setButtonStatus(buttonStatus: enabledButtonStatus)
         } else {
-            loginButton.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
+            loginButton.setButtonStatus(buttonStatus: disabledButtonStatus)
         }
     }
     
@@ -164,7 +164,7 @@ private extension LoginView {
             $0.setTitle("로그인하기", for: .normal)
             $0.layer.cornerRadius = 3
             $0.layer.borderColor = UIColor(resource: .grey4).cgColor
-            $0.setEnabledButtonStatus(buttonStatus: disabledButtonStatus)
+            $0.setButtonStatus(buttonStatus: disabledButtonStatus)
         }
         
         idButtonBox.do {

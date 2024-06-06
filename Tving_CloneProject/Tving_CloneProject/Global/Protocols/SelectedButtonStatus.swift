@@ -14,19 +14,19 @@ protocol SelectedButtonStatus {
     var isSelected: Bool { get }
     
 }
-
-struct SelectedPageControlButton: SelectedButtonStatus {
-    
-    var bgColor: UIColor = UIColor(resource: .white)
-    
-    var isSelected: Bool = true
-    
-}
-
-struct NotSelectedPageControlButton: SelectedButtonStatus {
-    
-    var bgColor: UIColor = UIColor(resource: .grey3)
-    
-    var isSelected: Bool = false
-    
-}
+//
+//struct SelectedPageControlButton: SelectedButtonStatus {
+//    
+//    var bgColor: UIColor = UIColor(resource: .white)
+//    
+//    var isSelected: Bool = true
+//    
+//}
+//
+//struct NotSelectedPageControlButton: SelectedButtonStatus {
+//    
+//    var bgColor: UIColor = UIColor(resource: .grey3)
+//    
+//    var isSelected: Bool = false
+//    
+//}

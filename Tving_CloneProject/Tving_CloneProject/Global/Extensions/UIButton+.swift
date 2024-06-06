@@ -9,15 +9,11 @@ import UIKit
 
 extension UIButton {
     
-    func setEnabledButtonStatus(buttonStatus: EnabledButtonStatus) {
+    func setButtonStatus(buttonStatus: ButtonStatus) {
         self.backgroundColor = buttonStatus.bgColor
         self.setTitleColor(buttonStatus.titleColor, for: .normal)
         self.layer.borderWidth = buttonStatus.borderWidth
         self.isEnabled = buttonStatus.isEnabled
-    }
-    
-    func setSelectedButtonStatus(buttonStatus: SelectedButtonStatus) {
-        self.backgroundColor = buttonStatus.bgColor
         self.isSelected = buttonStatus.isSelected
     }
     
