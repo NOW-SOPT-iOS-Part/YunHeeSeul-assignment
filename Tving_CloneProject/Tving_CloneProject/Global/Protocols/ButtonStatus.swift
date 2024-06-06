@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol EnabledButtonStatus {
+protocol ButtonStatus {
     
     var bgColor: UIColor { get }
     
@@ -19,7 +19,7 @@ protocol EnabledButtonStatus {
     
 }
 
-struct EnabledButton: EnabledButtonStatus {
+struct EnabledButton: ButtonStatus {
     
     var bgColor: UIColor = UIColor(resource: .red)
     
@@ -31,7 +31,7 @@ struct EnabledButton: EnabledButtonStatus {
     
 }
 
-struct DisabledSaveButton: EnabledButtonStatus {
+struct DisabledSaveButton: ButtonStatus {
     
     var bgColor: UIColor = UIColor(resource: .white)
     
@@ -43,7 +43,7 @@ struct DisabledSaveButton: EnabledButtonStatus {
     
 }
 
-struct DisabledLoginButton: EnabledButtonStatus {
+struct DisabledLoginButton: ButtonStatus {
     
     var bgColor: UIColor = UIColor(resource: .black)
     

@@ -13,13 +13,21 @@ import Then
 final class MainView: UIView {
     
     // MARK: - UI Properties
-
+    
     lazy var mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.makeFlowLayout())
-
+    
     
     // MARK: - Properties
     
     private var mainViewModel: MainViewModel = MainViewModel()
+    
+    private let mainPosterLayout: CompositionalLayout = MainPosterLayout()
+    
+    private let imageNTitleLayout: CompositionalLayout = ImageNTitleLayout()
+    
+    private let popularLiveChannelLayout: CompositionalLayout = PopularLiveChannelLayout()
+    
+    private let imageOnlyLayout: CompositionalLayout = ImageOnlyLayout()
     
     var tabBarHeight: CGFloat = 0 {
         didSet {
@@ -42,7 +50,7 @@ final class MainView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
 }
 
 private extension MainView {
@@ -66,114 +74,47 @@ private extension MainView {
     }
     
     func makeFlowLayout() -> UICollectionViewCompositionalLayout {
-        
         return UICollectionViewCompositionalLayout { section, ev -> NSCollectionLayoutSection? in
-            
             switch self.mainViewModel.dataSource[section] {
             case .mainPoster:
-                return self.makeMainPosterLayout()
+                return self.makeCompositionalLayout(layout: self.mainPosterLayout, type: PageControlButtonView.elementKinds)
             case .recommendedContents, .paramounts:
-                return self.makeImageNTitleLayout()
+                return self.makeCompositionalLayout(layout: self.imageNTitleLayout, type: BasicHeaderView.elementKinds)
             case .popularLiveChannel:
-                return self.makePopularLiveChannelLayout()
+                return self.makeCompositionalLayout(layout: self.popularLiveChannelLayout, type: BasicHeaderView.elementKinds)
             case .categories:
-                return self.makeImageOnlyLayout()
+                return self.makeCompositionalLayout(layout: self.imageOnlyLayout, type: nil)
             }
         }
     }
     
-    func makeMainPosterLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+    func makeCompositionalLayout(layout: CompositionalLayout, type: String?) -> NSCollectionLayoutSection{
+        let itemSize = layout.itemSize
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = layout.itemContentInset
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(550 / 812))
+        
+        let groupSize = layout.groupSize
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = layout.groupContentInset
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 23, trailing: 0)
+        section.contentInsets = layout.sectionContentInset
         
-        let footer = makePageControlButtonView()
-        section.boundarySupplementaryItems = [footer]
-        
-        return section
-    }
-    
-    func makeImageNTitleLayout() -> NSCollectionLayoutSection {
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(98 / 375), heightDimension: .fractionalHeight(170 / 812))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 14, leading: 0, bottom: 0, trailing: 0)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 40, trailing: 0)
-        
-        let header = makeHeaderView()
-        section.boundarySupplementaryItems = [header]
+        guard let type else { return section }
+        let supplemetaryItem = makeSupplementaryLayout(layout: layout, type: type)
+        section.boundarySupplementaryItems = [supplemetaryItem]
         
         return section
     }
     
-    func makePopularLiveChannelLayout() -> NSCollectionLayoutSection {
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(160 / 375), heightDimension: .fractionalHeight(140 / 812))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 40, trailing: 0)
-        
-        let header = makeHeaderView()
-        section.boundarySupplementaryItems = [header]
-        
-        return section
+    func makeSupplementaryLayout(layout: CompositionalLayout , type: String) -> NSCollectionLayoutBoundarySupplementaryItem {
+        let supplemetaryItemSize = layout.supplemetaryItemSize
+        let supplemetaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: supplemetaryItemSize,
+                                                                           elementKind: type,
+                                                                           alignment: layout.supplementaryAlignment)
+        return supplemetaryItem
     }
     
-    func makeImageOnlyLayout() -> NSCollectionLayoutSection {
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(58 / 812))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: tabBarHeight + 40, trailing: 0)
-        
-        return section
-    }
-    
-    func makeHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(25))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                 elementKind: BasicHeaderView.elementKinds,
-                                                                 alignment: .top)
-        return header
-        
-    }
-    
-    func makePageControlButtonView() -> NSCollectionLayoutBoundarySupplementaryItem {
-        
-        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(36))
-        let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize,
-                                                                 elementKind: PageControlButtonView.elementKinds,
-                                                                 alignment: .bottom)
-        return footer
-        
-    }
-    
-
 }
