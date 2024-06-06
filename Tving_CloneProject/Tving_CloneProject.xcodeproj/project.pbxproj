@@ -48,7 +48,6 @@
 		CA3D0C992C0E4A4800735097 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C982C0E4A4800735097 /* CreateView.swift */; };
 		CA3D0C9C2C10D5D500735097 /* ButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */; };
 		CA3D0C9E2C10DB6C00735097 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */; };
-		CA3D0CA02C10F47600735097 /* SelectedButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */; };
 		CA3D0CA22C11969100735097 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0CA12C11969100735097 /* CompositionalLayout.swift */; };
 		CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D972C05B977006B8C35 /* LoginViewModel.swift */; };
 		CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D992C0866BA006B8C35 /* ObservablePattern.swift */; };
@@ -122,7 +121,6 @@
 		CA3D0C982C0E4A4800735097 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 		CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStatus.swift; sourceTree = "<group>"; };
 		CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
-		CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedButtonStatus.swift; sourceTree = "<group>"; };
 		CA3D0CA12C11969100735097 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
 		CA803D972C05B977006B8C35 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CA803D992C0866BA006B8C35 /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
@@ -507,7 +505,6 @@
 			isa = PBXGroup;
 			children = (
 				CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */,
-				CA3D0C9F2C10F47600735097 /* SelectedButtonStatus.swift */,
 				CA3D0CA12C11969100735097 /* CompositionalLayout.swift */,
 			);
 			path = Protocols;
@@ -730,7 +727,6 @@
 				CAB6E7EC2C0485E300E49F9E /* DailyBoxOfficeCell.swift in Sources */,
 				CA3953172BC45DA300B15E91 /* UIFont+.swift in Sources */,
 				CA3952E82BC31F9900B15E91 /* SceneDelegate.swift in Sources */,
-				CA3D0CA02C10F47600735097 /* SelectedButtonStatus.swift in Sources */,
 				CA3D0C842C0E2ED300735097 /* WelcomeView.swift in Sources */,
 				CA1F68FB2BD5886600439E33 /* MainPosterCell.swift in Sources */,
 				CA3D0CA22C11969100735097 /* CompositionalLayout.swift in Sources */,
