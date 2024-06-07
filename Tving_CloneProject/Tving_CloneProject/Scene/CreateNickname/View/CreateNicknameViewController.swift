@@ -7,6 +7,11 @@
 
 import UIKit
 
+import SnapKit
+import Then
+import RxSwift
+import RxCocoa
+
 protocol CreateNicknameVCDelegate: AnyObject {
     func saveUserNickname(nickname: String)
 }
@@ -20,12 +25,19 @@ final class CreateNicknameViewController: UIViewController {
     
     // MARK: - Properties
     
-    var isActivate: Bool = false
+    var isActivate: Bool = false {
+        didSet {
+            self.createNicknameView.warningLabel.isHidden = isActivate
+            self.createNicknameView.setSaveButton(isEnabled: isActivate)
+        }
+    }
     
     weak var delegate: CreateNicknameVCDelegate?
     
     private let createNicknameViewModel = CreateNicknameViewModel()
     
+    private let disposeBag = DisposeBag()
+
     
     // MARK: - Life Cycles
     
@@ -39,6 +51,7 @@ final class CreateNicknameViewController: UIViewController {
         setStyle()
         setCreateNicknameView()
         setViewModel()
+        didTapSaveButton()
     }
 
 }
@@ -59,40 +72,33 @@ private extension CreateNicknameViewController {
             let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapDimmedView))
             $0.dimmedView.isUserInteractionEnabled = true
             $0.dimmedView.addGestureRecognizer(gesture)
-            $0.nicknameTextField.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
-            $0.saveButton.addTarget(self, action: #selector(popToLoginVC), for: .touchUpInside)
         }
     }
     
     func setViewModel() {
-        createNicknameViewModel.isValid.bind { [weak self] isValid in
-            guard let isValid else { return }
-            if isValid {
-                self?.createNicknameView.warningLabel.isHidden = true
-                self?.isActivate = true
-                self?.createNicknameView.setSaveButton(isEnabled: true)
-            } else {
-                self?.createNicknameView.warningLabel.isHidden = false
-                self?.createNicknameView.warningLabel.text = self?.createNicknameViewModel.fetchErrMessage()
-                self?.isActivate = false
-                self?.createNicknameView.setSaveButton(isEnabled: false)
+        let input = CreateNicknameViewModel.Input(
+            nicknameTextfieldDidChangeEvent: createNicknameView.nicknameTextField.rx.text.asObservable()
+        )
+        
+        let output = createNicknameViewModel.transform(from: input, disposeBag: disposeBag)
+        
+        output.isValid.subscribe(onNext: { [weak self] isValid in
+            self?.isActivate = isValid ? true : false
+        }).disposed(by: disposeBag)
+        
+        output.errMessage.subscribe(onNext: { [weak self] errMessage in
+            self?.createNicknameView.warningLabel.text = errMessage
+        }).disposed(by: disposeBag)
+    }
+
+    func didTapSaveButton() {
+        createNicknameView.saveButton.rx.tap.subscribe(onNext:  { _ in
+            if self.isActivate {
+                guard let nickname  = self.createNicknameView.nicknameTextField.text else { return }
+                self.delegate?.saveUserNickname(nickname: nickname)
+                self.dismiss(animated: true)
             }
-        }
-    }
-    
-    @objc
-    func textFieldChange() {
-        createNicknameViewModel.checkValidNickname(
-            nicknameModel: CreateNicknameModel(nickname: self.createNicknameView.nicknameTextField.text))
-    }
-    
-    @objc
-    func popToLoginVC() {
-        if isActivate {
-            let nickname = self.createNicknameView.nicknameTextField.text ?? ""
-            self.delegate?.saveUserNickname(nickname: nickname)
-            self.dismiss(animated: true)
-        }
+        }).disposed(by: disposeBag)
     }
     
     @objc

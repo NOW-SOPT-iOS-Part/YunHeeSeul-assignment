@@ -5,42 +5,58 @@
 //  Created by 윤희슬 on 6/4/24.
 //
 
-import Foundation
+import RxSwift
+import RxRelay
 
 final class CreateNicknameViewModel {
     
-    var nickname: ObservablePattern<String> = ObservablePattern.init(nil)
+    var nickname: String?
+        
+    struct Input {
+        
+        let nicknameTextfieldDidChangeEvent: Observable<String?>
+        
+    }
     
-    var errMessage: ObservablePattern<String> = ObservablePattern.init(nil)
-    
-    var isValid: ObservablePattern<Bool> = ObservablePattern.init(false)
+    struct Output {
+        
+        var isValid = PublishRelay<Bool>()
+        
+        var nicknameEmpty = PublishRelay<Bool>()
+
+        var errMessage = PublishRelay<String>()
+        
+    }
     
 }
 
 extension CreateNicknameViewModel {
     
-    func checkValidNickname(nicknameModel: CreateNicknameModel) {
-        guard let nickname = nicknameModel.nickname, !nickname.isEmpty else {
-            errMessage.value = "닉네임을 입력해주세요"
-            isValid.value = false
-            return
-        }
+    func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
         
-        // 정규식 패턴
-        let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣]*$"
-        guard let _ = nickname.range(of: pattern, options: .regularExpression) else {
-            errMessage.value = "닉네임은 \"한글\"만 사용 가능해요!"
-            isValid.value = false
-            return
-        }
+        input.nicknameTextfieldDidChangeEvent.subscribe(onNext: { [weak self] nickname in
+            self?.nickname = nickname
+            let nickname = self?.nickname ?? ""
+            if  !nickname.isEmpty {
+                output.isValid.accept(true)
+            } else {
+                output.errMessage.accept("닉네임을 입력해주세요")
+                output.isValid.accept(false)
+            }
+            
+            // 정규식 패턴
+            let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣]*$"
+            guard let _ = nickname.range(of: pattern, options: .regularExpression) else {
+                output.errMessage.accept("닉네임은 \"한글\"만 사용 가능해요!")
+                output.isValid.accept(false)
+                return
+            }
+            output.isValid.accept(true)
+
+        }).disposed(by: disposeBag)
         
-        self.nickname.value = nickname
-        isValid.value = true
-    }
-    
-    func fetchErrMessage() -> String {
-        guard let errMessage = self.errMessage.value else { return "" }
-        return errMessage
+        return output
     }
     
 }

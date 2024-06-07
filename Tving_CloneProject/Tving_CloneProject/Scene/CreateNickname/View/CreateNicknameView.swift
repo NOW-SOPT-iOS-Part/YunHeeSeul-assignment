@@ -35,6 +35,8 @@ final class CreateNicknameView: UIView {
     
     private let disabledButtonStatus = DisabledSaveButton()
     
+    private let textfieldStatus: TextfieldStatus = CreateNicknameTextfield()
+    
     
     // MARK: - Life Cycles
     
@@ -123,10 +125,7 @@ private extension CreateNicknameView {
         }
         
         nicknameTextField.do {
-            $0.setTextField(forBackgroundColor: UIColor(resource: .grey2),
-                            forBorderColor: UIColor(resource: .grey2),
-                            forBorderWidth: 0,
-                            forCornerRadius: 3)
+            $0.setTextField(textfieldStatus: textfieldStatus)
             $0.textColor = UIColor(resource: .grey4)
             $0.setLeftPadding(amount: 23)
         }
