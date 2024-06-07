@@ -39,6 +39,8 @@ final class LoginView: UIView {
     
     private let disabledButtonStatus = DisabledLoginButton()
     
+    private let unselectedTextfieldStatus: TextfieldStatus = UnselectedTextfield()
+
     
     // MARK: - Life Cycles
     
@@ -109,10 +111,7 @@ private extension LoginView {
         }
         
         idTextField.do {
-            $0.setTextField(forBackgroundColor: UIColor(resource: .grey4),
-                                    forBorderColor: UIColor(resource: .grey4),
-                                    forBorderWidth: 0,
-                                    forCornerRadius: 3)
+            $0.setTextField(textfieldStatus: unselectedTextfieldStatus)
             $0.setPlaceholder(placeholder: "아이디", fontColor: UIColor(resource: .grey2), font: UIFont.pretendard(.subhead3))
             $0.setLeftPadding(amount: 22)
             $0.textColor = UIColor(resource: .grey2)
@@ -132,10 +131,7 @@ private extension LoginView {
         }
         
         pwTextField.do {
-            $0.setTextField(forBackgroundColor: UIColor(resource: .grey4),
-                                    forBorderColor: UIColor(resource: .grey4),
-                                    forBorderWidth: 0,
-                                    forCornerRadius: 3)
+            $0.setTextField(textfieldStatus: unselectedTextfieldStatus)
             $0.setPlaceholder(placeholder: "비밀번호", fontColor: UIColor(resource: .grey2), font: UIFont.pretendard(.subhead3))
             $0.setLeftPadding(amount: 22)
             $0.textColor = UIColor(resource: .grey2)

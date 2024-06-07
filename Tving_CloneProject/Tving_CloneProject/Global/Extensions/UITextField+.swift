@@ -22,12 +22,12 @@ extension UITextField {
     }
     
     //TextField 기본 속성 커스텀
-    func setTextField(forBackgroundColor: UIColor, forBorderColor: UIColor, forBorderWidth: CGFloat, forCornerRadius: CGFloat = 0) {
+    func setTextField(textfieldStatus: TextfieldStatus) {
         self.clipsToBounds = true
-        self.layer.borderColor = forBorderColor.cgColor
-        self.layer.borderWidth = forBorderWidth
-        self.backgroundColor = forBackgroundColor
-        self.layer.cornerRadius = forCornerRadius
+        self.layer.borderColor = textfieldStatus.borderColor.cgColor
+        self.layer.borderWidth = textfieldStatus.borderWidth
+        self.backgroundColor = textfieldStatus.bgColor
+        self.layer.cornerRadius = textfieldStatus.borderRadius
     }
     
     //TextField placeholder 커스텀
