@@ -9,11 +9,11 @@ import UIKit
 
 import Then
 
-class TabBarViewController: UITabBarController {
+final class TabBarViewController: UITabBarController {
     
     // MARK: - UI Components
     
-    let mainVC = MainViewController()
+    let mainVC = HomeViewController()
     
     let toBeReleasedVC = ToBeReleasedViewController()
     
