@@ -7,38 +7,37 @@
 
 import UIKit
 
-protocol LoginViewDelegate: AnyObject {
-    func pushToWelcomeVC(id: String)
-}
+import SnapKit
+import Then
 
 final class LoginView: UIView {
 
     // MARK: - UI Properties
     
-    private lazy var idTextField = UITextField()
+    private let loginLabel = UILabel()
+
+    let idTextField = UITextField()
     
-    private lazy var pwTextField = UITextField()
+    let pwTextField = UITextField()
     
-    private let loginButton = UIButton()
+    let loginButton = UIButton()
     
     private let idButtonBox = UIView()
     
     private let pwButtonBox = UIView()
     
-    private lazy var idClearButton = UIButton()
+    let idClearButton = UIButton()
     
-    private lazy var pwClearButton = UIButton()
+    let pwClearButton = UIButton()
     
-    private lazy var maskButton =  UIButton()
+    let maskButton =  UIButton()
     
     
-    // MARK: - Properties
+    // MARK: - UI Properties
     
-    var isActivate: Bool = false
+    private let enabledButtonStatus = EnabledButton()
     
-    weak var delegate: LoginViewDelegate?
-    
-    private let loginViewModel: LoginViewModel = LoginViewModel()
+    private let disabledButtonStatus = DisabledLoginButton()
     
     
     // MARK: - Life Cycles
@@ -55,6 +54,14 @@ final class LoginView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setLoginButton(isEnabled: Bool) {
+        if isEnabled {
+            loginButton.setButtonStatus(buttonStatus: enabledButtonStatus)
+        } else {
+            loginButton.setButtonStatus(buttonStatus: disabledButtonStatus)
+        }
+    }
+    
 }
 
 
@@ -63,12 +70,18 @@ final class LoginView: UIView {
 private extension LoginView {
     
     func setHierarchy() {
-        self.addSubviews(idTextField, pwTextField, loginButton)
+        self.addSubviews(loginLabel, idTextField, pwTextField, loginButton)
     }
     
     func setLayout() {
+        loginLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(100)
+            $0.centerX.equalToSuperview()
+        }
+        
         idTextField.snp.makeConstraints {
-            $0.top.centerX.width.equalToSuperview()
+            $0.top.equalTo(loginLabel.snp.bottom).offset(30)
+            $0.centerX.width.equalToSuperview()
             $0.height.equalTo(52)
         }
         
@@ -88,6 +101,12 @@ private extension LoginView {
     
     func setStyle() {
         self.backgroundColor = UIColor(resource: .black)
+        
+        loginLabel.do {
+            $0.text = "TVING ID 로그인"
+            $0.font = UIFont.pretendard(.body1)
+            $0.textColor = UIColor(resource: .grey1)
+        }
         
         idTextField.do {
             $0.setTextField(forBackgroundColor: UIColor(resource: .grey4),
@@ -110,9 +129,6 @@ private extension LoginView {
             }
             $0.rightView = idButtonBox
             $0.rightViewMode = .whileEditing
-            
-            $0.delegate = self
-            $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
         pwTextField.do {
@@ -142,18 +158,13 @@ private extension LoginView {
             }
             $0.rightView = pwButtonBox
             $0.rightViewMode = .whileEditing
-            
-            $0.delegate = self
-            $0.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
         }
         
         loginButton.do {
             $0.setTitle("로그인하기", for: .normal)
-            $0.setTitleColor(UIColor(resource: .grey2), for: .normal)
             $0.layer.cornerRadius = 3
-            $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor(resource: .grey4).cgColor
-            $0.addTarget(self, action: #selector(pushToWelcomeVC), for: .touchUpInside)
+            $0.setButtonStatus(buttonStatus: disabledButtonStatus)
         }
         
         idButtonBox.do {
@@ -162,8 +173,6 @@ private extension LoginView {
         
         idClearButton.do {
             $0.setImage(UIImage(resource: .clear), for: .normal)
-            $0.tag = 0
-            $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
         
         pwButtonBox.do {
@@ -172,77 +181,13 @@ private extension LoginView {
         
         pwClearButton.do {
             $0.setImage(UIImage(resource: .clear), for: .normal)
-            $0.tag = 1
-            $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
         
         maskButton.do {
             $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
             $0.tintColor = UIColor(resource: .grey3)
-            $0.addTarget(self, action: #selector(maskButtonTapped), for: .touchUpInside)
         }
         
     }
     
-    func setLoginButton(isEnabled: Bool) {
-        if isEnabled {
-            loginButton.backgroundColor = UIColor(resource: .red)
-            loginButton.setTitleColor(UIColor(resource: .white), for: .normal)
-            loginButton.layer.borderWidth = 0
-            loginButton.isEnabled = true
-            isActivate = true
-        } else {
-            loginButton.backgroundColor = UIColor(resource: .black)
-            loginButton.setTitleColor(UIColor(resource: .grey2), for: .normal)
-            loginButton.layer.borderWidth = 1
-            loginButton.isEnabled = false
-            isActivate = false
-        }
-    }
-    
-    @objc
-    func textFieldChange() {
-        let id = self.idTextField.text
-        let pw = self.pwTextField.text
-        
-        setLoginButton(isEnabled: loginViewModel.checkValid(id: id, pw: pw))
-    }
-    
-    @objc
-    func maskButtonTapped() {
-        self.pwTextField.isSecureTextEntry = !self.pwTextField.isSecureTextEntry
-    }
-    
-    @objc
-    func clearButtonTapped(_ sender: UIButton) {
-        if sender.tag == 0 {
-            self.loginViewModel.clearText(textfield: self.idTextField)
-        } else {
-            self.loginViewModel.clearText(textfield: self.pwTextField)
-        }
-        setLoginButton(isEnabled: false)
-    }
-    
-    @objc
-    func pushToWelcomeVC() {
-        if isActivate {
-            let id = self.idTextField.text ?? ""
-            self.delegate?.pushToWelcomeVC(id: id)
-        }
-    }
-    
-}
-
-// MARK: - Delegates
-
-extension LoginView: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing (_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(resource: .grey2).cgColor
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 0
-    }
 }

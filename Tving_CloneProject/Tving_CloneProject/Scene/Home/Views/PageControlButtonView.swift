@@ -17,6 +17,10 @@ final class PageControlButtonView: UICollectionReusableView {
     
     let buttonCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
+    let selectedButton: ButtonStatus = SelectedPageControlButton()
+    
+    let notSelectedButton: ButtonStatus = NotSelectedPageControlButton()
+    
     
     // MARK: - UI Properties
     
@@ -27,9 +31,7 @@ final class PageControlButtonView: UICollectionReusableView {
     weak var delegate: PageControlButtonDelegate?
 
     static let identifier: String = "PageControlButtonView"
-    
-    private let pageControlButtonViewModel: PageControlButtonViewModel = PageControlButtonViewModel()
-    
+        
     private var prevIndex: Int = 0 {
         didSet {
             // 이전에 선택된 버튼을 찾기
@@ -53,7 +55,6 @@ final class PageControlButtonView: UICollectionReusableView {
     
     var buttonCount: Int = 0 {
         didSet {
-            pageControlButtonViewModel.buttonCount.value = buttonCount
             buttonCollectionView.reloadData()
         }
     }
@@ -107,12 +108,15 @@ private extension PageControlButtonView {
     
     func setDelegate() {
         buttonCollectionView.delegate = self
-        buttonCollectionView.dataSource = pageControlButtonViewModel
+        buttonCollectionView.dataSource = self
     }
     
     func setButtonStyle(isSelected: Bool, button: UIButton) {
-        button.isSelected = isSelected ? true : false
-        button.backgroundColor = isSelected ? UIColor(resource: .white) : UIColor(resource: .grey3)
+        if isSelected {
+            button.setButtonStatus(buttonStatus: selectedButton)
+        } else {
+            button.setButtonStatus(buttonStatus: notSelectedButton)
+        }
     }
     
 }
@@ -144,4 +148,20 @@ extension PageControlButtonView: UICollectionViewDelegate {
             }
         }
     }
+}
+extension PageControlButtonView: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return buttonCount
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagerButtonCell.identifier, for: indexPath) as? PagerButtonCell
+        else { return UICollectionViewCell() }
+        
+        cell.pagerButton.tag = indexPath.row
+
+        return cell
+    }
+    
 }
