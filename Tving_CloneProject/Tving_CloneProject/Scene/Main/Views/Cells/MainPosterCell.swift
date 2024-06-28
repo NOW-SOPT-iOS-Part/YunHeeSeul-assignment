@@ -11,7 +11,6 @@ import SnapKit
 import Then
 
 protocol MainPosterDelegate: AnyObject {
-    
     func didSwipePoster(index: Int, vc: UIPageViewController, vcData: [UIViewController])
 }
 
@@ -58,9 +57,7 @@ final class MainPosterCell: UICollectionViewCell {
             }
             vcData += [vc]
         }
-        
         setVCInPageVC()
-            
     }
 }
 

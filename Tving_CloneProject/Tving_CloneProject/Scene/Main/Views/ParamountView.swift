@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class ParamountView: UIView {
+final class ParamountView: UIView {
 
     // MARK: - UI Properties
     

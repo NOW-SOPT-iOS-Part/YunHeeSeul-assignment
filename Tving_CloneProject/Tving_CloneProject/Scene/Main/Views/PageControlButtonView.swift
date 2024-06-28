@@ -11,7 +11,7 @@ protocol PageControlButtonDelegate: AnyObject {
     func didTapControlButton(index: Int)
 }
 
-class PageControlButtonView: UICollectionReusableView {
+final class PageControlButtonView: UICollectionReusableView {
     
     // MARK: - UI Properties
     
@@ -27,6 +27,8 @@ class PageControlButtonView: UICollectionReusableView {
     weak var delegate: PageControlButtonDelegate?
 
     static let identifier: String = "PageControlButtonView"
+    
+    private let pageControlButtonViewModel: PageControlButtonViewModel = PageControlButtonViewModel()
     
     private var prevIndex: Int = 0 {
         didSet {
@@ -51,6 +53,7 @@ class PageControlButtonView: UICollectionReusableView {
     
     var buttonCount: Int = 0 {
         didSet {
+            pageControlButtonViewModel.buttonCount.value = buttonCount
             buttonCollectionView.reloadData()
         }
     }
@@ -104,7 +107,7 @@ private extension PageControlButtonView {
     
     func setDelegate() {
         buttonCollectionView.delegate = self
-        buttonCollectionView.dataSource = self
+        buttonCollectionView.dataSource = pageControlButtonViewModel
     }
     
     func setButtonStyle(isSelected: Bool, button: UIButton) {
@@ -128,28 +131,17 @@ extension PageControlButtonView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension PageControlButtonView: UICollectionViewDelegate {}
-
-extension PageControlButtonView: UICollectionViewDataSource {
+extension PageControlButtonView: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return buttonCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagerButtonCell.identifier, for: indexPath) as? PagerButtonCell
-        else { return UICollectionViewCell() }
-        
-        cell.pagerButton.tag = indexPath.row
-        cell.pagerButton.addTarget(self, action: #selector(didTapControlButton(_:)), for: .touchUpInside)
-        
-        if indexPath.row == index {
-            setButtonStyle(isSelected: true, button: cell.pagerButton)
-        } else {
-            setButtonStyle(isSelected: false, button: cell.pagerButton)
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let pageButtonCell = cell as? PagerButtonCell {
+            pageButtonCell.pagerButton.addTarget(self, action: #selector(didTapControlButton(_:)), for: .touchUpInside)
+            
+            if indexPath.row == index {
+                setButtonStyle(isSelected: true, button: pageButtonCell.pagerButton)
+            } else {
+                setButtonStyle(isSelected: false, button: pageButtonCell.pagerButton)
+            }
         }
-
-        return cell
     }
-    
 }

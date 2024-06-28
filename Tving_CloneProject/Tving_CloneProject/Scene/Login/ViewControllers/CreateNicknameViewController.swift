@@ -11,7 +11,7 @@ protocol CreateNicknameVCDelegate: AnyObject {
     func saveUserNickname(nickname: String)
 }
 
-class CreateNicknameViewController: UIViewController {
+final class CreateNicknameViewController: UIViewController {
     
     // MARK: - UI Properties
     
@@ -33,6 +33,8 @@ class CreateNicknameViewController: UIViewController {
     var isActivate: Bool = false
     
     weak var delegate: CreateNicknameVCDelegate?
+    
+    private let loginViewModel: LoginViewModel = LoginViewModel()
     
     
     // MARK: - Life Cycles
@@ -131,7 +133,6 @@ private extension CreateNicknameViewController {
         }
         
         warningLabel.do {
-            $0.text = "닉네임은 \"한글\"만 사용 가능해요!"
             $0.font = UIFont.pretendard(.subhead5)
             $0.textColor = UIColor(resource: .red)
             $0.isHidden = true
@@ -167,8 +168,7 @@ private extension CreateNicknameViewController {
     
     @objc
     func textFieldChange() {
-        let nickname = self.nicknameTextField.text ?? ""
-        setSaveButton(isEnabled: !nickname.isEmpty)
+        setSaveButton(isEnabled: loginViewModel.checkValidNickname(nickname: self.nicknameTextField.text))
     }
     
     @objc
@@ -192,15 +192,14 @@ private extension CreateNicknameViewController {
 extension CreateNicknameViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // 정규식 패턴
-        let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣]*$"
         
         // 입력된 문자열이 패턴과 일치하는지 확인
-        if let _ = string.range(of: pattern, options: .regularExpression) {
+        if loginViewModel.checkValidNickname(nickname: textField.text) {
             self.warningLabel.isHidden = true
             return true
         } else {
             self.warningLabel.isHidden = false
+            self.warningLabel.text = loginViewModel.fetchErrMessage()
             setSaveButton(isEnabled: false)
             return false
         }

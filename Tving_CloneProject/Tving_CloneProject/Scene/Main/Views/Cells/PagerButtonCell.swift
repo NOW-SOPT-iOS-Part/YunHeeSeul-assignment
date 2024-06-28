@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class PagerButtonCell: UICollectionViewCell {
+final class PagerButtonCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
@@ -44,13 +44,11 @@ class PagerButtonCell: UICollectionViewCell {
 private extension PagerButtonCell {
     
     func setHierarchy() {
-        
         self.addSubview(pagerButton)
         
     }
     
     func setLayout() {
-        
         pagerButton.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -58,7 +56,6 @@ private extension PagerButtonCell {
     }
     
     func setStyle() {
-        
         pagerButton.do {
             $0.layer.cornerRadius = 2
             $0.backgroundColor = .grey3

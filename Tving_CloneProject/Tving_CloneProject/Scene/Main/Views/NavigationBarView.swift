@@ -7,18 +7,14 @@
 
 import UIKit
 
-class NavigationBarView: UIView {
+final class NavigationBarView: UIView {
     
     // MARK: - UI Properties
     
     private let tvingLogoButton = UIButton()
     
     private let profileImage = UIImageView()
-    
-    
-    // MARK: - Properties
-    
-    
+
     
     // MARK: - Life Cycles
     
@@ -42,13 +38,10 @@ class NavigationBarView: UIView {
 private extension NavigationBarView {
     
     func setHierarchy() {
-        
         self.addSubviews(tvingLogoButton, profileImage)
-        
     }
     
     func setLayout() {
-        
         tvingLogoButton.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().inset(10)
@@ -63,7 +56,6 @@ private extension NavigationBarView {
     }
     
     func setStyle() {
-        
         self.backgroundColor = .clear
         
         tvingLogoButton.do {
