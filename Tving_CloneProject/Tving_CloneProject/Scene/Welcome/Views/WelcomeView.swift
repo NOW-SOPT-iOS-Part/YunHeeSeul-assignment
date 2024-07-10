@@ -1,8 +1,8 @@
 //
-//  WelcomeViewController.swift
+//  WelcomeView.swift
 //  Tving_CloneProject
 //
-//  Created by 윤희슬 on 4/10/24.
+//  Created by 윤희슬 on 6/4/24.
 //
 
 import UIKit
@@ -10,31 +10,29 @@ import UIKit
 import SnapKit
 import Then
 
-final class WelcomeViewController: UIViewController {
+final class WelcomeView: UIView {
     
     // MARK: - UI Properties
     
     private let logoImageView = UIImageView()
     
-    private let welcomeLabel = UILabel()
+    let welcomeLabel = UILabel()
     
-    private lazy var goToMainButton = UIButton()
-    
-    
-    // MARK: - Properties
-        
-    var userInfo: String? = ""
+    let goToMainButton = UIButton()
     
     
-    // MARK: - Life Cycles
+    // MARK: - Life Cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         setHierarchy()
         setLayout()
         setStyle()
-        bindUserInfo()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 }
@@ -42,10 +40,10 @@ final class WelcomeViewController: UIViewController {
 
 // MARK: - Private Methods
 
-private extension WelcomeViewController {
+private extension WelcomeView {
     
     func setHierarchy() {
-        self.view.addSubviews(logoImageView, welcomeLabel, goToMainButton)
+        self.addSubviews(logoImageView, welcomeLabel, goToMainButton)
     }
     
     func setLayout() {
@@ -69,9 +67,6 @@ private extension WelcomeViewController {
     }
     
     func setStyle() {
-        self.view.backgroundColor = UIColor(resource: .black)
-        self.navigationController?.navigationBar.isHidden = true
-        
         logoImageView.do {
             $0.image = UIImage(resource: .redTvingLogo)
         }
@@ -88,20 +83,8 @@ private extension WelcomeViewController {
             $0.setTitleColor(UIColor(resource: .white), for: .normal)
             $0.layer.cornerRadius = 3
             $0.backgroundColor = UIColor(resource: .red)
-            $0.addTarget(self, action: #selector(pushToMainVC), for: .touchUpInside)
         }
         
     }
-    
-    func bindUserInfo() {
-        let name = userInfo ?? ""
-        self.welcomeLabel.text = "\(name)님\n반가워요!"
-    }
-    
-    @objc
-    func pushToMainVC() {
-        let tabBarVC = TabBarViewController()
-        self.navigationController?.pushViewController(tabBarVC, animated: true)
-    }
-    
+
 }
