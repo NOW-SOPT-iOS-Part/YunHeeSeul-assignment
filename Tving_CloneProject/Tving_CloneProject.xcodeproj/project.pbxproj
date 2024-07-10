@@ -49,6 +49,11 @@
 		CA3D0C9C2C10D5D500735097 /* ButtonStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */; };
 		CA3D0C9E2C10DB6C00735097 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */; };
 		CA3D0CA22C11969100735097 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0CA12C11969100735097 /* CompositionalLayout.swift */; };
+		CA3D0CA42C12174A00735097 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0CA32C12174A00735097 /* ViewModelType.swift */; };
+		CA3D0CA72C12181F00735097 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = CA3D0CA62C12181F00735097 /* RxBlocking */; };
+		CA3D0CA92C12181F00735097 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA3D0CA82C12181F00735097 /* RxCocoa */; };
+		CA3D0CAB2C12181F00735097 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CA3D0CAA2C12181F00735097 /* RxRelay */; };
+		CA3D0CAD2C12F27700735097 /* TextfieldStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D0CAC2C12F27700735097 /* TextfieldStatus.swift */; };
 		CA803D982C05B977006B8C35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D972C05B977006B8C35 /* LoginViewModel.swift */; };
 		CA803D9A2C0866BA006B8C35 /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D992C0866BA006B8C35 /* ObservablePattern.swift */; };
 		CA803D9C2C09C784006B8C35 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */; };
@@ -122,6 +127,8 @@
 		CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStatus.swift; sourceTree = "<group>"; };
 		CA3D0C9D2C10DB6C00735097 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		CA3D0CA12C11969100735097 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
+		CA3D0CA32C12174A00735097 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		CA3D0CAC2C12F27700735097 /* TextfieldStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldStatus.swift; sourceTree = "<group>"; };
 		CA803D972C05B977006B8C35 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CA803D992C0866BA006B8C35 /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		CA803D9B2C09C784006B8C35 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -156,10 +163,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA3D0CA92C12181F00735097 /* RxCocoa in Frameworks */,
 				CA3953052BC4527D00B15E91 /* SnapKit in Frameworks */,
+				CA3D0CAB2C12181F00735097 /* RxRelay in Frameworks */,
 				CA3953152BC45CA700B15E91 /* Then in Frameworks */,
 				CA8496E22BE7E36D0064E0CC /* Moya in Frameworks */,
 				CA3953072BC4527D00B15E91 /* SnapKit-Dynamic in Frameworks */,
+				CA3D0CA72C12181F00735097 /* RxBlocking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +516,8 @@
 			children = (
 				CA3D0C9B2C10D5D500735097 /* ButtonStatus.swift */,
 				CA3D0CA12C11969100735097 /* CompositionalLayout.swift */,
+				CA3D0CA32C12174A00735097 /* ViewModelType.swift */,
+				CA3D0CAC2C12F27700735097 /* TextfieldStatus.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -630,6 +642,9 @@
 				CA3953062BC4527D00B15E91 /* SnapKit-Dynamic */,
 				CA3953142BC45CA700B15E91 /* Then */,
 				CA8496E12BE7E36D0064E0CC /* Moya */,
+				CA3D0CA62C12181F00735097 /* RxBlocking */,
+				CA3D0CA82C12181F00735097 /* RxCocoa */,
+				CA3D0CAA2C12181F00735097 /* RxRelay */,
 			);
 			productName = Tving_CloneProject;
 			productReference = CA3952E22BC31F9900B15E91 /* Tving_CloneProject.app */;
@@ -663,6 +678,7 @@
 				CA3953032BC4527D00B15E91 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				CA3953132BC45CA700B15E91 /* XCRemoteSwiftPackageReference "Then" */,
 				CA8496E02BE7E36D0064E0CC /* XCRemoteSwiftPackageReference "Moya" */,
+				CA3D0CA52C12181F00735097 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = CA3952E32BC31F9900B15E91 /* Products */;
 			projectDirPath = "";
@@ -702,7 +718,9 @@
 				CA3953002BC44B9900B15E91 /* UIView+.swift in Sources */,
 				CA1F68F02BD5691D00439E33 /* HomeViewController.swift in Sources */,
 				CA8496F22BE8A6700064E0CC /* NetworkResult.swift in Sources */,
+				CA3D0CAD2C12F27700735097 /* TextfieldStatus.swift in Sources */,
 				CA3D0C702C0D9D4500735097 /* MainView.swift in Sources */,
+				CA3D0CA42C12174A00735097 /* ViewModelType.swift in Sources */,
 				CA902EBC2BD6F9F900560D26 /* ImageWithTitleCell.swift in Sources */,
 				CA3953222BC6FA9F00B15E91 /* Constant.swift in Sources */,
 				CA902EF52BDE9E4800560D26 /* ToBeReleasedViewController.swift in Sources */,
@@ -988,6 +1006,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		CA3D0CA52C12181F00735097 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
 		CA8496E02BE7E36D0064E0CC /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya";
@@ -1013,6 +1039,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA3953132BC45CA700B15E91 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		CA3D0CA62C12181F00735097 /* RxBlocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA3D0CA52C12181F00735097 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxBlocking;
+		};
+		CA3D0CA82C12181F00735097 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA3D0CA52C12181F00735097 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		CA3D0CAA2C12181F00735097 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA3D0CA52C12181F00735097 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
 		};
 		CA8496E12BE7E36D0064E0CC /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;

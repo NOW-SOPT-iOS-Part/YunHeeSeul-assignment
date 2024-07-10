@@ -9,6 +9,8 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class LoginViewController: UIViewController {
     
@@ -21,13 +23,23 @@ final class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    var isActivate: Bool = false
+    var isActivate: Bool = false {
+        didSet {
+            self.loginView.setLoginButton(isEnabled: isActivate)
+        }
+    }
     
     var nickname: String? = nil
     
     var loginModel: LoginModel = LoginModel(id: nil, pw: nil)
     
     private let loginViewModel: LoginViewModel = LoginViewModel()
+    
+    private let disposeBag = DisposeBag()
+    
+    private let selectedTextfieldStatus: TextfieldStatus = SelectedTextfield()
+
+    private let unselectedTextfieldStatus: TextfieldStatus = UnselectedTextfield()
     
     
     // MARK: - Life Cycles
@@ -39,6 +51,10 @@ final class LoginViewController: UIViewController {
         setLayout()
         setStyle()
         setView()
+        setViewModel()
+        clearButtonTapped()
+        pushToWelcomeVC()
+        maskButtonTapped()
     }
     
 }
@@ -72,15 +88,7 @@ private extension LoginViewController {
     func setView() {
         self.loginView.do {
             $0.idTextField.delegate = self
-            $0.idTextField.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
             $0.pwTextField.delegate = self
-            $0.pwTextField.addTarget(self, action: #selector(textFieldChange), for: .editingChanged)
-            $0.loginButton.addTarget(self, action: #selector(pushToWelcomeVC), for: .touchUpInside)
-            $0.idClearButton.tag = 0
-            $0.idClearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
-            $0.pwClearButton.tag = 1
-            $0.pwClearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
-            $0.maskButton.addTarget(self, action: #selector(maskButtonTapped), for: .touchUpInside)
         }
         
         self.createView.do {
@@ -88,6 +96,20 @@ private extension LoginViewController {
             $0.createNicknameLabel.isUserInteractionEnabled = true
             $0.createNicknameLabel.addGestureRecognizer(gesture)
         }
+    }
+    
+    private func setViewModel() {
+        let input = LoginViewModel.Input(
+            idTextfieldDidChangeEvent: loginView.idTextField.rx.text.asObservable(),
+            pwTextfieldDidChangeEvent: loginView.pwTextField.rx.text.asObservable(),
+            loginButtonDidTapEvent: loginView.loginButton.rx.tap.asObservable()
+        )
+        
+        let output = loginViewModel.transform(from: input, disposeBag: disposeBag)
+        
+        output.isValid.subscribe(onNext: { [weak self] isValid in
+            self?.isActivate = isValid ? true : false
+        }).disposed(by: disposeBag)
     }
     
     @objc
@@ -98,42 +120,46 @@ private extension LoginViewController {
         self.present(createNicknameVC, animated: true)
     }
     
-    @objc
-    func textFieldChange() {
-        loginModel = LoginModel(id: self.loginView.idTextField.text, pw: self.loginView.pwTextField.text)
-        self.isActivate = loginViewModel.checkValid(loginInfo: loginModel)
-        self.loginView.setLoginButton(isEnabled: self.isActivate)
-    }
-    
-    @objc
     func maskButtonTapped() {
-        self.loginView.pwTextField.isSecureTextEntry = !self.loginView.pwTextField.isSecureTextEntry
+        loginView.maskButton.rx.tap
+            .subscribe(
+                onNext:  { _ in
+                    self.loginView.pwTextField.isSecureTextEntry = !self.loginView.pwTextField.isSecureTextEntry
+                }).disposed(by: disposeBag)
     }
-    
-    @objc
-    func clearButtonTapped(_ sender: UIButton) {
-        if sender.tag == 0 {
-            self.loginViewModel.clearText(textfield: self.loginView.idTextField)
-        } else {
-            self.loginViewModel.clearText(textfield: self.loginView.pwTextField)
-        }
+
+    func clearButtonTapped() {
+        loginView.idClearButton.rx.tap
+            .subscribe(
+                onNext:  { _ in
+                    self.loginViewModel.clearText(textfield: self.loginView.idTextField)
+                }).disposed(by: disposeBag)
+        
+        loginView.pwClearButton.rx.tap
+            .subscribe(
+                onNext:  { _ in
+                    self.loginViewModel.clearText(textfield: self.loginView.pwTextField)
+                }).disposed(by: disposeBag)
+
         self.isActivate = false
-        self.loginView.setLoginButton(isEnabled: self.isActivate)
     }
-    
-    @objc
+
     func pushToWelcomeVC() {
-        if isActivate {
-            let welcomeVC = WelcomeViewController()
-            if loginViewModel.checkEmptyNickname(nickname: self.nickname) {
-                welcomeVC.userInfo = self.loginViewModel.id.value
-            } else {
-                welcomeVC.userInfo = self.loginViewModel.nickname.value
-             }
-            self.navigationController?.pushViewController(welcomeVC, animated: true)
-        }
+        loginView.loginButton.rx.tap
+            .subscribe(
+                onNext: { _ in
+                    if self.isActivate {
+                        let welcomeVC = WelcomeViewController()
+                        let nickname = self.loginViewModel.fetchNickname()
+                        if nickname.isEmpty {
+                            welcomeVC.userInfo = self.loginViewModel.fetchId()
+                        } else {
+                            welcomeVC.userInfo = nickname
+                         }
+                        self.navigationController?.pushViewController(welcomeVC, animated: true)
+                    }
+                }).disposed(by: disposeBag)
     }
-    
 }
 
 // MARK: - Delegates
@@ -141,18 +167,17 @@ private extension LoginViewController {
 extension LoginViewController: CreateNicknameVCDelegate {
     
     func saveUserNickname(nickname: String) {
-        self.nickname = nickname
+        self.loginViewModel.nickname = nickname
     }
 }
 
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing (_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(resource: .grey2).cgColor
+        textField.setTextField(textfieldStatus: selectedTextfieldStatus)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 0
+        textField.setTextField(textfieldStatus: unselectedTextfieldStatus)
     }
 }
